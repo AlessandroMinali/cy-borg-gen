@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <style type="text/css">
+    span {
+      min-width: 5px;
+      display: inline-block;
+      font-size: 0.85em;
+      letter-spacing: 1.5px;
+      color: #FFF;
+    }
+
+    body {
+      background: #111;
+    }
+
+    body, html {
+      font-family: monospace, sans-serif;
+    }
+
+    #text {
+      display: flex;
+    }
+    .result {
+      display: none;
+      background: blue;
+      color: white;
+      display: inline;
+      position: absolute;
+      padding-top:    15px;
+      padding-right:  40px;
+      padding-bottom: 15px;
+      padding-left:   5px;
+      outline: 10px solid blue;
+      border: 2px solid white;
+      opacity: 0.95;
+    }
+    .result:hover:not(.solid) {
+      opacity: 0.75;
+    }
+
+    .blink_me {
+      animation: blinker 1s linear infinite;
+    }
+
+    @keyframes blinker {
+      50% {
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class='solid result' style='font-size: 8px; color: #ccc; width: 200px; top: 800px'>CY_D0SSIER is an independent production by Alessandro Minali and is not affiliated with Stockholm Kartell. It is published under the CY_BORG Third Party License.<br>
+CY_BORG IS ©2022 STOCKHOLM KARTELL.</div>
+  <div class='solid result' style='top: 32px; left: 21px'>CY_D0SSIER<br>>>> INCOMING PACKETS //// <a href='' style='color: white ;background: black;' class='blink_me'>_skip</a><br><a onclick='copy_text()' style='background: grey; color: yellow' href='javascript:void(0);'>> > COPY PLAINTEXT ?</a> <span id='status' style='display: none;'></span></div>
+  <div class='result' id='contact'></div>
+  <div class='result' id='patron'></div>
+  <div class='result' id='reward'></div>
+  <div class='result' id='job'></div>
+  <div class='result' id='target'></div>
+  <div class='result' id='location'></div>
+  <div class='result' id='geo'></div>
+  <div class='result' id='security'></div>
+  <p style='margin:  0px;' id="text" data-text="/nstruct group_info init_groups = { .usage = ATOMIC_INIT(2) }; /n /nstruct group_info *groups_alloc(int gidsetsize){ /n    struct group_info *group_info; /n    int nblocks; /n    int i; /n /n /n    nblocks = (gidsetsize + NGROUPS_PER_BLOCK - 1) / NGROUPS_PER_BLOCK; /n    /* Make sure we always allocate at least one indirect block pointer */ /n    nblocks = nblocks ? : 1; /n    group_info = kmalloc(sizeof(*group_info) + nblocks*sizeof(gid_t *), GFP_USER); /n    if (!group_info) /n        return NULL; /n /n    group_info->ngroups = gidsetsize; /n    group_info->nblocks = nblocks; /n    atomic_set(&group_info->usage, 1); /n /n    if (gidsetsize <= NGROUPS_SMALL) /n        group_info->blocks[0] = group_info->small_block; /n    else { /n        for (i = 0; i < nblocks; i++) { /n            gid_t *b; /n            b = (void *)__get_free_page(GFP_USER); /n            if (!b) /n                goto out_undo_partial_alloc; /n            group_info->blocks[i] = b; /n        } /n    } /n    return group_info; /n /n /nout_undo_partial_alloc: /n /n    while (--i >= 0) { /n /n        free_page((unsigned long)group_info->blocks[i]); /n /n    } /n /n    kfree(group_info); /n /n    return NULL; /n /n} /n /n /n /nEXPORT_SYMBOL(groups_alloc); /n /n /n /nvoid groups_free(struct group_info *group_info) /n /n{ /n /n    if (group_info->blocks[0] != group_info->small_block) { /n /n        int i; /n /n        for (i = 0; i < group_info->nblocks; i++) /n /n/nstruct group_info init_groups = { .usage = ATOMIC_INIT(2) }; /n /nstruct group_info *groups_alloc(int gidsetsize){ /n    struct group_info *group_info; /n    int nblocks; /n    int i; /n /n /n    nblocks = (gidsetsize + NGROUPS_PER_BLOCK - 1) / NGROUPS_PER_BLOCK; /n    /* Make sure we always allocate at least one indirect block pointer */ /n    nblocks = nblocks ? : 1; /n    group_info = kmalloc(sizeof(*group_info) + nblocks*sizeof(gid_t *), GFP_USER); /n    if (!group_info) /n        return NULL; /n /n    group_info->ngroups = gidsetsize; /n    group_info->nblocks = nblocks; /n    atomic_set(&group_info->usage, 1); /n /n    if (gidsetsize <= NGROUPS_SMALL) /n        group_info->blocks[0] = group_info->small_block; /n    else { /n        for (i = 0; i < nblocks; i++) { /n            gid_t *b; /n            b = (void *)__get_free_page(GFP_USER); /n            if (!b) /n                goto out_undo_partial_alloc; /n            group_info->blocks[i] = b; /n        } /n    } /n    return group_info; /n /n /nout_undo_partial_alloc: /n /n    while (--i >= 0) { /n /n        free_page((unsigned long)group_info->blocks[i]); /n /n    } /n /n    kfree(group_info); /n /n    return NULL; /n /n} /n /n /n /nEXPORT_SYMBOL(groups_alloc); /n /n /n /nvoid groups_free(struct group_info *group_info) /n /n{ /n /n    if (group_info->blocks[0] != group_info->small_block) { /n /n        int i; /n /n        for (i = 0; i < group_info->nblocks; i++) /n /n/nstruct group_info init_groups = { .usage = ATOMIC_INIT(2) }; /n /nstruct group_info *groups_alloc(int gidsetsize){ /n    struct group_info *group_info; /n    int nblocks; /n    int i; /n /n /n    nblocks = (gidsetsize + NGROUPS_PER_BLOCK - 1) / NGROUPS_PER_BLOCK; /n    /* Make sure we always allocate at least one indirect block pointer */ /n    nblocks = nblocks ? : 1; /n    group_info = kmalloc(sizeof(*group_info) + nblocks*sizeof(gid_t *), GFP_USER); /n    if (!group_info) /n        return NULL; /n /n    group_info->ngroups = gidsetsize; /n    group_info->nblocks = nblocks; /n    atomic_set(&group_info->usage, 1); /n /n    if (gidsetsize <= NGROUPS_SMALL) /n        group_info->blocks[0] = group_info->small_block; /n    else { /n        for (i = 0; i < nblocks; i++) { /n            gid_t *b; /n            b = (void *)__get_free_page(GFP_USER); /n            if (!b) /n                goto out_undo_partial_alloc; /n            group_info->blocks[i] = b; /n        } /n    } /n    return group_info; /n /n /nout_undo_partial_alloc: /n /n    while (--i >= 0) { /n /n        free_page((unsigned long)group_info->blocks[i]); /n /n    } /n /n    kfree(group_info); /n /n    return NULL; /n /n} /n /n /n /nEXPORT_SYMBOL(groups_alloc); /n /n /n /nvoid groups_free(struct group_info *group_info) /n /n{ /n /n    if (group_info->blocks[0] != group_info->small_block) { /n /n        int i; /n /n        for (i = 0; i < group_info->nblocks; i++) /n /n echo('Hello World');"></p>
+  <script type="text/javascript">
+    var contact = ["FRIEND FROM THE OLD DAYS", "FAMILY MEMBER", "UNTRACEABLE NET USER", "CASUAL ACQUAINTANCE", "PREVIOUS PATRON", "KNOWN FENCE AND FIXER", "GANG-GOON", "LOVER/EX-LOVER", "REGULAR FROM THE PCS’ FAVORITE WATERING HOLE", "STREET KID", "MASKED STRANGER", "BODEGA OWNER", "FORMER ENEMY", "MOBSTER", "PORTS SMUGGLER", "WASHED-UP VIP", "CONCERNED CITIZEN", "CULTIST", "JOB BROKER", "SOMEONE A PC OWES MONEY"]
+    var patron = ["A POLITICIAN", "A MEGACORP", "AN AMBITIOUS STARTUP", "A MONEY LAUNDERER", "AN ARMS DEALER", "A STRANGE CULT", "A SECRET SOCIETY", "A STREET GANG", "THE CEO OF A MAJOR CORP", "THEMSELVES", "THEMSELVES", "THEIR LOVER", "SOMEONE A PC OWES MONEY", "A NEARBY NEIGHBORHOOD COMMUNITY", "A CLAN OF ROADRUNNERS", "A CURRENT VIP", "ANOTHER GROUP OF PUNKS", "A RENOWNED HACKER", "A FORMER ENEMY", "AN AI OR OTHER NET ENTITY"]
+    var reward = ["NOTHING. THEY DO IT OR ELSE...", "NOTHING. <PLEASE HELP, YOU ARE THE ONLY ONES WHO CAN!>", "FUTURE FAVOR", "INFO THEY MAY HAVE USE FOR", "USEABLE GEAR", "A VEHICLE", "ILLEGAL GOODS THEY CAN USE OR SELL", "A PLACE TO CRASH AND HIDE OUT", "AN IN WITH HIGH-PAYING CLIENTELE", "FAME AND EXPOSURE", "GETTING RID OF HALF OF A SINGLE PC’S DEBT", "A PIECE OF EXPERIMENTAL CYBERTECH",
+      d(6) + "K¤",
+      d(10) + "K¤",
+      (d(10) + d(10) + d(10)) + "K¤",
+      (d(10) + d(10) + d(10) + d(10) + d(10)) +  "K¤",
+      (d(10) + d(10) + d(10)) + "K¤",
+      d(10) + "K¤",
+      (d(10) + d(10)) + "K¤",
+      (d(10) + d(10)) * 10 + "K¤"]
+    var job = ["SABOTAGE", "ESCORT", "STEAL", "DELIVER", "THREATEN", "KIDNAP", "BLACKMAIL", "OBSERVE", "PROTECT", "SAVE", "DISTRACT", "FIND", "SMUGGLE", "DESTROY", "PUNISH", "TRICK", "FIGHT FOR", "WIN OVER", "PLANT", "INFILTRATE"]
+    var target = [["A SHIPMENT OF ILLEGAL GOODS", "A GANG-GOON"], ["SOME BLACKMAIL MATERIAL", "A POLITICIAN"], ["A PIECE OF FINE ART", "A RECENTLY RELEASED CRIMINAL"], ["A PROTOTYPE WEAPON", "A FRIEND"], ["A UNIQUE VEHICLE", "A SIBLING"], ["A SERVER", "A HACKER"], ["AN OFFLINE DATABASE", "A SECRET SOURCE"], ["AN EXPERIMENTAL CURE", "A DOCTOR, MEDICAL OR OTHERWISE"], ["A SECRET HIDEOUT", "A GROUP OF PUNKS"], ["EVIDENCE OF SOME CRIME", "A COP"], ["A HIGHLY IMPORTANT VIDEO RECORDING", "A CURRENT VIP-CELEB"], ["A BUNCH OF EXPLOSIVES", "A MILITARY OFFICER"], ["A PIECE OF PROTOTYPE TECHNOLOGY", "AN INVENTOR"], ["RECORDS OF PERSONAL COMMUNICATIONS", "A LOVER"], ["A RELIC", "A CULT LEADER"], ["A PIECE OF JEWELRY", "A NEO-ARISTOCRAT"], ["AN IMPORTANT POWER SOURCE", "AN AI OR OTHER NET ENTITY"], ["SOMEONE’S MIND PALACE", "AN IMMORTAL"], ["A SIGNED CONTRACT", "A LAWYER"], ["A DATA DUMP", "THE JOURNALIST WHO MADE THAT BIG SCOOP LAST YEAR"]]
+    var locations = [["Corp office", "on an active crime scene investigation"], ["Dive bar", "known drug-trafficking den"], ["Night club", "a freight ship in port, with a labyrinth of hidden compartments"], ["Luxury residence", "a shelter hidden behind a nondescript door inside a subway station"], ["Apartment building", "a forgotten doomsday bunker"], ["Medical facility", "the set for the next holoflick in the Blood Countess franchise"], ["Hideout", "some sewer tunnels with Nano-infested algae"], ["Warehouse", "a meeting place for the disgustingly rich"], ["Moving vehicle", "an RV with several dead bodies hidden behind a fake wall"], ["Underground parking garage", "a fully automated protein cloning and packaging factory"], ["Shopping mall", "the ritual chamber of a strange serpent drug cult"], ["Street corner", "a network of utility tunnels booby-trapped by the street kids who live here"], ["Street food stall", "an underwater human cloning facility"], ["Restaurant", "an ancient subway tunnel accessible through a G0 crater"], ["Factory", "deep inside a lost virtual world"], ["Drug den", "in one of the top levels of the Narwhal arcology"], ["Entertainment complex", "a shelter for the severely Nano-infested"], ["Maintenance hub", "an archipelago spa retreat for the upper class"], ["Laboratory", "within LifArt, the largest living artwork/gallery/ artist collective in Cy"], ["Construction site", "beneath a replica pyramid"]]
+    var geo = [["Central", "the Arcs"], ["Central", "North"], ["Central", "South"], ["Central", "Undersjön"], ["Slums", "Bigmosse"], ["Slums", "Lilypond"], ["Slums", "Barnyard Fields"], ["Slums", "Laketon"], ["Hills", "Edges"], ["Hills", "Galgbacken"], ["Hills", "Oak Isles"], ["Inbetweens", "Burnchurch Hex"], ["Inbetweens", "Svärta"], ["Inbetweens", "Low Meadow"], ["Industrial", "Mosscroft"], ["G0"], ["Ports"], ["Sewers and underground"], ["On/in water"], ["Outside of Cy"]]
+    var security = ["UNITED CITADEL SECURITY", "SLUM ROUGHNECKS", "WELL-TRAINED SECOP TEAM", "MAINLY DRONES AND TURRETS", "ENHANCED BEASTS", "ROADRUNNER CLAN", "STREET GANG", "VIRID VIPERS", "OFF-DUTY COPS", "SECOPS AND NANOGOONS", "CYBERSLASHERS", "A GROUP OF PUNKS", "CORP ASSASSIN STRIKE TEAM", "WILD NANOPHREAKS", "AI WITH WEAPON PLATFORMS", "WAY MORE GUARDS THAN FIRST APPARENT", "A DEATH CULT", "DRUNKEN, LOW-RATE SECOPS", "STEALTH-SUIT PSYCHOPATH", "VINDICATOR CYDROID AND HANDLER"]
+    var complication = ["The contact or target starts acting against their own interest.", "Rival punks interfere or are on the same contract.", "Someone a PC owes money to shows up and interferes.", "Nothing.", "It’s just a distraction for the patron to pull off something bigger.", "It’s a trap.", "Another team of punks or SecOps will try to hunt them down as soon as the job’s done.", "Someone else gets there first.", "The contact backpedals on the reward.", "The contact got the situation all wrong.", "The job has a very short deadline.", "The contact or target is not who they claim to be.", "The contact or target disappears.", "There are a lot of bystanders in the way.", "The contact or target is arrested.", "The events are being recorded.", "Everything turns to chaos.", "A miserable headline occurs midway, changing the situation.", "The target is a friend or loved one.", "The group gets a counteroffer from someone else."]
+    var distinctive = ["Under renovation; paint etc. spread around.", "Holoprojections of historical art pieces in most rooms.", "Anti-Nano propaganda everywhere.", "Every room is a separate floor. Two elevators service every second floor only.", "Parts have been taken over by squatters engaged in a slow but deadly conflict with the owners.", "Vertigo-inducing animated wallpapers.", "Traces of a recent gunfight with bullet holes and soot from small fires still on the walls.", "Way cleaner and more luxurious than expected.", "Surprisingly rough and dirty.", "Due to a hostage situation, SecOps have surrounded the building next door"]
+    var hidden = ["Maze-like crawlspaces hidden in walls, floors, buckets, scaffolding, ceiling.", "Hidden cameras in many rooms, planted there by someone else.", "A secret room used as a reaperdoc clinic.", "Paper-thin internal walls.", "A small data node that leads into the low-res virtual hellscape of a dying world. A terrible monster guards a large ¤ stash.", "Sentient maintenance system can be bribed to work with the party.", "Hidden conspiracy board detailing plot behind the latest miserable headline.", "In a gamma-ray protected vault sits an artifact of terrible and weird powers.", "What looks like mannequins are knock-off skulkers with sharp claws.", "A cassette with a custom App. Has a tracker that will ping the App author as soon as it's used."]
+    var more = ["Large valuable art piece covered in Nano-spreading dust.", "A glitching Ghost is stuck in a loop somewhere, attacking anyone who enters its vicinity.", "Locked maintenance door leads to a temple of s small but violent cult.", "Tech use has a 50% chance of triggering an electrical fire.", "Three vials of Red Pain marked as Red-juice left on a table.", "An out-of-place laser turret fires at everyone without the password.", "A Cy-raging menance locked inside a padded room.", "A canister with a non-human creature thaty warps reality around it if distrubed.", "Mold in the walls releases sight-blocking spores when bullets hit them.", "An EMP booby trap renders all electronics unusuable for 10 minutes if triggered."]
+    function d(max) {
+      return Math.floor(Math.random() * max) + 1;
+    }
+    function random_item_from(array) {
+      return array[Math.floor(Math.random() * array.length)];
+    }
+    function getRandomInRange(from, to, fixed) {
+      return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
+    }
+    function show_status(msg) {
+      var el = document.getElementById("status");
+      el.innerHTML = msg;
+      el.style.display = 'inline';
+      hide_status();
+    }
+    var timers = [];
+    function hide_status() {
+      for(var i = 0; i < timers.length; i++) {
+        clearTimeout(timers[i]);
+      }
+      var el = document.getElementById("status");
+      el.style.opacity = 1;
+      for(var i = 0; i < 50; i++) {
+        timers.push(setTimeout(function() { el.style.opacity -= 0.02; } , i * 60));
+      }
+    }
+    var s_contact;
+    var s_patron;
+    var s_reward;
+    var s_job;
+    var s_target;
+    var s_location;
+    var s_geo;
+    var s_security
+    var s_complication;
+    var s_distinctive;
+    var s_hidden;
+    var s_more;
+    function g_contact() { return s_contact = random_item_from(contact); }
+    function g_patron() { return s_patron = random_item_from(patron); }
+    function g_reward() { return s_reward = random_item_from(reward); }
+    function g_job() { return s_job = random_item_from(job); }
+    function g_target() { return s_target = random_item_from(random_item_from(target)); }
+    function g_location() { return s_location = random_item_from(random_item_from(locations)).toUpperCase(); }
+    function g_geo() { return s_geo = random_item_from(geo); }
+    function g_security() { return s_security = random_item_from(security); }
+    function g_complication() { return s_complication = random_item_from(complication); }
+    function g_distinctive() { return s_distinctive = random_item_from(distinctive); }
+    function g_hidden() { return s_hidden = random_item_from(hidden); }
+    function g_more() { return s_more = random_item_from(more); }
+    function fallbackCopyTextToClipboard(text) {
+      var textArea = document.createElement("textarea");
+      textArea.value = text;
+      
+      // Avoid scrolling to bottom
+      textArea.style.top = "0";
+      textArea.style.left = "0";
+      textArea.style.position = "fixed";
+
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+
+      try {
+        if (document.execCommand('copy')) { show_status('COPIED'); }
+      } catch (err) {
+        console.error('Fallback: Oops, unable to copy', err);
+      }
+
+      document.body.removeChild(textArea);
+    }
+    function copyTextToClipboard(text) {
+      if (!navigator.clipboard) {
+        fallbackCopyTextToClipboard(text);
+        return;
+      }
+      navigator.clipboard.writeText(text).then(function() {
+        show_status('COPIED');
+      }, function(err) {
+        console.error('Async: Could not copy text: ', err);
+      });
+    }
+    function copy_text() {
+      copyTextToClipboard(['CY_D0SSIER MISSION', 'CONTACT: ' + s_contact, 'PATRON: ' +s_patron, 'REWARD: ' + s_reward, 'JOB: ' + s_job, 'TARGET: ' + s_target, 'LOCATION: ' + s_location, 'GEO: ' + s_geo, 'SECURITY: ' + s_security, 'COMPLICATION: ' + s_complication, 'DISTINCTIVE FEATURE: ' + s_distinctive, 'HIDDEN FEATURE: ' + s_hidden, 'ADDITIONAL DANGER: ' + s_more].join("\n"));
+    }
+
+    function d_contact() {
+      setTimeout(function () {
+        document.getElementById('contact').style.display = 'inline';
+        document.getElementById('contact').style.top = '300px';
+        document.getElementById('contact').style.left = '100px';
+        document.getElementById('contact').innerHTML = "{ CONTACT }<br><br>xxx" + g_contact();
+      }, d(500) + 200)
+      document.getElementById('contact').addEventListener('click', function(e) {
+        e.target.innerHTML = '';
+        e.target.display = 'none';
+        d_contact();
+      })
+    }
+    d_contact();
+    function d_patron() {
+      setTimeout(function () {
+        document.getElementById('patron').style.display = 'inline';
+        document.getElementById('patron').style.top = '400px';
+        document.getElementById('patron').style.left = '50px';
+        document.getElementById('patron').innerHTML = "{ PATRON }<br><br>~~~ " + g_patron() + ' ~~~';
+      }, d(500) + 200)
+      document.getElementById('patron').addEventListener('click', function(e) {
+        e.target.innerHTML = '';
+        e.target.display = 'none';
+        d_patron();
+      })
+    }
+    d_patron();
+    function d_reward() {
+      setTimeout(function () {
+        document.getElementById('reward').style.display = 'inline';
+        document.getElementById('reward').style.top = '500px';
+        document.getElementById('reward').style.left = '125px';
+        document.getElementById('reward').innerHTML = "{ REWARD }<br><br><em>$: " + g_reward() + ' ?<em>';
+      }, d(500) + 200)
+      document.getElementById('reward').addEventListener('click', function(e) {
+        e.target.innerHTML = '';
+        e.target.display = 'none';
+        d_reward();
+      })
+    }
+    d_reward();
+    function d_job() {
+      setTimeout(function () {
+        document.getElementById('job').style.display = 'inline';
+        document.getElementById('job').style.top = '150px';
+        document.getElementById('job').style.left = '400px';
+        document.getElementById('job').innerHTML = "JOBjobJOB<br><br>%" + g_job();
+      }, d(500) + 200)
+      document.getElementById('job').addEventListener('click', function(e) {
+        e.target.innerHTML = '';
+        e.target.display = 'none';
+        d_job();
+      })
+    }
+    d_job();
+    function d_target() {
+      setTimeout(function () {  
+        document.getElementById('target').style.display = 'inline';
+        document.getElementById('target').style.top = '300px';
+        document.getElementById('target').style.left = '700px';
+        document.getElementById('target').innerHTML = "TARGETtargetTARGET<br><br>" + g_target().split('').join('.');
+      }, d(500) + 200)
+      document.getElementById('target').addEventListener('click', function(e) {
+        e.target.innerHTML = '';
+        e.target.display = 'none';
+        d_target();
+      })
+    }
+    d_target();
+    function d_location() {
+      setTimeout(function () {
+        document.getElementById('location').style.display = 'inline';
+        document.getElementById('location').style.top = '20px';
+        document.getElementById('location').style.left = '700px';
+        document.getElementById('location').innerHTML = "< LOCATION ><br><br>" + g_location();
+      }, d(500) + 200)
+      document.getElementById('location').addEventListener('click', function(e) {
+        e.target.innerHTML = '';
+        e.target.display = 'none';
+        d_location();
+      })
+    }
+    d_location();
+    function d_geo() {
+      setTimeout(function () {
+        document.getElementById('geo').style.display = 'inline';
+        document.getElementById('geo').style.top = '100px';
+        document.getElementById('geo').style.left = '800px';
+        t_geo = g_geo();
+        document.getElementById('geo').innerHTML = "< GEO ><br><br><b>" + t_geo[0] + "<b>" + (t_geo[1] ? ": <i>" + t_geo[1].toUpperCase() + "</i> " : ' ') + '|' +[getRandomInRange(-180, 180, 3), getRandomInRange(-180, 180, 3)].join(' ,, ') + '|';
+      }, d(500) + 200)
+      document.getElementById('geo').addEventListener('click', function(e) {
+        e.target.innerHTML = '';
+        e.target.display = 'none';
+        d_geo();
+      })
+    }
+    d_geo();
+    function d_security() {
+      setTimeout(function () {
+        document.getElementById('security').style.display = 'inline';
+        document.getElementById('security').style.top = '420px';
+        document.getElementById('security').style.left = '625px';
+        document.getElementById('security').innerHTML = "T." + (d(99) + 100) + " CAMERA ACCESS GRANTED -/<br>;knockKNOCK<br>@ FOREcasting | SIMulating Chances of success*<br><pre>SECURITY - " + (d(30) + 70) + "%<br>    \\t" + g_security() +
+                      "<br>COMPLICATION - " + (d(30) + 30) + "%<br>    \\t" + g_complication() +
+                      "<br>distinctive FEATURE - " + (d(80) + 50) + "%<br>    \\t" + g_distinctive() +
+                      "<br><span style='background: grey; color: grey'>hidden</span> FEATURE - " + (d(30) + 50) + "%<br>    \\t" + g_hidden() +
+                      "<br>additional DANGER - " + (d(80) + 10) + "%<br>    \\t" + g_more() +
+                      "</pre>";
+      }, d(500) + 200);
+      document.getElementById('security').addEventListener('click', function(e) {
+        e.target.innerHTML = '';
+        e.target.display = 'none';
+        d_security();
+      })
+    }
+    d_security();
+
+    var printText = document.getElementById('text').dataset.text;
+    var contentArray = printText.split('/n');
+
+    contentArray.forEach((newLine, index) => {
+      if (d(100) > 5) {
+        document.getElementById('text').innerHTML += '<span style="display:block;" id="'+index+'"></span>';
+      }
+      
+      var lineID = index;
+      setTimeout(function() {
+        if (d(100) > 50) {
+          newLine.split('').forEach((chunk, index) => {
+            setTimeout(function () {
+              try { document.getElementById(contentArray.length - 1 - lineID).innerHTML += "<span>"+chunk+"</span>"; } catch { }
+            }, index*10);
+          });
+        } else {
+          newLine.split('').forEach((chunk, index) => {
+            setTimeout(function () {
+              try { document.getElementById(lineID).innerHTML += "<span>"+chunk+"</span>"; } catch { }
+            }, index*10);
+          });
+        }
+      }, index*1);
+    });
+
+    setTimeout(function() {
+      const els = document.querySelectorAll('p > span > span')
+      for(var i = 0; i < els.length; i++) {
+        if (els[i].innerText != '' && d(1000) == 1) {
+          
+        }
+      }
+    }, 1000)
+  </script>
+</body>
+</html>

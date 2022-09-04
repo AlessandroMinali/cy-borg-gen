@@ -1,0 +1,171 @@
+_.split("\n").map &:strip
+z.split("\n").map {|i| i.split("/").map(&:strip) }
+
+//CORPORATION GENERATOR
+//NAME PART ONE
+Cy
+Kifo
+Fosse
+Útga
+Crown's
+Galg
+Smrt
+Gene
+Pereo
+Progen
+Häx
+Futura
+
+//NAME PART TWO
+Futures
+Tech
+Inc
+Industrial
+Labs
+Nero
+Mgmt
+Svärta
+Wave
+Institute
+Division
+Malum
+
+//INDUSTRY
+Propaganda/news
+Lifestyle
+Property
+Finance
+Biomedical
+Food Products
+Raw material
+Entertainment
+Weapons
+Legal/lobbying
+Security
+Transport
+
+//LATEST CONTROVERSY
+Massive collateral damage in corp war.
+Selling undisclosed cloned human meat.
+Supplying violent gangs with personal data for profit.
+Non-informed human test subjects.
+Mandatory Osleep for every employee working 48+ hour shifts.
+Rumors of several board members being part of a cannibal cult.
+Offering homeless people 10¤ to equip them with subdermal projectors displaying advertisements.
+Kidnapping a competitor’s key staff.
+Hazardous waste dumping.
+Cybertech enhancements made mandatory for certain employees.
+Selling dead employees’ body parts after workplace accidents.
+Employee contracts include the rights to firstborn children.
+Rules against dating non-employees.
+Assassinating several product reviewers and critics.
+Dropping a weaponized meme on a public square, resulting in 138 deaths.
+Non-consensual cloning.
+Increasing employee loyalty through secret memory alterations.
+Kidnapping customers, releasing them into a booby-trapped murdermaze and recording it for a pay feed. 
+Using customer data for blackmail.
+A weaponized virus released during corp war spread outside their intended target.
+
+//CULT GENERATOR
+//WORSHIPPING
+Nuclear destruction
+A free AI
+Nano
+Death
+A number-station prophecy
+The cult leader
+A pantheon of dead celebrities
+Progress
+The unborn child of light
+She of the Dark
+The Two-Headed
+Those who came before
+
+//TEMPLE
+A private virtual world with outdated security
+2nd top flfloor of north Central ‘scraper
+G0 ruin’s basement
+Unused salons in a Galgbacken holocinema
+An unmarked door inside Burnchurch Hex subway station
+Sub-level 43B of the Nutopia Arc
+A closed-down factory in Mosscroft
+Public but heavily defended temple in Edges
+A private residence in Oak Isles
+Atop a high-class Ports restaurant
+An abandoned and partially flflooded Laketon block
+A Lilypond community center
+
+//ALONG THE CITY STREETS
+Someone is harvesting guerilla-grown vegetables on top of an elevated walkway.
+A group of five, all with the same holographic tattoos matching the stab wounds of recently murdered musician Mammoth Lydon.
+Posters for Plague- wave artist MC Venom’s upcoming gig at My Wall.
+The Heirs of Kergoz cursing a building with an animal sacrifice in a candlelit alley.
+A shop offering drop-in Bullet Scarifications.
+Street kid at a table offering credchip laundering for cheap.
+The sound of automatic fire from 15+ floors above.
+Three rich teenagers splashing people with licorice booze from the safety of their flight suits.
+A vendor selling canned food from G0 as a miracle cure for any ailment.
+A cop gets punched by a dealer. Several passersby join the beating.
+Two kids are hunting pigeons with an SMG-equipped drone.
+A heavily armored limo waiting for someone.
+Gang members in a 2v3 knife fight
+A Nano-infested with wrappings around their disfigured skull is handing out flyers for a charity killmatch between two groups of former idols.
+A sword wielding, trenchcoat-wearing slasher appears from out of nowhere, stabs a pedestrian and then activates her autocamo and disappears. The corpse is not human but a Doppel.
+Roadrunners trading real meat and tobacco for any sort of drugs.
+Food cart selling deep-fried seal eyes.
+An RCD ad-bomb for deVerte’s latest vurt- variant explodes, distracting everyone including the driver of a speeding cyberbike that crashes into a lamp post.
+“Everything's for free” painted with blood on an alley wall.
+SecOps laying siege to a Liquid Dreams store. Passersby are told to stay away or get shot.
+Pusher offering free (Nano-infested) drugs.
+An almost completely silent black helicopter hovers above for a minute then keeps going.
+The ground shakes. Three nearby manhole covers fly off. Something deep below just exploded.
+Camera drones chasing a running VIP-celeb who’s trying to cover their face
+An Emergency Response Team in a firefight, trying to reach a bleeding client in the middle of a gang shootout.
+A couple hugging and intimately conversing, wearing the colors of rival gangs.
+Body bags piled on the street next to a subway exit.
+Panicked victim of an RCD theft. Bleeding from the skull. Lost without any messaging, mapping or payment capabilities.
+A fresh corpse, dead from a single headshot. Flyers asking “Who runs UCS?” surround the body.
+A private security officer handing a cop a credchip. Not even trying to hide the bribe.
+A holoprojection outside a sneaker store, boasting about the number of murder/robbery victims targetted for wearing their latest model.
+Two people wearing holoheadsets sitting slumped against a wall in a pool of sweat and piss.
+The metallic screech of a monorail emergency brake coming from somewhere above.
+A long queue of the less fortunate, signing up for work at the AST factory. Replacements for the recent HR incident.
+Flash ad: say yes within 5 seconds to accept an order of one large pizza with extra kelp. Delivered straight to you within 90 minutes.
+A neo-aristocrat surrounded by bodyguards and a leashed tiger.
+“Atheist? Sell your soul here! 100¤”. The line’s short, but the contract’s long.
+An old man trying to pay a group of confused teenagers to stab him.
+Copper wires shaped in occult symbols stapled to a wall. They are connected to a large, burnt-out battery that sits on the ground beneath.
+A child Nanomancer about to get beat by two SecOps. The kid says something, and the guards instantly turn around and walk away. The kid gives you a sly, violet-hued smile.
+Smoke clears from the grenades dropped by Grey-CERT. Almost as suddenly as the team appear, they are cleaning up. All the blood, gore, metal and flesh are soon gone. Their target will not be a risk of Cy-rage again.
+A team of TG Labs scientists in hazmat suits gathers glowing, star-shaped flowers that have sprung up through the pavement.
+A crew of four perform music on a street corner. The holosynth player is wearing a drone suit, floating in the air and playing their laser rays as if they were the finest of harps.
+Two highly intoxicated salaryfolk are throwing fists in the middle of a street.
+A projection drone is using facial recognition to write personalized and somewhat embarrassing ads in front of pedestrians on the street.
+A violet, fist-sized beetle crawls across a nearby wall. In a flash, all nearby lights and signs change color to the same shade of violet. The beetle is gone.
+Bets have just been placed on a street-corner fight between a corp-war vet and a young cyberslasher. As the gong goes off, so does the cyberslasher’s arm. The fight is over.
+All ads nearby suddenly switch to promoting the same Lucky 77 Lotto Jackpot. For just 5¤, you too can dream about becoming aristocrat-rich by giving your ¤ away to someone who already is.
+Eight 4Sec guards are violently evicting a family of four for not paying their rent on the agreed date.
+A hooded figure with a golden mask stands on a balcony. Arms raised, chanting drone-like. A wall of amplifiers behind the figure emits a high-pitched tone ever increasing in volume.
+
+//NET EVENT
+An aggressive ad-swarm is obscuring whatever you wanted to find. It is selling you ammunition from ACGS and explaining how the Nano-sick are living at your expense.
+A 20-frame clip from yesterday’s killmatch is constantly looping in your peripheral. A forced refresh is necessary to get rid of it.
+Agree to these terms to start downloading a cred-reader update that will double the value of any credchip scanned.
+A glitching artifact hangs in the air. It sucks all color from the area and slows down time.
+Suddenly, it’s all bright light. The smell of fire. A flash of red wetness. Deafening screams or maybe grotesque laughter. A nearby pizza place is projecting their animated menu much too large.
+The video feed recorded by a nearby gate is being projected onto the gate itself, creating a confusing, distorted mirror.
+The leaked script of the next Blood Countess flick, or so the anonymous poster claims.
+A message: <LFG 4 ROTBLACK SLUDGE, NO MORE ROYALS>
+A floating projection of a woman, cable- interfaced with a custom built, state-of- the-art THC Drone deck. Both she and the deck bear the unmistakable signs of a Black Ice death.
+Long, black tentacles slither all over the area, grabbing at any data storage, then suddenly retract, leaving only a lingering smell of blown-out match.
+The mobile entrance to the exclusive holoclub Terebac is nearby. It is a ball of infrared light that emits a slow, pulsing bass.
+Several data nodes in the cyber cosm suddenly go dark all at once. Like hundreds of stars suddenly disappearing from the wasteland’s night sky.
+Text flashes all around you: <INFORMATION WANTS TO BE FREE! FREE THE CAPTURED GOD-MACHINES! FREEDOM FOR THE MERGED!> A cleaning App from CERT is deleting the messages.
+A hacktivist group is publishing private information from a group of Alliansen Inc. middle managers as an act of revenge for last week’s privacy scandal.
+You stumble into a private virtual world, a memorial for lost pets. It twists and turns around you, pushing you through it all until you are back where you started and the entrance to the node locked behind you.
+A virus, visualized as a cluster of great worms, is eating away at a nearby data node.
+Discrete posting: <APPS 4 TRADE - ASK FOR COOL AT THE CAVE CLUB>
+A virtual cult worshipping a dog- headed idol, all worshippers disguised with expensive custom avatars from old flicks. They chant ‘Nuclear Money, Nuclear Skies’ before an explosion of light covers their disappearances.
+An open folder with your name. Full of unseen pictures, details you'd forgotten, a message: They are watching.
+A violet cube door. Pulsing, glitching, spinning. A hissing sound, expanding. Then it's gone.
+

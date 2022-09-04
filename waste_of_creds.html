@@ -1,0 +1,819 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Waste of Creds - A CY_BORG Character Generator</a></title>
+  <meta name="description" content="Waste of Creds - A CY_BORG Character Generator">
+  <style type="text/css">
+    body { font-family: Monaco, courier new; font-size: 12px; background: #0827F5; color: white }
+    .smaller { font-size: 85%; }
+    ul { padding-left: 15px }
+    div > b:first-child, div > span > b:first-child { font-size: 120% }
+    html, body { height: 99%;}
+    body > footer {
+      position: sticky;
+      top: 100vh;
+    }
+    footer > pre { white-space: pre-wrap; }
+    label { display: inline-block; }
+    .character > button { margin: 10px; }
+    .top { width: 500px }
+    @media only screen and (max-width: 400px) {
+      .top { width: auto; }
+    }
+    button { background: silver;
+box-shadow: inset -1px -1px #0a0a0a,inset 1px 1px #fff,inset -2px -2px grey,inset 2px 2px #dfdfdf; }
+  </style>
+</head>
+
+<body>
+  <h1 style="margin: 0px;">
+    <a style='text-decoration: none; color: yellow;' href='./waste_of_creds.html'>
+      WASTE OF CREDS - A CY_BORG TECH_SLAVE SPAWNER
+    </a>
+  </h1>
+  <div id="klass">
+    <span>PICK YOUR CLASS</span>
+    <br>
+    <button id="ws" value="0">Punk (no class)</button>
+    <button id="fd" value="1">Shunned Nanomancer</button>
+    <button id="gs" value="2">Burned Hacker</button>
+    <button id="eh" value="3">Discharged Corp Killer</button>
+    <button id="wr" value="4">Orphaned Gear Head</button>
+    <button id="he" value="5">Renegade Cyberslasher</button>
+    <button id="oh" value="6">Forsaken Gang-Goon</button>
+  </div>
+  <hr style="margin: 0px;">
+  <div id=prompt style="display: none;">
+    Which abilities would you like to try and excel with (select 2):
+    <form>
+      <div style="display: inline-block;">
+        <input type="checkbox" id="agi" name="agility" value=0>
+        <label for="agi">
+          <b>AGILITY</b>
+          <span class="smaller">Sneak, dodge, drive, autofire</span>
+        </label>
+        <br>
+        <input type="checkbox" id="pre" name="knowledge" value=1>
+        <label for="kno">
+          <b>KNOWLEDGE</b>
+          <span class="smaller">Science, use tech or App</span>
+        </label>
+        <br>
+        <input type="checkbox" id="pre" name="presence" value=1>
+        <label for="pre">
+          <b>PRESENCE</b>
+          <span class="smaller">Snipe/shoot, use Nane, charm</span>
+        </label>
+      </div>
+      <div style="display: inline-block; vertical-align: top;">
+        <input type="checkbox" id="str" name="strength" value=2>
+        <label for="str">
+          <b>STRENGTH</b>
+          <span class="smaller">Strike, grapple, lift, throw</span>
+        </label>
+        <br>
+        <input type="checkbox" id="tou" name="toughness" value=3>
+        <label for="tou">
+          <b>TOUGHNESS</b>
+          <span class="smaller">Survive falling, poison, and elements</span>
+        </label>
+      </div>
+    </form>
+    <b>AFTER SELECTING, CLICK <em>BEGGAR</em> AGAIN TO REROLL WITH CHANGES</b>
+  </div>
+  <div id=character>
+    <button id="save">Share</button>
+    <button id="edit">Edit Locally</button>
+    <button id="save_edits" style="display: none;">Save Local Edit</button>
+    <button id="load" style="display: none;">Load Local Edit</button>
+    <button id="delete" style="display: none;">Delete Local Edit</button>
+    <button id="stop" style="display: none;">Stop Editing</button>
+    <span style='display: none; background: green; color: black; padding: 1px 5px;' id='status'></span>
+    <br>
+    <div class='top' style="display: inline-block;">
+      <div style="display: inline-block; padding-right: 20px;">
+        <b style="background: yellow; color: black;">NAME</b>
+        <span id="name" class="edit"></span>
+      </div>
+      <div style="display: inline-block; padding-right: 20px;">
+        <b style="background: yellow; color: black;">CLASS</b>
+        <span id="class_name"></span>
+      </div>
+    </div>
+    <div class='top' style="display: inline-block;">
+      <div style="display: inline-block; padding-right: 20px;">
+        <b style="background: yellow; color: black;">HP</b>
+        <span id="hp" class="edit"></span>
+      </div>
+      <div style="display: inline-block; padding-right: 20px;">
+        <b style="background: yellow; color: black;">GLITCHES</b>
+        <span id="glitches" class="edit"></span>
+        <span id="glitches_dice"></span>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div style="display: inline-block; max-width: 500px; vertical-align: top;">
+      <div id="ablities"><b style="background: yellow; color: black;">ABILITIES</b></div>
+      <pre style="margin-bottom: 0px;">
+  <em>AGILITY</em>      <span id="agility" class="edit"></span>   Sneak, dodge, drive, autofire
+  <em>KNOWLEDGE</em>    <span id="knowledge" class="edit"></span>   Science, use tech or App
+  <em>PRESENCE</em>     <span id="presence" class="edit"></span>   Snipe/shoot, use Nano, charm
+  <em>STRENGTH</em>     <span id="strength" class="edit"></span>   Strike, grapple, lift, throw
+  <em>TOUGHNESS</em>    <span id="toughness" class="edit"></span>     Survive falling, poison, and elements
+    </pre>
+      <div>
+        <b style="background: yellow; color: black;">EQUIPMENT</b>
+        <span class="smaller" style="float: right; background: #aaa; color: black; margin-top: 3px; margin-right: 10px;">
+          CAPACITY
+          <span id="capacity" class="edit"></span>+ items then STRENGTH and AGILITY DR+2. Max
+          <span id="capacity_max" class="edit"></span>
+        </span>
+        <ul id="equipment" class="edit">
+        </ul>
+      </div>
+      <div style="max-width: 500px">
+        <b style="background: yellow; color: black;">BACKGROUND</b>
+        <span id="description" class="smaller edit"></span>
+      </div>
+    </div>
+    <div style="display: inline-block; max-width: 500px;">
+      <div>
+        <b style="background: yellow; color: black;">CLASS BENEFITS</b>
+        <div id="skills" style="padding: 0px 20px 0px  0px;" class="edit"></div>
+      </div>
+      <div id="tech" style='display: none;'>
+        <b style="background: yellow; color: black;">CYBERTECH</b>
+        <div style="padding: 0px 20px 0px  0px;" class="edit"></div>
+      </div>
+      <div id="nanos" style='display: none;'>
+        <span style="background: yellow; color: black;"><b>NANO</b> PRESENCE DR12</span>
+        <div style="padding: 0px 20px 0px  0px;" class="edit"></div>
+      </div>
+      <div id="apps" style='display: none;'>
+        <span style="background: yellow; color: black;"><b>APPS</b> KNOWLEDGE DR12</span>
+        <div style="padding: 0px 20px 0px  0px;" class="edit"></div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div id="saved_souls">DOWNLOADED AVATARS<br><span id="souls"></span></div>
+  <footer style="text-align: center; font-size: 65%; opacity: 75%;">
+    <hr>
+    <pre style="margin: 0px 15px;">
+Waste of Skin is an independent production by Alessandro Minali and is not affiliated with Stockholm Kartell. It is published under the CY_BORG Third Party License.
+CY_BORG IS ©2022 STOCKHOLM KARTELL.
+    </pre>
+  </footer>
+  <script src="utils.js"></script>
+  <script>
+    var total_checks = 0;
+    var klass;
+    var selected;
+    var descriptions = ["Of unknown origins.", "It's inside you. Infesting your brain, warping your flesh. People are afraid of you now. They're afraid of the power that poisons you. You're scared too.", "You were one of the sharpest deckers in Cy. No one could use tech or warp the world with an App like you could. You don't know what went wrong. You messed up. Maybe you were tricked; maybe you got sloppy. You glimpsed a terrible truth, and now you're burnt. No collective, no fallback, nothing.", "A good soldier in bad company, always fighting someone else's war in the name of greed. Capitalism crushed your enthusiasm quickly enough, and you were discharged without severance.", "People are unreliable. Socially. Physically. Emotionally. Weak bodies and weaker wills. They are worn down, unfixable. Instead, you have mastered emotionless steel and loyal code. You can fix, drive and pilot any machine. Machines, you can trust.", "You are DEATH incarnate - a frenzied flurry of chrome, murder and blood-stained steel. But yours is no mindless rage. You match your trained and cybernetically enhanced body with an equally disciplined mind. You use to kill for a cause, for an ideal. Now? You kill for money.", "You ran with the only gang to have your back and treat you like more than slum trash. They were your family, and you bled, stole, and fought and killed for them. They're gone now, so you have to keep your edge."]
+    var base_skills = [["Nimble", ""], ['Brainy', ''], ["Witty", ""], ["Well-fed", ""], ["Indomitable", ""]]
+    var shunned_nanomancer_memory = ['you spent a wild night with a group of neo-pagan cultists, performing profane rites to some snake god.', 'a star fell close to your building, and you were a curious child.', 'you found drugs. Free drugs. They were neither drugs nor entirely free.', 'you were kidnapped and subjected to horrible experiments.', 'a G0 rat bit you.', 'you were born.']
+    var shunned_nanomancer_features = [
+      ['A strange leaf-looking knife', 'Deals d4 damage, and victims have to test TOUGHNESS or bleed 1 HP for d6 rounds.'],
+      ['Milkwhite eyes that see through lies', "Once per day when you believe you've been lied to, test PRESENCE DR8. On a success, you can tell whenever the target lies for the rest of the day."],
+      ['Burnt orange stone-like skin', "-d4 damage taken, not subject to being reduced on a Defence fumble. Instead, you take an additional d8 damage as part of your skin is ripped off."],
+      ["A second mouth where you navel used to be", "Any food or drugs consumed with your navel-mouth are twice as effective."],
+      ["An elongated, pointed and semi-translucent skull", "Your brain shines underneath emitting light like that of a candle."],
+      ['Scales cover most of your body', "Any roll to resist cold, heat or radiation is -4DR."]
+    ]
+    var shunned_nanomancer_abilites = [
+      ["Weird", ""],
+      ["Ill", ""],
+    ]
+    var burned_hacker_memory = ["the public faces of the UCS board are fabricated. They don't exist. Who's running UCS?", "stealth carrier drones are offloading large amounts of something in G0 on rainy nights.", "Rogue AI are flocking to Cy, more so than anywhere else in the world.", "nanobacteria is seeping into the Net. What does that even mean? Who's covering it up?", "two AIs have merged into a two-headed sentience. Its intelligence is beyond our comprehension.", "An unknown collective has opened backdoors in Cy's major data nodes. No hackers have claimed credit."]
+    var burned_hacker_abilities = [
+      ["Cutting Edge", ""],
+      ["Unhealthy Living", ""]
+    ]
+    var burned_hacker_features = [
+      ['Borgtrigga-0.5', 'Provoke a Cy-rage test for one nearby target.'],
+      ['Law1', 'Parallaxes imagery around you, making you invisible to all tech (except true AI) for 10 minutes.'],
+      ['Boomboom', 'd4 nearby simple devices (lamps, monitors, cameras, etc.) explode. d6 damage to up to d4 targets.'],
+      ['CopySwappy', 'For d10 rounds, all tech will mistake you for another person within 30m and vice versa.'],
+      ['tError', "Target's RCD renders subliminal, personalized nightmare imagery that distorts reality. Test PRESENCE DR14 or unable to act for d4 rounds."],
+      ['DvG-sling', "Deal damage to a cybered target or drone/vehicle/mech based on their size. Dog-sized targets take d6 damage, human d10, car 2d8, and larger targets take 2d12."]
+    ]
+    var corp_killer_memory = ["for Urban infiltration in Cy Central. You know the area well.", "as an Orbital station grunt. Zero-G wall breaches and airlock executions were your idea of fun.", "as a Maritime raider. Blowing up drilling rigs, underwater labs and the occasional ship.", "in Mobile wasteland rig corps. Mowing down roadrunners, sabotaging rival infrastructure, burning what little nature was left.", "in Periglacial SecCorp. Plundering released gas and bioweapons for your employer.", "...wait, actually you didn't get that far. Washed out."
+    ]
+    var corp_killer_abilities = [
+      ["Emotionally Scarred Jarhead", ""],
+      ["Tough as Nails", ""],
+      ['Trained Killer', 'Your autofire tests are always -1DR. The Corp wants you dead.']
+    ]
+    var corp_killer_features = [
+      ['Old-school heavy machine gun (d12a)', "Breaks down after a damage roll of 1. You can fix it if you get 10 minutes of quiet time."],
+      ['Prototype Smart<sup>TM</sup> assault rifle (d10a)', "Around-the-corner shooting, camera-sight, grenade launcher, the works. Grenade: d6 damage up to d3 targets, ×2 damage vs. vehicles, turrets and mechs."],
+      ['Hot Potato', 'You throw grenades with -2DR.'],
+      ['Heavy laser cannon (d12)', "PRESENCE DR14 against people, bots and animals. 3d12 damage, PRESENCE DR10 against vehicles, turrets or similar targets."],
+      ['Crowd-control air cannon (d6)', "Can hit up to d4 targets close to each other."],
+      ['Incendiary shotgun (d10)', 'Test AGILITY DR12 or flammable materials are ignited for +d6 damage the following round.']
+    ]
+    var gear_head_memory = ["disappeared in Go. Looking for an advanced lab rumored to have survived the Incident.", "were proclaimed dead. But you know their soul lives on inside something.", "were dragged off to a Corp black-site by an anonymous killteam.", "left you to join up with a roadrunner outfit. They scavenge scrap on the rivers up north.", "bugged out, pursued by rival droners and bots. Waiting out the heat.", "got laid up, comatose in a Central Cy hospital. Allegedly a workshop accident. They're fine as long as there's ¤ on their account."]
+    var gear_head_abilities = [
+      ["Engineer", ""],
+      ["Prefers Machines", " You test KNOWLEDGE DR10 when you try to repair a piece of tech or to pilot a vehicle, drone or other machine."]
+    ]
+    var cyberslasher_memory = ["doing yoga and meditating.", "chugging a mix of carefully selected and measured stimulants.", "assiduously minding you three favourite plants.", "obsessively laying out your clothes and cleaning your gear.", 'doing recreational blood transfusion.', 'strengthening your inner daemon through a chaos magick ritual.']
+    var cyberslasher_abilities = [
+      ["Body and Soul", ""],
+      ["Not a Reader", ""],
+    ]
+    var cyberslasher_features = [
+      ['Ancient blade (d8)', "Claimed 1,000 souls. Or so you say. If you are the first to strike in combat you deal double damage."],
+      ['Steelcutter chainsaw (d8)', 'Absolutely not made for combat. When hitting for maximum damage, it gets stuck for d3 rounds, dealing damage automatically as long as it remains there.'],
+      ['Filament zweihänder (d10)', 'Makes everyone around you nervous. Crits hit with such a force that your target is thrown up in the air making them an easy target (-2DR) for anyone else.'],
+      ['Wire-wrapped baseball bat (d8)', 'Hooked up to a battery. You can supercharge it dealing +d4 damage to your target and to yourself.'],
+      ['Dual logans (d8)', "Make that sound when you pop 'em out. Once per fight, you can surprise a victim by popping out feet claws as well, attacking at DR8."],
+      ['GodDAMN flail (d8)', 'Spiked. Absolutely medieval. Crumples and shreds enemy armor a tier when you hit for 6+ damage.']
+    ]
+    var gang_goon_memory = ["was taken out by a rival gang. They think you are dead too.", 'got hauled off. Cops thought you were just a punk kid. Nobody ratted you out.', "betrayed you. Left you for dead in the gutter. They don't know you survived.", "wandered off into G0 with a newfound religious fervor. They left you and a few other skeptics behind.", "broke the only rules that separate a criminal from a monster. You left on bad terms.", "threw you out for breaking the code. They'll kill you if they see you again."]
+    var gang_goon_abilities = [
+      ["Small", ""],
+      ["Stealthy", "All PRESENCE and AGILITY tests are -2DR."],
+    ]
+    var gang_goon_features = [
+      ['Hits', 'When attacking from surprise, test AGILITY DR10. On a success, you hit once with a melee weapon, dealing normal damage +3.'],
+      ['Brawls', "Test AGILITY DR14 to sucker punch an opponent and give all allies -2DR on their next attack against the same enemy."],
+      ['BnE', "You have a talent for opening doors and getting inside buildings. Test AGILITY DR10 to pick any mechanical lock or KNOWLEDGE DR10 for any electronic lock. You begin with toolsets for both mechanical and electronic lockpicking."],
+      ['Fencing', 'You know potential buyers for almost anything. Once per day, you can test PRESENCE DR12 to remember the name of a person in Cy who might be willing and able to buy whatever illicit goods have fallen into your hands.'],
+      ['Cleanup', 'You know how to clean up evidence from a crime scene. Start with two DNA bombs and a large bottle of acid.'],
+      ['Assaults', 'You always liked it old school: both hands raised, running straight at the enemy. Whatever weapon you begin with, you start with one for each hand. You can use it to make a second attack each round at DR14.']
+    ]
+    var classes = ['Punk', 'Shunned Nanomancer', 'Burned Hacker', 'Discharged Corp Killer', 'Orphaned Gear Head', 'Renegade Cyberslasher', 'Forsaken Gang-Goon'];
+    var names = ["Ao", "Bell", "Blink", "Clock", "Cord", "Duzi", "Fase", "Fu", "Glam", "Glare", "Gul", "Hira", "Hla", "Ia", "Kei", "Key", "Lhamo", "Måne", "Mehr", "Mille", "Mpho", "Nur", "Phix", "Reeve", "Riz", "Shade", "Soma", "Tick", "Vac", "Wick", "Xleo", "Yann", "Zalec", "Zenit", "Zign", "Zola"];
+    var debitor = ['a crime syndicate.', 'an anonymous hacker collective.', "your distant relative, a corrupt politician's assistant.", "a gang run by your childhood bully.", "an unknown benefactor signing their message with YN.", "a death cult run by a board member from a powerful crop.", "a roadrunner clan who may request services and housing as long as the debt is unpaid.", "the owner of a seedy club or dive bar.", "a fixer with cops on their payroll.", "someone you trust, hospitalized with increasing medical bills.", "a semi-sentient AI cluster slowly building up its influence.", "a small but extremely violent SecCorp."]
+    const applications = [
+      ['WEIAN-Hammer', 'Nearby devices are triggered to perform their function, i.e. open/close unlocked doors, trigger sprinklers, start a camera recording, adjust the AC. You can trigger 5 devices as you choose over the next 5 rounds.'],
+      ['RCDOvrChargr', 'One target gets +d6 on all AGILITY and STRENGTH tests for KNOWLEDGE+3 rounds.'],
+      ['Nok_Nok', 'Open a nearby locked door. Failure may trigger an alarm.'],
+      ['False Flagger', 'Fake an alarm or the location of a triggered alarm. Any response to a real alarm is delayed by 2d6 minutes.'],
+      ['SigilTag', 'This location and nearby systems are tagged with your invisible sigil, enabling you to remotely activate Apps as if you were present. Only two locations can be tagged at the the same time.'],
+      ['>eRase', 'Cut or copy the latest 10 minutes of stored information from any type of recording/surveillance device.'],
+      ['De-fenc/der', 'Take control of a nearby turret, drone or similar defense system for d6 rounds.'],
+      ['Blood Snoot', 'Tracks down an enemy hacker and deals d4 damage each round until they pass a DR12 KNOWLEDGE test or die.'],
+      ['PathMapper', 'Uses nearby sensors, cameras and public information to create a detailed 3D map of the surrounding ~100m.'],
+      ['CTechAttak', 'd4 nearby cybered targets lose a total of 4d10 HP.'],
+      ['beaconworm', 'Place a tracker into a device or cybertech, enabling you to track its movements in real-time for the coming d4 weeks.'],
+      ['TrolleySkipper', 'Automated defenses have trouble tracking a person of your choice and prioritize other available targets.']
+    ]
+    const nano = [
+      ['Benevolent suturedroids', 'd2 people regain d10 HP each. A roll of 6 or greater comes with a free migraine.'],
+      ['Pineal gland stimulation', 'For d4 rounds, you can feel nearby data flows. You can hear a short conversation or message, sense the direction of a large data source or see the last few seconds of the most recently recorded information on a device.'],
+      ['Cosmic dust bots', 'An area of up to 20m in diameter is covered in dust and darkness for the duration of a fight or for 10 rounds. It tastes like stained, rusted metal.'],
+      ['Psychic scalpels', 'A living target of your choice tests PRESENCE DR14 or loses d10 HP. Their eyes bleed, and their ears ring.'],
+      ['Bent prism', 'A person becomes invisible and attacks and defends at DR6. The effect lasts for d6 rounds or until you are hurt.'],
+      ['Crawling carapace', "d4 targets gain -d6 armor for 4 rounds. Sometimes it feels as if this thing has a will of its own, but that's probably just your imagination."],
+      ['Chill of the void', "Up to d4 targets test TOUGHNESS DR14 or take d4 damage. The next round, the test is DR16 and the damage taken is d8. In the third and fourth rounds, the test is DR16 and the damage is 2d10. Frost covers the area, and snowflakes float in the air."],
+      ['To dust', 'Half a cubic meter of inorganic matter turns to dust. If the target is attached to or in the hands of a conscious creature, the test to activate the power is DR14.'],
+      ['Dead cell spirits', 'By consuming a handful of something dead, you can relive their last moments as if through a hazy distorted lens. Test PRESENCE DR14 to avoid taking d6 damage from ego death.'],
+      ['Lifetap', 'Choose two targets, one to heal and one to hurt. The healing target tests PRESENCE DR10 to heal d6 damage, while the second target is dealt d6 damage. Failure deals both targets d3 damage. A translucent, oozing bridge of blood and energy flows between the creatures, like oil in water.'],
+      ['Remote control', 'A target within spitting range must obey a single command. You will forever hear their wordless voice faintly echo in your mind.'],
+      ['Swarm trip', 'Your mind is transferred to a flying swarm of bacteria for 10 minutes. You can move through any crack or hole, and you can see whatever the swarm sees but not hear or interact with anything. If your body is killed or if you are not back at your body when the 10 minutes are up, you are stuck in the swarm forever.']
+    ]
+    const infestation = [
+      ['Alien crabs', 'Bugs crawl beneath your skin.', 'They burrow deeper, sending you to the ground, shaking with pain for d6 rounds.'],
+      ['Rot', 'Skin and flesh slowly rot.', "Large chunks of skin fall off. You take d6 damage and for the rest of the day, take an extra +2 damage from physical sources."],
+      ['Flora', 'Your skin is tinted green or purple. Plant matter grows over your wounds.', 'Flowers bloom from your mouth and scream violently for 10 minutes, after which they wither and die. During this time, you cannot speak and add +2DR to all your actions.'],
+      ['Third eye', 'It does not look human, that eye in the middle of your forehead.', 'Your sight shifts to the alien eye, revealing endless spectra of colors incomprehensible to the human mind. For d6 rounds, you have −4DR on all PRESENCE and KNOWLEDGE tests but +4DR on everything else.'],
+      ['Gills', 'You can breathe under water.', 'For d6 rounds, you cannot breathe air– test TOUGHNESS DR12 each round or suffer d4 damage.'],
+      ['Tubes', 'Thick, rubber-like hair that moves against the wind.', 'It starts to twist and turn around your face and arms, constraining you and d3 other nearby targets. +4DR to any attack or defense tests until either they break free by testing STRENGTH DR12 or someone helps them struggle loose.'],
+      ['Brittle bones', 'Your STRENGTH counts as one less for calculating carrying capacity.', 'A sudden vibration. The sound of shattering glass. Extreme pain. You take 1 point of damage for each item you are carrying.'],
+      ['Bloodthirst', 'You have to eat raw meat every 2-3 hours to survive.', 'You can’t control it anymore. It. Must. FEED. For d3 rounds, you can do nothing but attempt to bite or claw your way into the nearest person’s main artery.'],
+      ['Barbed skeleton', 'Sharp pieces of bone pierce the skin around your joints. You need to grind them down every two weeks, or they hinder your movements.', 'A growth spurt occurs, causing d4 damage, bleeding wounds and for the next hour, you have +2DR on all actions that require moving your limbs.'],
+      ['Radiance', 'A faint, eerie glow surrounds you. Geiger counters malfunction in your presence.', 'You flash brightly and deal d6 damage to yourself and up to d6 others in your close proximity.'],
+      ['Fading', 'You seem to fade in and out of existence', 'You disappear from sight and all sensors, but you are stuck in complete darkness for d4 rounds, after which you appear in a random location up to 50m from where you were.'],
+      ['Seed pods', 'Pea-sized seed pockets cover most of your body.', 'Seed shoot out of your body, weakening you for the next hour as the seeds rapidly grow back. All physical tests are +4DR for this hour.'],
+      ['Crystalline', 'Small buds of crystal cover your body.', 'They expand, immobilizing you as the crystal covers your entire body. You are unable to move for d3 rounds, and any damage taken during this time is tripled.'],
+      ['Nanite echo', 'Your eyes are yellow and red.', 'A semi-physical copy of yourself appears behind you and attempts to kill you or a nearby ally, whoever is weakest. The echo has d12 HP and deals d6 damage with its ghastly grasp.'],
+      ['Elongated fingers', 'Twice the length they used to be.', 'They painfully twist and bend. You are unable to use weapons or other items requiring a firm grip for the next d10x10 minutes.'],
+      ['Cold', 'Humidity burns to frost on your cold skin.', 'Your body temperature drops, and the air around you seems to freeze. You and everyone close to you act with +2DR for the next minute.'],
+      ['Rage', 'Skin pulled tight, your blood is boiling.', 'You lose control of your senses and attack anyone near you for d4 rounds. Whatever controls you prefers to use offensive Nano Powers first and your first second.'],
+      ['Bloated and moist', 'You swell up even more, and a greyish liquid seeps, from you orifices. +4DR on every test for 10 minutes.'],
+      ['Bestial, enlarged maw', 'It splits in two and grows even larger when triggered. You take d8 damage but can bite for d6 damage for the next hour.'],
+      ['Magnetic', "You attract metal objects. Usually only noticeable at a few centimeters' distance from your skin.", 'Small metal objects come flying towards you. Defend against metal melee weapons or bullets at +4DR for the next d6 rounds.']
+    ]
+    const cybertech = [
+      ['Retracting cyberclaws', 'd6 damage'],
+      ['Mule pocket', 'Big enough for a SmartGun<sup>TM</sup>'],
+      ['Subdermal shockers', 'd4 damage to anyone grabbing or hitting you in melee. +2DR to avoid electrical damage'],
+      ['Autocamo', 'Subdermal projection of ever-changing anti-facial-recognition patterns'],
+      ['Additional joints', '-2DR to all grapple-related tests, able to git into small space'],
+      ['Buzzeyes', 'Fly-like eyes with 360-vision capabilities'],
+      ['Strangler', 'Filament wire hidden in a finger, d6 damage each round when grappling'],
+      ['Skinhard', 'Hardened skin providing -d2 armor'],
+      ['Deserter fangs', 'DR10 bite attack, d6 damage. 2-in-6 chance of a free attack against you'],
+      ['SmartJack', 'Enhanced cerebral/RCD-links enabling you to use Smart<sup>TM</sup>-tech* to its full potential'],
+      ['Muscle-ups', '+1 on tests of raw strength such as crushing, lifting, pulling. +4 carrying capacity'],
+      ['PulseWires', '+1 AGILITY, PRESENCE, STRENGTH, or TOUGHNESS for 2 hours. Each pulse costs 75¤'],
+      ['BodyGun', 'Hidden, single-shot, large-caliber gun, 2d10 damage'],
+      ['Taurs', 'Horns, d4 damage'],
+      ['Sonic Blaster', 'Deafening sonic wave hitting up to d3 targets for d6 damage. Recharges automatically after 6 hours'],
+      ['Handy bot', 'Detachable drone hand with a 50m range'],
+      ['SmartHair', 'Change hairstyle at will'],
+      ['Skinslot', 'Extra App slot for your deck, hidden beneath you skin'],
+      ['Skeleplating', 'Skeleton covered in a thin metal layer, +10 HP'],
+      ['Brainbox', "Black box for your brain. As long as it remains intact at the point of death, the user's mind can be restarted in another brainbox. Cloning or otherwise getting a new body comes with additional costs and is highly illegal unless you already are rich beyond the reach of the law"]
+    ]
+    var style = ['0core', 'Acid panda', 'Beatie', 'Bitcrusher', 'Bloodsport', 'Cadavercore', 'Codefolk', 'Converter', 'Corpodrone', "Cosmopunk", "Cvlt", "Cybercrush", "CyPop", "Daemonista", "Deathbloc", "Doomtroop", "Ghoul", "Glitchmode", "Goregrinder", "Gutterscum", "Hexacore", "Hype street", "Kill Mode", "Meta", "Mimic", "Minimal", "Minotaur", "Mobwave", "Monsterwave", "Murdercore", "Nercopop", "Neurotripper", "NuFlesh", "NuGoth", "NuPrep", "Oceanwave", "OG", "Old-school cyberpunk", "Orbital", "Postlife", "Pyrocore", "Razormouth", "Retro metal", "Riot kid", "Robomode", "Roller bruiser", "Technoir", "Trad punk", "Wallgoth", "Waster"]
+    var feature = ["Abundance of rings", "All monochrome", "Artifical skin", "Beastlike", "Broken nose", "Burn scars", "Completely hairless", "Cosmetic gills", "Covered in tattoos", "Customized voicebox", "Disheveled look", "Dollfaced", "Dueling scars", "Elaborate hairstyle", "Enhanced cheekbones", "Fluorescent veins", "Forehead display", "Giant RCD helmet rig", "Glitterskin", "Glowing respirator", "Golden grillz", "Headband", "Heavy on the makeup", "Holomorphed face", "Interesting perfume", "Lace trimmings", "Laser branded", "Lipless-just teeth", "Mirror eyes", "More plastic than skin", "Necrotic face", "Nonhuman ears", "Palms covered in notes", "Pattern overdose", "Plenty of piercings", "Radiant eyebrows", "Rainbow haircut", "Ritual scarifications", "Robotlike", "Shoulder pads", "Subdermal implants", "Tons of jewelry", "Traditional amulets", "Translucent skin", "Transparent wear", "Unkempt hair", "Unnatural eyes", "UV-inked face", "VIP lookalike", "War paints"]
+    var wants = ["Anarchy", "Burn it all down", "Cash", "Drugs", "Enlightenment", "Fame", "Freedom", "Fun", "Justice", "Love", "Mayhem", "Power over others", "Revenge", "Safety for loved ones", "Save the world", "See others fail", "Self-control", "Self-actualization", "Success", "To kill"]
+    var quirk = ["Chainsmoker", "Chews on hair", "Compulsive swearing", "Constantly watching holos", "Coughs", "Fiddles with jewelry", "Flirty", "Gestures a lot", "Giggles inappropriately", "Hat/hood and shades, always", "Itchy", "Loudly chews gum", "Must tag every location", "Never look anyone in the eye", "Nosepicker", "Rapid blinking", "Reeks of lighter fluid", "Scratches facial scar", "Twitchy", "Wheezes"]
+    var obsession = ["Adrenaline", "AI poetry", "Ammonium chloride candy", "Ancient grimoires", "Arachnids", "Belts", "Blades", "Bones", "Customized cars", "Dronespotting", "Experimental stimuli", "Explosives", "Extravagant manicure", "Gauze and band-aids", "Gin", "Graffiti", "Hand-pressed synthpresso", "Handheld games", "Headphones", "History sims", "Interactive holo-ink", "Journaling", "Masks", "Medieval weaponry", "Microbots", "Mixing stimulants", "Model mech kits", "Obsolete tech", "Porcelain figurines", "Printed shirts", "Puppets", "Records", "Recursive synthesizers", "Shades", "Slacklining", "Sneakers", "Stim smokes", "Style hopping", "Tarot", "Taxidermy", "Trendy food", "Urban exploring", "Vampires vs. werewolves", "Vintage army jackets", "Vintage tv shows", "Virtuaflicks", "Virtuapals", "Voice modulators", "Watches", "Wigs"]
+    var role = ["Advertiser", "Anarchist", "Artisan", "Bureaucrat", "Busker", "Cleaner", "Cook", "Cult recruiter", "Customer service", "Dealer", "Developer", "Driver", "Drone pilot", "Entertainer", "Factory drone", "Fixer", "Fleshcarver", "Gig worker", "Goon", "Gunrunner", "Hacker", "Homeless", "Hospitality", "Influencer", "Killmatch champ", "Mechanic", "Medstaff", "Merchant", "Middle manager", "Muscle", "NuCap", "Politician", "Preacher", "Punk", "Reporter", "Researcher", "Retired", "Reaperdoc", "Roadrunner", "Salaryfolk", "Scammer", "Scientist", "SecOp", "Smuggler", "Soldier", "Specialist", "Student", "Techhead", "Test subject"]
+    var abilities = ["-3", "-3", "-3", "-3", "-2", "-2", "-1", "-1", "±0", "±0", "±0", "±0", "+1", "+1", "+2", "+2", "+3", "+3", "+3", "+3"]
+
+    function update_souls() {
+      document.getElementById("souls").innerHTML = '';
+      for (var i = 0, len = localStorage.length; i < len; i++ ) {
+        if (localStorage.key(i).slice(0, 2) != 'CY') { continue; }
+        var item = localStorage.getItem(localStorage.key(i)).split('&666&', 2);
+        document.getElementById("souls").innerHTML +=
+          "<a style='margin-right: 10px; background: black; color: white;' href='" + window.location.pathname + '?' + localStorage.key(i) + "'>" + item[0];
+      }
+      // if (localStorage.length == 0) { document.getElementById("saved_souls").style.display = "none"; return }
+    }
+
+    function removeSmallest(arr) {
+        var min = Math.min(...arr);
+        return arr.filter(e => e != min);
+    }
+
+    function two_unique(array) {
+      var x = frandom_item_from(array);
+      var y;
+      do {
+        y = frandom_item_from(array);
+      } while(x == y);
+
+      return [x, y]
+    }
+
+    function shuffle(array) {
+      var new_array = array.slice();
+      var m = new_array.length, t, i;
+
+      while (m) {
+        i = Math.floor(_r() * m--);
+        t = new_array[m];
+        new_array[m] = new_array[i];
+        new_array[i] = t;
+      }
+
+      return new_array;
+    }
+
+    function load_char() {
+      if (!window.location.search) { reseed(); klass = (d(6) - 1).toString(); return; }
+
+      var tag = window.location.search.split('&');
+      if (tag.length < 2) { return; }
+      if (tag[1].length != 2) { return; }
+      if (tag[2]) {
+        if (tag[2].length != 2) {return; }
+        total_checks = 2;
+        document.querySelectorAll('input[type=checkbox]')[tag[2][0]].checked = true;
+        document.querySelectorAll('input[type=checkbox]')[tag[2][1]].checked = true;
+        selected = tag[2].split('');
+      }
+
+      _seed = tag[0].slice(1,);
+      seed();
+      klass = tag[1];
+    }
+    load_char();
+    fixed_rolls_only();
+    generate();
+    if (check_edits(search())) {
+      load_edits(search());
+      document.getElementById("load").style.display = "inline";
+      document.getElementById("delete").style.display = "inline";
+    }
+    update_souls();
+
+    var checkboxes = document.querySelectorAll('input[type=checkbox]');
+    for(var i = 0, len = checkboxes.length; i < len; i++) {
+      checkboxes[i].addEventListener('change', function() {
+        if (this.checked) {
+          total_checks += 1;
+        } else {
+          total_checks -= 1;
+        }
+
+        if (total_checks > 2) {
+          alert("Stop fooling around vagrant, only select two!");
+          checkboxes.forEach(e => e.checked = false);
+          total_checks = 0;
+        }
+      })
+    }
+
+    document.getElementById("save").addEventListener('click', function() {
+      alert("Shareable link:\n\n" +
+              window.location.origin + window.location.pathname +
+                "?" +
+                  [_seed, klass.padStart(2, '0'), selected.join('')].join('&') +
+                    "\n\nNOTE: Other people will only see the base sheet and not any edits you made.");
+    })
+    document.getElementById("edit").addEventListener('click', function() {
+      if (history.pushState) {
+        var newurl = window.location.protocol + "//" +
+                     window.location.host +
+                     window.location.pathname + '?CY' +
+                     [_seed, klass.padStart(2, '0'), selected.join('')].join('&');
+        window.history.pushState({path:newurl},'',newurl);
+      }
+      enable_edits();
+      document.getElementById("klass").style.display = "none";
+      document.getElementById("prompt").style.display = "none";
+      document.getElementById("save").style.display = "none";
+      document.getElementById("edit").style.display = "none";
+      document.getElementById("save_edits").style.display = "inline";
+      document.getElementById("load").style.display = "inline";
+      document.getElementById("delete").style.display = "inline";
+      document.getElementById("stop").style.display = "inline";
+    })
+
+    document.getElementById("save_edits").addEventListener('click', function() {
+      save_edits(search());
+      update_souls();
+    })
+    document.getElementById("load").addEventListener('click', function() {
+      load_edits(search());
+      update_souls();
+    })
+    document.getElementById("delete").addEventListener('click', function() {
+      delete_edits(search());
+      update_souls();
+    })
+    document.getElementById("stop").addEventListener('click', function() {
+      disable_edits();
+      document.getElementById("klass").style.display = "block";
+      document.getElementById("prompt").style.display = klass == 0 ? "block" : "none";
+      document.getElementById("save").style.display = "inline";
+      document.getElementById("edit").style.display = "inline";
+      document.getElementById("save_edits").style.display = "none";
+      if (check_edits(search())) {
+        document.getElementById("load").style.display = "inline";
+        document.getElementById("delete").style.display = "inline";
+      } else {
+        document.getElementById("load").style.display = "none";
+        document.getElementById("delete").style.display = "none";
+      }
+      document.getElementById("stop").style.display = "none";
+    })
+
+    var buttons = document.querySelectorAll("#klass > button");
+    for(var i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener('click', function(e) {
+        if (e.target.value != 0) { document.getElementById("prompt").style.display = "none"; }
+        if (e.target.value == 0) { document.getElementById("prompt").style.display = "block"; }
+        klass = e.target.value;
+        history.pushState("", document.title, window.location.pathname);
+        document.getElementById("load").style.display = "none";
+        document.getElementById("delete").style.display = "none";
+        reseed();
+        generate();
+      });
+    }
+
+    function generate() {
+      document.getElementById("equipment").innerHTML = "";
+      document.getElementById("description").innerHTML = "";
+      document.getElementById("skills").innerHTML = "";
+      if (klass == 0) { document.getElementById("prompt").style.display = "block"; }
+      document.getElementById("class_name").innerHTML = classes[parseInt(klass)];
+      document.getElementById("name").innerHTML = names[(fd(6) - 1)*6 + fd(6) - 1];
+      selected = Array.from(document.querySelectorAll('input[type=checkbox]:checked')).map(e => e.value);
+
+      var stats = []
+      for(var i = 0; i < 5; i++) {
+        if (klass == 0) {
+          stats.push(selected.includes(i.toString()) ? removeSmallest([fd(6), fd(6), fd(6), fd(6)]).reduce((partialSum, a) => partialSum + a, 0) : fd(6) + fd(6) + fd(6))
+        } else {
+          stats.push(fd(6) + fd(6) + fd(6));
+        }
+      }
+      if (klass == 1) {
+        stats[2] += 2;
+        stats[4] -= 2;
+      } else if (klass == 2) {
+        stats[1] += 2;
+        stats[3] -= 1;
+        stats[4] -= 1;
+      } else if (klass == 3) {
+        stats[1] -= 1;
+        stats[2] -= 1;
+        stats[4] += 2;
+      } else if (klass == 4) {
+        stats[1] += 2;
+        stats[2] -= 2;
+      } else if (klass == 5) {
+        stats[1] -= 2;
+        stats[2] += 1;
+        stats[3] += 1;
+      } else if (klass == 6) {
+        stats[3] -= 2;
+      }
+
+      for(var i = 0; i < 5; i++) {
+        stats[i] = abilities[stats[i] - 1];
+      }
+      document.getElementById("agility").innerHTML   = stats[0];
+      document.getElementById("knowledge").innerHTML = stats[1];
+      document.getElementById("presence").innerHTML  = stats[2];
+      document.getElementById("strength").innerHTML  = stats[3];
+      document.getElementById("toughness").innerHTML = stats[4];
+
+      function agility() { return parseInt(stats[0]) || 0 }
+      function knowledge() { return parseInt(stats[1]) || 0 }
+      function presence() { return parseInt(stats[2]) || 0 }
+      function strength() { return parseInt(stats[3]) || 0 }
+      function toughness() { return parseInt(stats[4]) || 0 }
+
+      var hp_mod;
+      if (klass == 1) {
+        hp_mod = fd(4);
+      } else if (klass == 2 || klass == 6) {
+        hp_mod = fd(6);
+      } else if (klass == 5) {
+        hp_mod = fd(10);
+      } else {
+        hp_mod = fd(8);
+      }
+      var hp = Math.max(1, toughness() + hp_mod);
+      document.getElementById("hp").innerHTML = hp + "/" + hp;
+
+      var glitches;
+      if (klass == 4) {
+        glitches = [fd(4), 4];
+      } else if (klass == 5 || klass == 6) {
+        glitches = [fd(3), 3];
+      } else {
+        glitches = [fd(2), 2];
+      }
+      document.getElementById("glitches").innerHTML = glitches[0] + '/' + glitches[0];
+      document.getElementById("glitches_dice").innerHTML =  "(d" + glitches[1] + ")";
+
+      var creds = (fd(6) + fd(6))*10;
+      var debt = klass == 2 ? ((fd(6) + fd(6) + fd(6) + fd(6) + fd(6) + fd(6)) * 1000) : ((fd(6) + fd(6) + fd(6)) * 1000)
+
+      var weapons = [
+        [frandom_item_from(["Broken bottle", 'Shiv', 'Brick', 'Sharpened femur bone']), "d3 damage"],
+        ["Machete", "d6 damage"],
+        ["Throwing knives", "d4 damage, two attacks/round"],
+        ["Ancient revolver, " + fd(4) + " mags", "d8 damage"],
+        ["SmartGun<sup>TM</sup>, " + fd(4) + " mags", "d6a damage, d10a damage with SmartJack"],
+        ["Two small SMGs, "+ fd(4) + " mags", "d6a damage, only autofire"],
+        ['Shotgun, ' + fd(4) + ' mags', 'd8 damage'],
+        ['Monosword', 'd8 damage'],
+        ['Assault rifle, ' + fd(4) + ' mags', 'd8a damage'],
+        ['Assault rifle with a grenade launcher, ' + fd(4) + ' mags', 'd8a damage. Grenade: d6 damage up to d3 targets, ×2 damage vs. vehicles, turrets and mechs'],
+        ['Pulse rifle, ' + fd(4) + ' mags', 'd10a damage, ×2 damage vs. vehicles, turrets and mechs'],
+        ['Sniper rifle, ' + fd(4) + ' mags', '2d10 damage, x3 crit damage. When aiming for 2 rounds: -4DR and +3 damage']
+      ]
+      var armor = [
+        ["", ""],
+        ["StyleGuard", "-d2 damage, tier I. Looks just like clothes!"],
+        [frandom_item_from(['Heavy-duty jacket', 'Full kevlar']), "-d4 damage, tier 2."],
+        ["SmartWear", "-d4 damage, tier II. Equipped with Adrenachrome_HST auto-injector that fires if the wearer is Battered."],
+        ['Combat Armor', '-d6 damage, tier III. Equipped with Adrenachrome_HST auto-injector that fires if the wearer is Battered. +2DR on AGILITY test including Defense'],
+        ['EndGame-Class ExoSuit', '-d8 damage, tier IV. Equipped with multiple customizable injectors, jump jets, motorized joints and more. Not for sale. +4DR on AGILITY tests. Defense is +2DR, TOUGHNESS and STRENGTH are -2DR. Can jump 4x regular height and length.']
+      ]
+      var equip1 = [
+        ["Mirroshades", ""],
+        ["CWPC Metro card", fd(8) + ' trips left'],
+        ["Hangover-pills", "and a pounding headache"],
+        ["Pack of realTobacco<sup>TM</sup> smokes", ""],
+        ["Flashbangs(" + (fd(4) + 1) + ")", "TOUGHNESS DR14 or +4DR on everything for d4 rounds"],
+        ["Hand grenades(" + fd(4) + ")", "d6 damage to up to d3 targets. ×2 damage vs. vehicles, turrets and mechs"],
+        ["Old-school motorcycle", "fuel is hard to come by"],
+        ["Stolen Taxi", "Faked or removed transponders (may trigger alarms when entering high-sec areas)"],
+      ]
+
+      var equip2 = [
+        ["Paracord", "30m"],
+        ["Micro torch cutter", "power for " + fd(4) + " uses"],
+        ["Bio/ID scanner", "can track a person within 50m"],
+        ["Breathing mask", "provides oxygen in gas or underwater"],
+        ["Collapsible ladder", "5m"],
+        ["First aid kit", fd(3) + " uses (stops bleeding/infection and heals d6 HP)"],
+        ["Crowbar", "d4 damage"],
+        ["Superlube", ""],
+        ["Grappling-hook crossbow", "d4 damage"],
+        ["Small bottle of pulverized acid", ""],
+        ["Crime scene kit", ""],
+        ["", ""] // cybertech
+      ]
+      var equip3 = [
+        ["Red-juice stimjector", fd(4) + " doses (heals d10 HP)"],
+        ["Adrenachrome_HST", fd(3) + "doses (heals d6 HP, +1 on all abilities for d6 rounds then -1 until rest)"],
+        ['Drone Suit', 'slow but quiet flight (Attack/Defense +4DR while flying)'],
+        ["Small but jailbroken Robo-K9", "(" + (fd(6) + 2) + " HP, bite d4, only obeys you)"],
+        ["Tiny surveillance drone", '300m range'],
+        ['Optic camo suit', ''],
+        ['Noisemaker', 'floods 20m area with fake data for d4 minutes, making remote communication and surveillance impossible'],
+        ['Fake ID', 'good enough to pass a random check, might not work if they are looking for you'],
+        ['Visionvisor', 'Zoom, camera, heat/night vision, ultrasound'],
+        ["", ""], // cybertech
+        ['Cyberdeck', fd(3) + " slots"], //apps
+        ["", ""] // nano
+      ]
+
+      document.getElementById("capacity").innerHTML = strength() + 8;
+      document.getElementById("capacity_max").innerHTML = (strength() + 8) * 2;
+
+      var starting_items = [frandom_item_from(equip1)];
+      var starting_cyber = [], starting_apps = [], starting_nano = [];
+      var cybertech_dup = shuffle(cybertech.slice(0, (klass == 5 ? 12 : 10)));
+      var apps_dup = shuffle(applications);
+      var nano_dup = shuffle(nano);
+      var infestation_dup = shuffle(infestation);
+      var e2 = fd(12);
+      if (e2 == 12) {
+        starting_cyber.push(cybertech_dup.pop());
+      } else {
+        starting_items.push(equip2[e2 - 1]);
+      }
+      var e3 = fd(12);
+      if (e3 == 10) {
+        starting_cyber.push(cybertech_dup.pop());
+      } else if (e3 == 11) {
+        starting_apps = [apps_dup.pop(), apps_dup.pop()];
+      } else if (e3 == 12) {
+        starting_nano.push(nano_dup.pop());
+      } else {
+        starting_items.push(equip3[e3 - 1]);
+      }
+      if (klass == 1) {
+        starting_nano.push(nano_dup.pop());
+        for(var i = 0; i < (starting_cyber.length + starting_apps.length); i++) {
+          starting_nano.push(nano_dup.pop());
+        }
+        starting_cyber = [], starting_apps = [];
+      }
+      if (klass == 2) {
+        starting_items.push(['Cyberdeck+', (knowledge() + 4) + " slots"]);
+        starting_apps.push(apps_dup.pop());
+        for(var i = 0; i < (starting_cyber.length + starting_nano.length); i++) {
+          starting_apps.push(apps_dup.pop());
+        }
+        starting_cyber = [], starting_nano = [];
+      }
+      if (klass == 5) {
+        starting_cyber.push(cybertech_dup.pop());
+        for(var i = 0; i < (starting_apps.length + starting_nano.length); i++) {
+          starting_cyber.push(cybertech_dup.pop());
+        }
+        starting_apps = [], starting_nano = [];
+      }
+
+      var starting_weapon;
+      if (klass == 1 || klass == 6) {
+        starting_weapon = frandom_item_from(weapons.slice(0, 6));
+      } else if (klass == 2) {
+        starting_weapon = frandom_item_from(weapons.slice(0, 8));
+      } else {
+        starting_weapon = frandom_item_from(weapons);
+      }
+
+      var starting_armor;
+      if (klass == 1 || klass == 2 || klass == 6) {
+        starting_armor = frandom_item_from(armor.slice(0, 2));
+      } else if (klass == 3) {
+        starting_armor = frandom_item_from(armor.slice(1, 5));
+      } else {
+        starting_armor = frandom_item_from(armor.slice(0, 3));
+      }
+
+      var skills = [];
+      if (klass == 0) {
+        if (selected[0]) { skills.push(base_skills[selected[0]]); }
+        if (selected[1]) { skills.push(base_skills[selected[1]]); }
+      } else if (klass == 1) {
+        shunned_nanomancer_abilites.forEach(x => skills.push(x));
+        skills.push(frandom_item_from(shunned_nanomancer_features));
+      } else if (klass == 2) {
+        burned_hacker_abilities.forEach(x => skills.push(x));
+        starting_apps.push(frandom_item_from(burned_hacker_features));
+      } else if (klass == 3) {
+        corp_killer_abilities.forEach(x => skills.push(x));
+        var roll = fd(6);
+        if (roll == 3) {
+          starting_items.push(
+            ["Hand grenades(" + (toughness() + 5) + ")", "d6 damage to up to d3 targets. ×2 damage vs. vehicles, turrets and mechs"],
+          )
+          starting_items.push(
+            ["Flashbangs(5)", "TOUGHNESS DR14 or +4DR on everything for d4 rounds"]
+          )
+        }
+        skills.push(corp_killer_features[roll - 1]);
+      } else if (klass == 4) {
+        gear_head_abilities.forEach(x => skills.push(x));
+        skills.push(frandom_item_from([['Semi-Autonomous Quad-Bot', 'Tools including a health scanner and torch. Loyal but with an attitude. Bites for d4 damage, ' + (knowledge() + fd(8)) + " HP and -d2 armor."],
+      ['Flying Drone', 'Follows basic commands. ' + (knowledge() + fd(12)) + " HP, -d6 armor, and an assault rifle (d8a)."],
+      ['Three Fly-Sized Surveillance Drones', 'Equipped with a camera, 3D scanner and heat sensor respectively. Incredibly fragile. An expected corporate espionage tool.'],
+      ['Prototype Crawler Drone', 'Laser turret (d12a). ' + (knowledge() + fd(10)) + ' HP, -d6 armor. Can follow advanced commands. Needs a hard reboot after dealing max damage.'],
+      ['Armored Van', "Five seats and lined with junk. Has a smuggler's hatch underneath it all. once a day, test KNOWLEDGE DR8 to find the spare part you need to fix any broken tech."],
+      ['Walking Weapons Platform', 'Nigh-indestructible, large enough to ride and janky as hell. Anti-material battery (2d10) destroys most walls, doors and vehicles with a shot. Has a 2-in-6 chance of breaking down after firing. Takes d4 hours to repair.']]));
+      } else if (klass == 5) {
+        cyberslasher_abilities.forEach(x => skills.push(x));
+        skills.push(frandom_item_from(cyberslasher_features));
+      } else if (klass == 6) {
+        gang_goon_abilities.forEach(x => skills.push(x));
+        var roll = fd(6);
+        if (roll == 3) {
+          starting_items.push(['Lockpicks', 'for mechanical locks']);
+          starting_items.push(['Lockpicks', 'for electronic locks']);
+        } else if (roll == 5) {
+          starting_items.push(['DNA bomb (2)', 'fills a 10m area with mixed DNA matter']);
+          starting_items.push(["Large bottle of pulverized acid", ""])
+        }
+        skills.push(gang_goon_features[roll - 1]);
+      }
+      for(var i = 0; i < skills.length; i++) {
+        document.getElementById("skills").innerHTML += "<br><b style='background: #aaa; color: black'>" + skills[i][0] + "</b>";
+        if (skills[i][1] != '') {
+          document.getElementById("skills").innerHTML += "<br>" + skills[i][1] + "<br>";
+        }  else {
+          document.getElementById("skills").innerHTML += "<br>"
+        }
+      }
+      document.getElementById("skills").innerHTML += "<br>"
+
+      document.getElementById("equipment").innerHTML += "<li>RetinalComDevice<em class='smaller'> your interface with technology</em></li>";
+      document.getElementById("equipment").innerHTML += "<li>" +
+                                                        starting_weapon[0] +
+                                                        "<em class='smaller'>&nbsp;" +
+                                                        starting_weapon[1] +
+                                                        "</em></li>";
+      if (starting_armor[0] != "") {
+        document.getElementById("equipment").innerHTML += "<li>" +
+                                                          starting_armor[0] +
+                                                          "<em class='smaller'>&nbsp;" +
+                                                          starting_armor[1] +
+                                                          "</em></li>";
+      }
+      for(var i = 0; i < starting_items.length; i++) {
+        document.getElementById("equipment").innerHTML += "<li>" +
+                                                          starting_items[i][0] +
+                                                          "<em class='smaller'>&nbsp;" +
+                                                          starting_items[i][1] +
+                                                          "</em></li>";  
+      }
+
+      function special_items(type, array) {
+        var s_el = document.getElementById(type);
+        var s_el_inner = s_el.querySelector('.edit');
+        s_el_inner.innerHTML = '';
+        for(var i = 0; i < array.length; i++) {
+          s_el_inner.innerHTML += "<br><b style='background: #aaa; color: black'>" + array[i][0] + "</b>";
+          s_el_inner.innerHTML += "<br>" + array[i][1] + "<br>";
+          if (type == 'nanos') {
+            var infest = infestation_dup.pop();
+            s_el_inner.innerHTML += "<b style='background: black;'>INFESTATION: " + infest[0] + "</b> <em>" + infest[1] + "</em><br>";
+          }
+        }
+        s_el_inner.innerHTML += "<br>";
+        s_el.style.display = array.length ? 'inline-block' : 'none';
+      }
+      special_items('tech', starting_cyber);
+      special_items('apps', starting_apps);
+      special_items('nanos', starting_nano);
+      document.getElementById("equipment").innerHTML += "<li>" + creds + "¤<em class='smaller'> on an anonymous credstick</em></li>";
+
+      var memory;
+      if (klass == 0) {
+      } else if (klass == 1) {
+        memory = "You got infected when " + frandom_item_from(shunned_nanomancer_memory);
+      } else if (klass == 2) {
+        memory = "On a deep dive of the Cyber Cosmos, you've found a terrible truth that " + frandom_item_from(burned_hacker_memory);
+      } else if (klass == 3) {
+        memory = "You were deployed " + frandom_item_from(corp_killer_memory);
+      } else if (klass == 4) {
+        memory = "You trusted them, and then they " +frandom_item_from(gear_head_memory);
+      } else if (klass == 5) {
+        memory = "You try to start each day with " + frandom_item_from(cyberslasher_memory);
+      } else if (klass == 6) {
+        memory = "Your gang " + frandom_item_from(gang_goon_memory);
+      }
+      document.getElementById("description").innerHTML += "<p>STYLE:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + frandom_item_from(style) + "<br>" +
+                                                          "FEATURE:&nbsp;&nbsp;&nbsp;" + frandom_item_from(feature) + "<br>" +
+                                                          "WANTS:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + frandom_item_from(wants) + "<br>" +
+                                                          "QUIRK:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + frandom_item_from(quirk) + "<br>" +
+                                                          "OBSESSION: " + frandom_item_from(obsession) + "</p>" 
+      document.getElementById("description").innerHTML += "<p>" + memory + "</p>";
+      document.getElementById("description").innerHTML += "<p>" + descriptions[parseInt(klass)] + "</p>";
+      document.getElementById("description").innerHTML += "<p>Watch your back, you have a debt of " + debt + "¤ to " + frandom_item_from(debitor) + "</p>";
+    }
+  </script>
+</body>
+</html>
