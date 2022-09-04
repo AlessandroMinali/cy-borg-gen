@@ -1,6 +1,3 @@
-function hash() {
-  return window.location.hash.slice(1,);
-}
 function search() {
  return window.location.search.slice(1,);
 }
