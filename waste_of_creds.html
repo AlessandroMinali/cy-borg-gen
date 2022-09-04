@@ -83,7 +83,7 @@ box-shadow: inset -1px -1px #0a0a0a,inset 1px 1px #fff,inset -2px -2px grey,inse
         </label>
       </div>
     </form>
-    <b>AFTER SELECTING, CLICK <em>BEGGAR</em> AGAIN TO REROLL WITH CHANGES</b>
+    <b>AFTER SELECTING, CLICK <em>PUNK</em> AGAIN TO REROLL WITH CHANGES</b>
   </div>
   <div id=character>
     <button id="save">Share</button>
@@ -261,7 +261,7 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
       ['De-fenc/der', 'Take control of a nearby turret, drone or similar defense system for d6 rounds.'],
       ['Blood Snoot', 'Tracks down an enemy hacker and deals d4 damage each round until they pass a DR12 KNOWLEDGE test or die.'],
       ['PathMapper', 'Uses nearby sensors, cameras and public information to create a detailed 3D map of the surrounding ~100m.'],
-      ['CTechAttak', 'd4 nearby cybered targets lose a total of 4d10 HP.'],
+      ['CTechAttak', 'd3 nearby cybered targets lose a total of 4d10 HP.'],
       ['beaconworm', 'Place a tracker into a device or cybertech, enabling you to track its movements in real-time for the coming d4 weeks.'],
       ['TrolleySkipper', 'Automated defenses have trouble tracking a person of your choice and prioritize other available targets.']
     ]
@@ -647,6 +647,7 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
       if (e3 == 10) {
         starting_cyber.push(cybertech_dup.pop());
       } else if (e3 == 11) {
+        starting_items.push(equip3[e3 - 1]);
         starting_apps = [apps_dup.pop(), apps_dup.pop()];
       } else if (e3 == 12) {
         starting_nano.push(nano_dup.pop());
