@@ -564,7 +564,7 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
       document.getElementById("glitches_dice").innerHTML =  "(d" + glitches[1] + ")";
 
       var creds = (fd(6) + fd(6))*10;
-      var debt = klass == 2 ? ((fd(6) + fd(6) + fd(6) + fd(6) + fd(6) + fd(6)) * 1000) : ((fd(6) + fd(6) + fd(6)) * 1000)
+      var debt = fd(6) + fd(6) + fd(6) + (klass == 2 ? (fd(6) + fd(6) + fd(6)) : 0)
 
       var weapons = [
         [frandom_item_from(["Broken bottle", 'Shiv', 'Brick', 'Sharpened femur bone']), "d3 damage"],
@@ -591,7 +591,7 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
       var equip1 = [
         ["Mirroshades", ""],
         ["CWPC Metro card", fd(8) + ' trips left'],
-        ["Hangover-pills", "and a pounding headache"],
+        ["Hangover-pills", "and a pounding headache they can't cure"],
         ["Pack of realTobacco<sup>TM</sup> smokes", ""],
         ["Flashbangs(" + (fd(4) + 1) + ")", "TOUGHNESS DR14 or +4DR on everything for d4 rounds"],
         ["Hand grenades(" + fd(4) + ")", "d6 damage to up to d3 targets. ×2 damage vs. vehicles, turrets and mechs"],
@@ -813,7 +813,7 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
                                                           "OBSESSION: " + frandom_item_from(obsession) + "</p>" 
       document.getElementById("description").innerHTML += "<p>" + memory + "</p>";
       document.getElementById("description").innerHTML += "<p>" + descriptions[parseInt(klass)] + "</p>";
-      document.getElementById("description").innerHTML += "<p>Watch your back, you have a debt of " + debt + "¤ to " + frandom_item_from(debitor) + "</p>";
+      document.getElementById("description").innerHTML += "<p>Watch your back, you have a debt of " + debt + "k¤ to " + frandom_item_from(debitor) + "</p>";
     }
   </script>
 </body>
