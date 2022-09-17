@@ -564,7 +564,11 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
       document.getElementById("glitches_dice").innerHTML =  "(d" + glitches[1] + ")";
 
       var creds = (fd(6) + fd(6))*10;
-      var debt = fd(6) + fd(6) + fd(6) + (klass == 2 ? (fd(6) + fd(6) + fd(6)) : 0)
+      if (klass == 2) {
+        var debt = fd(10) + fd(10) + fd(10) + fd(10) + fd(10) + fd(10);
+      } else {
+        var debt = fd(6) + fd(6) + fd(6);
+      }
 
       var weapons = [
         [frandom_item_from(["Broken bottle", 'Shiv', 'Brick', 'Sharpened femur bone']), "d3 damage"],
