@@ -28,13 +28,21 @@
       background: silver;
       box-shadow: inset -1px -1px #0a0a0a,inset 1px 1px #fff,inset -2px -2px grey,inset 2px 2px #dfdfdf;
     }
+    #svg {
+      -webkit-filter: invert(100%); /* safari 6.0 - 9.0 */
+              filter: invert(100%);
+    }
   </style>
 </head>
 
 <body>
-  <h1 style="margin: 0px;">
+  <h1 style="margin: 0px; text-align: center;">
     <a style='text-decoration: none; color: yellow;' href='./waste_of_creds.html'>
-      WASTE OF CREDS - A CY_BORG TECH_SLAVE SPAWNER
+      WASTE OF CREDS
+      <br>
+      A TECH_SLAVE SPAWNER
+      <br>
+      <img id='svg' src="CompWith_CY_BORG_horiz.svg" width=150 />
     </a>
   </h1>
   <div id="klass">
@@ -59,26 +67,26 @@
           <span class="smaller">Sneak, dodge, drive, autofire</span>
         </label>
         <br>
-        <input type="checkbox" id="pre" name="knowledge" value=1>
+        <input type="checkbox" id="kno" name="knowledge" value=1>
         <label for="kno">
           <b>KNOWLEDGE</b>
           <span class="smaller">Science, use tech or App</span>
         </label>
         <br>
-        <input type="checkbox" id="pre" name="presence" value=1>
+        <input type="checkbox" id="pre" name="presence" value=2>
         <label for="pre">
           <b>PRESENCE</b>
           <span class="smaller">Snipe/shoot, use Nane, charm</span>
         </label>
       </div>
       <div style="display: inline-block; vertical-align: top;">
-        <input type="checkbox" id="str" name="strength" value=2>
+        <input type="checkbox" id="str" name="strength" value=3>
         <label for="str">
           <b>STRENGTH</b>
           <span class="smaller">Strike, grapple, lift, throw</span>
         </label>
         <br>
-        <input type="checkbox" id="tou" name="toughness" value=3>
+        <input type="checkbox" id="tou" name="toughness" value=4>
         <label for="tou">
           <b>TOUGHNESS</b>
           <span class="smaller">Resistances, survive falling</span>
@@ -119,21 +127,19 @@
     </div>
     <br>
     <br>
-    <div style="display: inline-block; max-width: 500px; vertical-align: top;">
+    <div class='top' style="display: inline-block; vertical-align: top;">
       <div id="ablities"><b style="background: yellow; color: black;">ABILITIES</b></div>
       <pre style="margin-bottom: 0px;">
-  <em>AGILITY</em>      <span id="agility" class="edit"></span>   Sneak, dodge, drive, autofire
-  <em>KNOWLEDGE</em>    <span id="knowledge" class="edit"></span>   Science, use tech or App
-  <em>PRESENCE</em>     <span id="presence" class="edit"></span>   Snipe/shoot, use Nano, charm
-  <em>STRENGTH</em>     <span id="strength" class="edit"></span>   Strike, grapple, lift, throw
-  <em>TOUGHNESS</em>    <span id="toughness" class="edit"></span>   Resistances, survive falling
+  <em>AGILITY</em>     <span id="agility" class="edit"></span>   Sneak, dodge, drive, autofire
+  <em>KNOWLEDGE</em>   <span id="knowledge" class="edit"></span>   Science, use tech or App
+  <em>PRESENCE</em>    <span id="presence" class="edit"></span>   Snipe/shoot, use Nano, charm
+  <em>STRENGTH</em>    <span id="strength" class="edit"></span>   Strike, grapple, lift, throw
+  <em>TOUGHNESS</em>   <span id="toughness" class="edit"></span>   Resistances, survive falling
     </pre>
       <div>
         <b style="background: yellow; color: black;">EQUIPMENT</b>
         <span class="smaller" style="float: right; background: #aaa; color: black; margin-top: 3px; margin-right: 10px;">
-          CAPACITY
-          <span id="capacity" class="edit"></span>+ items then STRENGTH and AGILITY DR+2. Max
-          <span id="capacity_max" class="edit"></span>
+          CAPACITY STR+8 items. Max 2*(STR+8) items.
         </span>
         <ul id="equipment" class="edit">
         </ul>
@@ -154,10 +160,12 @@
       </div>
       <div id="nanos" style='display: none;'>
         <span style="background: yellow; color: black;"><b>NANO</b> PRESENCE DR12</span>
+        <span style="background: yellow; color: black;"> FUMBLE <wrapper class="edit">1</wrapper></span>
         <div style="padding: 0px 20px 0px  0px;" class="edit"></div>
       </div>
       <div id="apps" style='display: none;'>
         <span style="background: yellow; color: black;"><b>APPS</b> KNOWLEDGE DR12</span>
+        <span style="background: yellow; color: black;"> FUMBLE <wrapper class="edit">1</wrapper></span>
         <div style="padding: 0px 20px 0px  0px;" class="edit"></div>
       </div>
     </div>
@@ -435,7 +443,6 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
       }
       enable_edits();
       document.getElementById("klass").style.display = "none";
-      document.getElementById("prompt").style.display = "none";
       document.getElementById("save").style.display = "none";
       document.getElementById("edit").style.display = "none";
       document.getElementById("save_edits").style.display = "inline";
@@ -459,7 +466,6 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
     document.getElementById("stop").addEventListener('click', function() {
       disable_edits();
       document.getElementById("klass").style.display = "block";
-      document.getElementById("prompt").style.display = klass == 0 ? "block" : "none";
       document.getElementById("save").style.display = "inline";
       document.getElementById("edit").style.display = "inline";
       document.getElementById("save_edits").style.display = "none";
@@ -476,8 +482,6 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
     var buttons = document.querySelectorAll("#klass > button");
     for(var i = 0; i < buttons.length; i++) {
       buttons[i].addEventListener('click', function(e) {
-        if (e.target.value != 0) { document.getElementById("prompt").style.display = "none"; }
-        if (e.target.value == 0) { document.getElementById("prompt").style.display = "block"; }
         klass = e.target.value;
         history.pushState("", document.title, window.location.pathname);
         document.getElementById("load").style.display = "none";
@@ -491,10 +495,12 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
       document.getElementById("equipment").innerHTML = "";
       document.getElementById("description").innerHTML = "";
       document.getElementById("skills").innerHTML = "";
-      if (klass == 0) { document.getElementById("prompt").style.display = "block"; }
       document.getElementById("class_name").innerHTML = classes[parseInt(klass)];
       document.getElementById("name").innerHTML = names[(fd(6) - 1)*6 + fd(6) - 1];
       selected = Array.from(document.querySelectorAll('input[type=checkbox]:checked')).map(e => e.value);
+      if (selected.length == 0) {
+        selected = two_unique(Array.from(document.querySelectorAll('input[type=checkbox]'))).map(e => e.value);
+      }
 
       var stats = []
       for(var i = 0; i < 5; i++) {
@@ -562,7 +568,7 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
       } else {
         glitches = [fd(2), 2];
       }
-      document.getElementById("glitches").innerHTML = glitches[0] + '/' + glitches[0];
+      document.getElementById("glitches").innerHTML = glitches[0];
       document.getElementById("glitches_dice").innerHTML =  "(d" + glitches[1] + ")";
 
       var creds = (fd(6) + fd(6))*10;
@@ -633,9 +639,6 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
         ['Cyberdeck', fd(3) + " slots"], //apps
         ["", ""] // nano
       ]
-
-      document.getElementById("capacity").innerHTML = strength() + 8;
-      document.getElementById("capacity_max").innerHTML = (strength() + 8) * 2;
 
       var starting_items = [frandom_item_from(equip1)];
       var starting_cyber = [], starting_apps = [], starting_nano = [];
@@ -779,7 +782,7 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
 
       function special_items(type, array) {
         var s_el = document.getElementById(type);
-        var s_el_inner = s_el.querySelector('.edit');
+        var s_el_inner = s_el.querySelector('div.edit');
         s_el_inner.innerHTML = '';
         for(var i = 0; i < array.length; i++) {
           s_el_inner.innerHTML += "<br><b style='background: #aaa; color: black'>" + array[i][0] + "</b>";
