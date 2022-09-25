@@ -81,7 +81,7 @@
         <input type="checkbox" id="tou" name="toughness" value=3>
         <label for="tou">
           <b>TOUGHNESS</b>
-          <span class="smaller">Survive falling, poison, and elements</span>
+          <span class="smaller">Resistances, survive falling</span>
         </label>
       </div>
     </form>
@@ -126,7 +126,7 @@
   <em>KNOWLEDGE</em>    <span id="knowledge" class="edit"></span>   Science, use tech or App
   <em>PRESENCE</em>     <span id="presence" class="edit"></span>   Snipe/shoot, use Nano, charm
   <em>STRENGTH</em>     <span id="strength" class="edit"></span>   Strike, grapple, lift, throw
-  <em>TOUGHNESS</em>    <span id="toughness" class="edit"></span>   Survive falling, poison, and elements
+  <em>TOUGHNESS</em>    <span id="toughness" class="edit"></span>   Resistances, survive falling
     </pre>
       <div>
         <b style="background: yellow; color: black;">EQUIPMENT</b>
@@ -566,7 +566,11 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
       document.getElementById("glitches_dice").innerHTML =  "(d" + glitches[1] + ")";
 
       var creds = (fd(6) + fd(6))*10;
-      var debt = fd(6) + fd(6) + fd(6) + (klass == 2 ? (fd(6) + fd(6) + fd(6)) : 0)
+      if (klass == 2) {
+        var debt = fd(10) + fd(10) + fd(10) + fd(10) + fd(10) + fd(10);
+      } else {
+        var debt = fd(6) + fd(6) + fd(6);
+      }
 
       var weapons = [
         [frandom_item_from(["Broken bottle", 'Shiv', 'Brick', 'Sharpened femur bone']), "d3 damage"],
@@ -737,8 +741,8 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
           starting_items.push(['Lockpicks', 'for mechanical locks']);
           starting_items.push(['Lockpicks', 'for electronic locks']);
         } else if (roll == 5) {
-          starting_items.push(['DNA bomb (2)', 'fills a 10m area with mixed DNA matter']);
-          starting_items.push(["Large bottle of pulverized acid", ""])
+          starting_items.push(['DNA bomb(2)', 'fills a 10m area with mixed DNA matter']);
+          starting_items.push(["Large bottle of pulverized acid", ""]);
         }
         skills.push(gang_goon_features[roll - 1]);
       }
