@@ -29,13 +29,18 @@
       max-width: 50px;
       flex: 1;
     }
+    .col-max {
+      flex: 1;
+    }
     input[type=text] {
       line-height: inherit;
       padding-left: 6px;
       max-width: 25px;
+      border: none;
     }
     #armor, #weapon {
-      max-width: 280px;
+      width: 100%;
+      /*max-width: 280px;*/
     }
     textarea {
       word-spacing: 1.5px;
@@ -95,11 +100,11 @@
       <div class='wrapper'>
         <div>
           <fieldset>
-            <legend>Today's mood</legend>
+            <legend>Tracker</legend>
             <h3>Tab Content</h3>
           </fieldset>
           <fieldset>
-            <legend>Today's mood</legend>
+            <legend>Subject</legend>
             <h3>Tab Content</h3>
           </fieldset>
         </div>
@@ -107,7 +112,7 @@
           <p id='goon'></p>
         </div>
       </div>
-      <hr>
+      <hr style='margin-bottom: 12px;'>
       <div class='wrapper'>
         <div>
           <div class="field-row">
@@ -122,21 +127,15 @@
             <label class='col'>MORALE</label>
             <input class='col' id="morale" type="text" />
           </div>
-          <div class="field-row-stacked">
-            <div class="field-row">
-              <label >ARMOR</label>
-              <input style='visibility: hidden;' />
-            </div>
-            <textarea id="armor"></textarea>
+          <div class="field-row" style='align-items: start;'>
+            <label class='col' style='padding-top: 5px;'>ARMOR</label>
+            <textarea class='col-max 'id="armor"></textarea>
           </div>
-          <div class="field-row-stacked">
-            <div class="field-row">
-              <label >ARSENAL</label>
-              <input style='visibility: hidden;' />
-            </div>
-            <textarea id="weapon"></textarea>
-            <p id='vehicle'><b>*x2 damage vs. vehicles, turrets and mechs.</b></p>
+          <div class="field-row" style='align-items: start;'>
+            <label class='col' style='padding-top: 5px;'>ARSENAL</label>
+            <textarea class='col-max' id="weapon"></textarea>
           </div>
+          <p id='vehicle'><b>*x2 damage vs. vehicles, turrets and mechs.</b></p>
         </div>
         <div></div>
       </div>
@@ -323,7 +322,7 @@
   }
   function expand_textarea(el) {
     el.style.height = 0;
-    el.style.height = (el.scrollHeight) + "px";
+    el.style.height = (el.scrollHeight) + 3 + "px";
   }
 
   function get_damage(number=0) {
@@ -346,8 +345,11 @@
     if (typeof weapon == 'object') { main = weapon[0]; flag = true; }
     var el = document.getElementById('weapon');
 
-    el.innerHTML += main.toUpperCase();
-    if (main == 'SMG') { el.insertAdjacentHTML("afterbegin", 'μ');}
+    if (main[0] == 'μ') {
+      el.insertHTML += 'μ'+ main.slice(1,).toUpperCase();
+    } else {
+      el.innerHTML += main.toUpperCase();
+    }
     if (damage) { el.innerHTML += (' D' + damage).toUpperCase(); }
     el.innerHTML += "\n";
 
