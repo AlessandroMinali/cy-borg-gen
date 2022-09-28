@@ -7,6 +7,7 @@
   <meta name="description" content="CY_THREAT - A CY_BORG Enemy Generator">
   <link rel="stylesheet" href="https://unpkg.com/xp.css/dist/98.css" />
   <link rel="stylesheet" href="menu.css" />
+  <link rel="stylesheet" href="sonar.css" />
   <style type="text/css">
     .wrapper {
       display: flex;
@@ -14,11 +15,10 @@
     }
     .wrapper > div {
       flex: 1 1 150px;
+      margin: 0px 10px;
     }
     #goon {
-      font-size: 200%;
-      padding:  10px 20px;
-
+      font-size: 150%;
     }
     #special {
       font-weight: bold;
@@ -40,7 +40,6 @@
     }
     #armor, #weapon {
       width: 100%;
-      /*max-width: 280px;*/
     }
     textarea {
       word-spacing: 1.5px;
@@ -59,58 +58,98 @@
       margin-top: 3px;
     }
     .window { 
-      max-width: 600px;
+      max-width: 700px;
+    }
+    .img_container {
+      width: 100%;
+      border: 1px solid grey;
+      overflow: hidden;
+    }
+    #map, #profile {
+      width: 100%;
+      transition: transform 0.5s linear;
+      transform: scale(1.1);
+      animation: flickerAnimation 0.01s 33;
+    }
+    #map:hover {
+      transform: scale(1.15);
+    }
+    #profile {
+
+      /*transform: scale(2.1) translate(-25%);*/
+    }
+    @keyframes flickerAnimation {
+      0%   { opacity:1; }
+      50%  { opacity:0.5; }
+      100% { opacity:1; }
+    }
+    @-o-keyframes flickerAnimation{
+      0%   { opacity:1; }
+      50%  { opacity:0.7; }
+      100% { opacity:1; }
+    }
+    @-moz-keyframes flickerAnimation{
+      0%   { opacity:1; }
+      50%  { opacity:0.7; }
+      100% { opacity:1; }
+    }
+    @-webkit-keyframes flickerAnimation{
+      0%   { opacity:1; }
+      50%  { opacity:0.7; }
+      100% { opacity:1; }
     }
   </style>
 </head>
 <body>
   <div class="window">
     <div class="title-bar">
-      <div class="title-bar-text">A Window With Tabs and Groups</div>
+      <div class="title-bar-text">United Citadel Security PRISM//v0.12.869</div>
       <div class="title-bar-controls">
         <button aria-label="Minimize"></button>
         <button aria-label="Maximize"></button>
         <button aria-label="Close"></button>
       </div>
     </div>
+    <ul role="menubar">
+      <li role="menuitem" tabindex="0" aria-haspopup="true">
+        <span style='text-decoration: underline'>F</span>ile
+        <ul role="menu">
+          <li role="menuitem"><a href="#menu"><span style='text-decoration: underline'>S</span>ave</a></li>
+          <li role="menuitem"><a href="#menu">Exit</a></li>
+        </ul>
+      </li>
+      <li role="menuitem" tabindex="0" aria-haspopup="true">
+        <span style='text-decoration: underline'>S</span>ettings
+        <ul role="menu">
+          <li role="menuitem"><a href="#menu"><span style='text-decoration: underline'>A</span>djust search</a></li>
+        </ul>
+      </li>
+      <li role="menuitem" tabindex="0" aria-haspopup="true">
+        <span style='text-decoration: underline'>H</span>elp
+        <ul role="menu">
+          <li role="menuitem"><a href="#menu"><span style='text-decoration: underline'>V</span>iew Help</a></li>
+          <li role="menuitem"><a href="#menu"><span style='text-decoration: underline'>A</span>bout</a></li>
+        </ul>
+      </li>
+    </ul>
+    <hr style='margin-top: 0px;'>
     <div class="window-body">
-      <ul role="menubar">
-        <li role="menuitem" tabindex="0" aria-haspopup="true">
-          <span style='text-decoration: underline'>F</span>ile
-          <ul role="menu">
-            <li role="menuitem"><a href="#menu"><span style='text-decoration: underline'>S</span>ave</a></li>
-            <li role="menuitem"><a href="#menu">Exit</a></li>
-          </ul>
-        </li>
-        <li role="menuitem" tabindex="0" aria-haspopup="true">
-          <span style='text-decoration: underline'>S</span>ettings
-          <ul role="menu">
-            <li role="menuitem"><a href="#menu"><span style='text-decoration: underline'>A</span>djust search</a></li>
-          </ul>
-        </li>
-        <li role="menuitem" tabindex="0" aria-haspopup="true">
-          <span style='text-decoration: underline'>H</span>elp
-          <ul role="menu">
-            <li role="menuitem"><a href="#menu"><span style='text-decoration: underline'>V</span>iew Help</a></li>
-            <li role="menuitem"><a href="#menu"><span style='text-decoration: underline'>A</span>bout</a></li>
-          </ul>
-        </li>
-      </ul>
-      <hr style='margin-top: 0px;'>
       <div class='wrapper'>
-        <div>
-          <fieldset>
-            <legend>Tracker</legend>
-            <h3>Tab Content</h3>
-          </fieldset>
-          <fieldset>
-            <legend>Subject</legend>
-            <h3>Tab Content</h3>
-          </fieldset>
-        </div>
-        <div style='align-content: center; height: 100%'>
+        <fieldset class='col-max' >
+          <legend>Subject</legend>
+          <div class='img_container'>
+            <img id='profile' src="SilentBunny_cyberpunk_goon_portraits_41f52a85-999f-45e6-bb40-59c04dd51e73.png" />
+          </div>
           <p id='goon'></p>
-        </div>
+        </fieldset>
+        <fieldset class='col-max' style=''>
+          <legend>Live Feed</legend>
+          <div class='img_container'>
+            <div id="sonar"></div>
+            <img id='map' style='' src="cy_map.jpg" />
+          </div>
+          <button style='width: 100%'>Search</button>
+        </fieldset>
       </div>
       <hr style='margin-bottom: 12px;'>
       <div class='wrapper'>
@@ -137,9 +176,15 @@
           </div>
           <p id='vehicle'><b>*x2 damage vs. vehicles, turrets and mechs.</b></p>
         </div>
-        <div></div>
+        <div>
+          <div class="field-row-stacked">
+            <label style='float: right;'>SPECIAL TRAITS</label>
+            <textarea id="specials"></textarea>
+          </div>
+        </div>
       </div>
     </div>
+    <hr style='margin-bottom: 0px;'>
     <div class="status-bar">
       <p class="status-bar-field" style='box-shadow: none;'>Press F1 for help</p>
       <p class="status-bar-field" style='text-align: right; max-width: 80px'>CPU Usage: <span id='cpu'>15%</span></p>
@@ -315,14 +360,9 @@
     'Made for combat'
   ]
 
-  const tx = document.getElementsByTagName("textarea");
-  for (let i = 0; i < tx.length; i++) {
-    // tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;");
-    // tx[i].addEventListener("input", OnInput, false);
-  }
   function expand_textarea(el) {
     el.style.height = 0;
-    el.style.height = (el.scrollHeight) + 3 + "px";
+    el.style.height = (el.scrollHeight) + "px";
   }
 
   function get_damage(number=0) {
@@ -365,11 +405,24 @@
   }
 
   function add_special() {
-    // var special = random_item_from(goon_special);
-    // document.getElementById('specials').innerHTML += special[0].toUpperCase() + "<br><span class='special_desc'>" + special[1] + '</span><br>';
+    var special = random_item_from(goon_special);
+    if (document.getElementById('specials').innerHTML.length > 4) {
+      document.getElementById('specials').innerHTML += special[0].toUpperCase() + "\n" + special[1] + "\n\n";
+    } else {
+      document.getElementById('specials').innerHTML = special[0].toUpperCase() + "\n" + special[1] + "\n\n";
+    }
   }
 
+  function set_sonar() {
+    var sonar = document.getElementById('sonar');
+    var map = document.getElementById('map');
+    sonar.style.top = clamp(d(map.offsetHeight) , map.offsetHeight*0.2, map.offsetHeight*0.8) + 'px';
+    sonar.style.left = clamp(d(map.offsetWidth) , map.offsetWidth*0.2, map.offsetWidth*0.8) + 'px';
+  }
+
+  set_sonar();
   document.getElementById('vehicle').style.display = 'none';
+  document.getElementById('specials').innerHTML = 'NONE';
   var die1 = d(12);
   var die2 = d(12);
   var die3 = d(12);
@@ -407,11 +460,18 @@
   if (d(100) < 25*tier) { add_special(); }
   if (d(100) < 25*tier && tier > 1) { add_special(); }
   if (tier == 3) { add_special(); }
+  document.getElementById('specials').innerHTML = document.getElementById('specials').innerHTML.trim();
+  expand_textarea(document.getElementById('specials'));
 
-  const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
   setInterval(function () {
     var percent = clamp(parseInt(document.getElementById('cpu').innerHTML) + ((d(2) - 1) ? 1 : -1) * d(10), 2, 99);
     document.getElementById('cpu').innerHTML = percent + '%';
   }, 500);
+  setInterval(function () {
+    var el = document.getElementById('map');
+    el.style.animation = 'none';
+    el.offsetHeight; /* trigger reflow */
+    el.style.animation = null;
+  }, d(4)*1000);
 </script>
 </html>

@@ -1,3 +1,5 @@
+const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+
 function search() {
  return window.location.search.slice(1,);
 }
