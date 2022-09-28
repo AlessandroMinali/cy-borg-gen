@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CY_THREAT</title>
+  <meta name="description" content="CY_THREAT - A CY_BORG Enemy Generator">
+  <style type="text/css">
+    #armor_desc, .weapon_desc, .special_desc {
+      font-size: 85%;
+      opacity: 80%;
+    }
+    .wrapper {
+      width: 600px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .wrapper > div {
+      flex: 1 1 150px;
+    }
+    #goon {
+      width: 600px;
+      font-size: 150%;
+      height: 150px;
+    }
+    #special {
+      font-weight: bold;
+      font-size: 120%;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div id='goon'></div>
+  <div class='wrapper'>
+    <div>
+      THREAT <span id='threat'></span><br>
+      HP <span id='hp'></span><br>
+      MORALE <span id='morale'></span><br>
+      <span id='armor' style='text-transform: uppercase;'></span><br>
+      <span id='armor_desc'></span>
+      <span id='weapon'></span>
+    </div>
+    <div>
+      <div id='special'>SPECIAL</div>
+      <span id='specials'></span>
+    </div>
+  </div>
+</body>
+<script src="utils.js"></script>
+<script type="text/javascript">
+  var goon_1 = ['twitching uncontrollably', 'blaring loud music', 'shouting for you to put your hand over your hands', 'gliding almost imperceptibly millimetres above the ground', 'covered in screens', 'unreasonably clean and dressed in white', 'missing limbs', 'frothing at the mouth with hypos sticking out from their necks', 'silently, barely noticeable', 'speeding along on cyberbikes', 'dressed in freshly pressed SecCorp uniforms', 'laughing at the pathetic sight of you and your group']
+  var goon_2 = ['one too many cybertech implants', 'a cyberdeck hanging by their side', 'a face covered in tattoos', 'blood leaking from exposed wounds', 'heavy eyelids hiding drug-infused eyes', 'skin moist with sweat', 'RCDs that display your face', 'head to toe leather', 'teeth filed down to sharp points', 'pockets overflowing with over-due bills', 'legs powered by compact exo-skeletons', 'a half eaten meal in one hand']
+  var goon_3 = ['in full sprint in your direction.', 'absorbing all sound, eerie dead quiet.', 'already calling for backup.', 'resting their hand on their biggest weapon.', 'they can barely out of their cracked RCDs.', 'vibrating the air around themselves.', 'hopping and whistling towards you.', 'taking one more hit of ADRENACHROME.', 'wiping down blood soaked daggers.', 'crying hysterically.', 'slicking back 30cm tall liberty spikes.', 'glowing and translucent.']
+  var goon_want = ['a god-damn drink.', 'creds to hit the slots as soon as possible.', 'to kill.', 'another hit.', 'to see it all burn.', 'impress the boss.', "a raise, they're not paid enough for this shit.", 'to flex their authority.', 'something to make them feel alive again.', 'to die.', "those nice shoes you're wearing.", 'another sucker for their NFT scheme.', 'the noise to stop. NOW!', 'to defend their turf.', 'to get even just a few hours of uninterrupted sleep for the first time in months.', "get away from the thing that's chasing them.", 'to flay something.', 'a new cyberbike.', 'to blackmail the VIP sleeping with their partner.', 'to clean up the streets.']
+  var goon_special = [
+    ["Raging", "Attacks twice per round, Attack DR10 and Defense DR14."],
+    ["Stealthy", "Test PRESENCE DR12 before combat or they go first before rolling initiative."],
+    ["Highly trained", "Defend at DR14."],
+    ["Elite", "Defense against their attacks is DR14."],
+    ["Old School", "Immune to Apps directly targeting them, indirect App attacks are +2DR"],
+    ["Berserker", "Goes berserk at 9HP, attacking twice each round and dealing d10 damage with the second attack."],
+    ["Coward", "Will call in back up if alive with 1-2 HP."],
+    ["Behind You", "Attacks and Defense at DR14."],
+    ["Wired Up", "Upon death, trigger an explosive blast dealing d12 evenly amongst anything near it."],
+    ["Sniper", "Attack DR10 and Defense DR16. Fumble Defense and you lose a limb, roll on body table (pg. 81)"],
+    ["Street Urchin", "Attack fumble means this goon now has your weapon to use."],
+    ["Faraday Cage", "All electronics in the room are powered down for 1 round. Every turn this goon attacks roll a d6, 5+ recharges this ability."],
+    ["Optical Camo", "1-in-6 chance you cannot target this creature for a round."],
+    ["Heart Bypass", "Upon death, this goon fakes it. Can pretend to be dead for d6 hours. Completely undetectable."],
+    ["AC/DC", "Grab attack, deals d6 electric damage and stuns cybered targets for 1 round."],
+    ["Ravenously Hungry", "Will begin eating the first creature that falls in battle."],
+    ["Big Spender", "Can give the PCs something they want if they agree to do what it wants."],
+    ["Underling", "Can be bribed for less than 1K¤"],
+    ["Boss", "All other friendlies will not flee/surrender until the boss is down."],
+    ["Ace", "Has a drone suit and can fly around. DR is not affected."]
+  ]
+  var weapon3 = [
+    ['Sting', 'Deals no damage, instead injects a drug or poison into its target.'],
+    'Broken bottle',
+    'Cobblestone',
+    'Shiv',
+    'Brick',
+    'Sharpened femur bone',
+    ['Taser', 'Test TOUGHNESS 12 or fall down']
+  ]
+  var weapon4 = [
+    ['Throwing knives', 'Two attacks/round'],
+    ['Shockstick', 'Test TOUGHNESS 12 or fall down'],
+    'Crowbar'
+  ]
+  var weapon4a = [
+    'Small SMG',
+    'Silenced SMG',
+    'μSMG'
+  ]
+  var weapon6 = [
+    'Machete',
+    'Cyberblade',
+    'Filament knife',
+    'Blade',
+    'Fire axe',
+    '9mm',
+    'Wristblade',
+    ['Pneumatic glove', 'ignores armor on crit'],
+    ['Power tool*', 'breaks down on a 1'],
+    ['Chainsaw', '1-in-4 to hit self']
+  ]
+  var weapon6a = [
+    'UCS Protector SMG',
+    '9mm pistol',
+    'Dum-dum AR',
+    'Silenced SMG',
+    'SmartGun™',
+    'Two small SMGS',
+    'Nailgun'
+  ]
+  var weapon8 = [
+    'Shotgun',
+    'Monosword',
+    'Ancient Revolver',
+    'Stone fist'
+  ]
+  var weapon8a = [
+    'Assault rifle',
+  ]
+  var weapon10a = [
+    'SmartGun™',
+    'Pulse rifle*',
+    'Tesla rail rifle*'
+  ]
+  var weapon12 = [
+    ['Sniper Rifle', '×3 damage on crit, attack -4DR  but get +3 damage when aiming 2 rounds'],
+    ['Rocket Launcher*', 'd4 targets, ignores 2 points of armor, fires onces per combat']
+  ]
+  var weapon12a = [
+    'Laser turret*'
+  ]
+  var grenade_launcher = [
+    'Grenade launcher*',
+    'd6 damage across up to d3 targets'
+  ]
+  var weapon0 = [
+    [d(3) + 1 + ' flashbangs', 'TOUGHNESS DR12 or +4DR on everything for d4 rounds'],
+    [d(3) + 1 + ' hand grenades*', 'd6 damage to up to d3 targets'],
+    [d(3) + 1 + ' ePulse grenades*', 'd8 to up to d3 tech targets or people with 2+ cybertech'],
+    [d(3) + 1 + ' smoke grenades', 'fill a 30m area with colored smoke for d6 minutes'],
+  ]
+  var goon_armor2 = [
+    "StyleGuard",
+    'Virid jacket',
+    "Waster's Tux",
+    ['Tech Overall', "Auto-injects a dose of Red-juice (+d10 HP) upon hitting ≤1 HP."],
+    'Heavy robes',
+    'Leather duster',
+    'Vest',
+    'Light vest'
+  ]
+  var goon_armor4 = [
+    'Heavy-duty jacket',
+    'Full kevlar',
+    'Kevlar',
+    'UCS basic combat gear',
+    ["SmartWear", "Auto-injects a dose of Adrenachrome_HST upon hitting ≤1 HP."],
+    'More metal than flesh',
+    'Stoneskin™',
+    'Rough Jacket'
+  ]
+  var goon_armor6 = [
+    ['Combat Armor', "Auto-injects a dose of Adrenachrome_HST upon hitting ≤1 HP."],
+    'Wraith suit',
+    'Stealth combat suit'
+  ]
+  var goon_armor8 = [
+    ['EndGame-Class ExoSuit', 'Customize the ExoSuit as you see fit']
+  ]
+  var phreak_armor2 = [
+    'Ragged robes',
+    'Quick and erratic',
+    'Scales',
+    'Heavy robes',
+    'Vest',
+    'Light vest'
+  ]
+  var phreak_armor6 = [
+    ['Spectral', 'Ignores any damage when the damage taken is an uneven number.']
+  ]
+  // phreak weapon, WARPED + d6 weapon name
+  var drone_armor2 = [
+    'Cyberbike scrap'
+  ]
+  var drone10a = [
+    ['Twin autocannons', 'Ammo depletion', 'After the third round, the turret has a 10% risk of running out of ammo. Some turrets are set to self-destruct when this happens, dealing d10 damage to d4 targets unless they test AGILITY DR12.']
+  ]
+  var drone_armor4 = [
+    'Armored'
+  ]
+  var drone_armor6 = [
+    'Metal plating'
+  ]
+  var beast_armor2 = [
+    'Fur and steel',
+    'Scales'
+  ]
+  var beast_armor4 = [
+    'Thick skin'
+  ]
+  var droid_armor2 = [
+    'Skinweave'
+  ]
+  var droid_armor4 = [
+    'All metal'
+  ]
+  var droid_armor6 = [
+    'Made for combat'
+  ]
+
+  function get_damage(number=0) {
+    var dice = [die1, die2, die3].sort(function(a, b) { return a - b; })[tier - 1] - 1;
+    if (number == 1) {
+      if (d(100) > 50) {
+        dice = dice / 2;
+      } else {
+        return 0; // possible grenades for second wep
+      }
+    }
+    if (number == 2) { dice = dice / 2 - 3; }
+    if (dice < 0) { dice = 0; }
+    return [3, 4, '4a', 6, '6a', 8, '8a', '10a', '10a', '10a', 12, '12a'][Math.round(dice)];
+  }
+
+  function add_weapon(damage) {
+    var weapon = random_item_from(eval('weapon'+damage));
+    var flag, main = weapon;
+    if (typeof weapon == 'object') { main = weapon[0]; flag = true; }
+
+    document.getElementById('weapon').innerHTML += main.toUpperCase();
+    if (damage) { document.getElementById('weapon').innerHTML += (' D' + damage).toUpperCase(); }
+    document.getElementById('weapon').innerHTML += '<br>';
+
+    if (flag) {
+      document.getElementById('weapon').innerHTML += '<span class="weapon_desc">' + weapon[1] + '</span><br>';
+    }
+    if (damage == '8a' && d(6) == 1) {
+      document.getElementById('weapon').innerHTML += 'with ' + grenade_launcher[0].toUpperCase() + ' D6<br>'
+      document.getElementById('weapon').innerHTML += '<span class="weapon_desc">' + grenade_launcher[1] + '</span><br>';
+    }
+  }
+
+  function add_special() {
+    var special = random_item_from(goon_special);
+    document.getElementById('specials').innerHTML += special[0].toUpperCase() + "<br><span class='special_desc'>" + special[1] + '</span><br>';
+  }
+
+  var die1 = d(12);
+  var die2 = d(12);
+  var die3 = d(12);
+  var tier = random_item_from([1, 1, 1, 2, 2, 3]);
+
+  document.getElementById('goon').innerHTML =
+    'The GOONS approach ' + goon_1[die1 - 1] + ' with ' + goon_2[die2 - 1] + " they're " + goon_3[die3 - 1] + ' More than anything they want ' + random_item_from(goon_want);
+
+  var morale = Math.max(die1, die2, die3);
+  var damage = get_damage();
+  var armor = [0, 1, die3 % 2 ? 2 : 3][[die1, die2, die3].indexOf(morale)]
+  var hp = d(parseInt(damage)) * 2;
+
+  document.getElementById('threat').innerHTML = tier;
+  document.getElementById('hp').innerHTML = hp + tier*3;
+  document.getElementById('morale').innerHTML = morale;
+  var clothes = ['No armor', random_item_from(goon_armor2), random_item_from(goon_armor4), random_item_from(goon_armor6)][armor];
+  if (typeof clothes == 'object') {
+    if (d(100) < 25*tier) { document.getElementById('armor_desc').innerHTML += clothes[1] + '<br>'; }
+    clothes = clothes[0];
+  }
+  document.getElementById('armor').innerHTML =
+    clothes + (armor ? (' -d' + armor*2) : '');
+  add_weapon(damage);
+  if (d(100) < 25*tier && tier == 3) { add_weapon(get_damage(2)); } // possible third weapon
+  if (d(100) < 25*tier) { add_weapon(get_damage(1)); } // possible second weapon
+
+  if (d(100) < 25*tier) { add_special(); }
+  if (d(100) < 25*tier && tier > 1) { add_special(); }
+  if (tier == 3) { add_special(); }
+</script>
+</html>
