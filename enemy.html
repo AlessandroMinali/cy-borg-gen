@@ -5,13 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CY_THREAT</title>
   <meta name="description" content="CY_THREAT - A CY_BORG Enemy Generator">
+  <link rel="stylesheet" href="https://unpkg.com/xp.css/dist/98.css" />
+  <link rel="stylesheet" href="menu.css" />
   <style type="text/css">
-    #armor_desc, .weapon_desc, .special_desc {
-      font-size: 85%;
-      opacity: 80%;
-    }
     .wrapper {
-      width: 600px;
       display: flex;
       flex-wrap: wrap;
     }
@@ -19,34 +16,138 @@
       flex: 1 1 150px;
     }
     #goon {
-      width: 600px;
-      font-size: 150%;
-      height: 150px;
+      font-size: 200%;
+      padding:  10px 20px;
+
     }
     #special {
       font-weight: bold;
       font-size: 120%;
       margin-bottom: 8px;
     }
+    .col {
+      max-width: 50px;
+      flex: 1;
+    }
+    input[type=text] {
+      line-height: inherit;
+      padding-left: 6px;
+      max-width: 25px;
+    }
+    #armor, #weapon {
+      max-width: 280px;
+    }
+    textarea {
+      word-spacing: 1.5px;
+    }
+    [role=menupanel] {
+      padding: 1px;
+      clear: both;
+      background: silver;
+      border: none;
+      position: relative;
+      z-index: 2;
+      margin-bottom:9px;
+      box-shadow: inset 1px 1px #fff, inset 2px 2px #dfdfdf, inset -1px -1px #0a0a0a, inset -2px -2px grey
+    }
+    .window-body {
+      margin-top: 3px;
+    }
+    .window { 
+      max-width: 600px;
+    }
   </style>
 </head>
 <body>
-  <div id='goon'></div>
-  <div class='wrapper'>
-    <div>
-      THREAT <span id='threat'></span><br>
-      HP <span id='hp'></span><br>
-      MORALE <span id='morale'></span><br>
-      <span id='armor' style='text-transform: uppercase;'></span><br>
-      <span id='armor_desc'></span>
-      <span id='weapon'></span>
+  <div class="window">
+    <div class="title-bar">
+      <div class="title-bar-text">A Window With Tabs and Groups</div>
+      <div class="title-bar-controls">
+        <button aria-label="Minimize"></button>
+        <button aria-label="Maximize"></button>
+        <button aria-label="Close"></button>
+      </div>
     </div>
-    <div>
-      <div id='special'>SPECIAL</div>
-      <span id='specials'></span>
+    <div class="window-body">
+      <ul role="menubar">
+        <li role="menuitem" tabindex="0" aria-haspopup="true">
+          <span style='text-decoration: underline'>F</span>ile
+          <ul role="menu">
+            <li role="menuitem"><a href="#menu"><span style='text-decoration: underline'>S</span>ave</a></li>
+            <li role="menuitem"><a href="#menu">Exit</a></li>
+          </ul>
+        </li>
+        <li role="menuitem" tabindex="0" aria-haspopup="true">
+          <span style='text-decoration: underline'>S</span>ettings
+          <ul role="menu">
+            <li role="menuitem"><a href="#menu"><span style='text-decoration: underline'>A</span>djust search</a></li>
+          </ul>
+        </li>
+        <li role="menuitem" tabindex="0" aria-haspopup="true">
+          <span style='text-decoration: underline'>H</span>elp
+          <ul role="menu">
+            <li role="menuitem"><a href="#menu"><span style='text-decoration: underline'>V</span>iew Help</a></li>
+            <li role="menuitem"><a href="#menu"><span style='text-decoration: underline'>A</span>bout</a></li>
+          </ul>
+        </li>
+      </ul>
+      <hr style='margin-top: 0px;'>
+      <div class='wrapper'>
+        <div>
+          <fieldset>
+            <legend>Today's mood</legend>
+            <h3>Tab Content</h3>
+          </fieldset>
+          <fieldset>
+            <legend>Today's mood</legend>
+            <h3>Tab Content</h3>
+          </fieldset>
+        </div>
+        <div style='align-content: center; height: 100%'>
+          <p id='goon'></p>
+        </div>
+      </div>
+      <hr>
+      <div class='wrapper'>
+        <div>
+          <div class="field-row">
+            <label class='col'>THREAT</label>
+            <input class='col' id="threat" type="text" />
+          </div>
+          <div class="field-row">
+            <label class='col'>HP</label>
+            <input class='col' id="hp" type="text" />
+          </div>
+          <div class="field-row">
+            <label class='col'>MORALE</label>
+            <input class='col' id="morale" type="text" />
+          </div>
+          <div class="field-row-stacked">
+            <div class="field-row">
+              <label >ARMOR</label>
+              <input style='visibility: hidden;' />
+            </div>
+            <textarea id="armor"></textarea>
+          </div>
+          <div class="field-row-stacked">
+            <div class="field-row">
+              <label >ARSENAL</label>
+              <input style='visibility: hidden;' />
+            </div>
+            <textarea id="weapon"></textarea>
+            <p id='vehicle'><b>*x2 damage vs. vehicles, turrets and mechs.</b></p>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+    <div class="status-bar">
+      <p class="status-bar-field" style='box-shadow: none;'>Press F1 for help</p>
+      <p class="status-bar-field" style='text-align: right; max-width: 80px'>CPU Usage: <span id='cpu'>15%</span></p>
     </div>
   </div>
 </body>
+<script src="tab.js"></script>
 <script src="utils.js"></script>
 <script type="text/javascript">
   var goon_1 = ['twitching uncontrollably', 'blaring loud music', 'shouting for you to put your hand over your hands', 'gliding almost imperceptibly millimetres above the ground', 'covered in screens', 'unreasonably clean and dressed in white', 'missing limbs', 'frothing at the mouth with hypos sticking out from their necks', 'silently, barely noticeable', 'speeding along on cyberbikes', 'dressed in freshly pressed SecCorp uniforms', 'laughing at the pathetic sight of you and your group']
@@ -92,7 +193,7 @@
   var weapon4a = [
     'Small SMG',
     'Silenced SMG',
-    'μSMG'
+    'SMG'
   ]
   var weapon6 = [
     'Machete',
@@ -130,7 +231,7 @@
     'Tesla rail rifle*'
   ]
   var weapon12 = [
-    ['Sniper Rifle', '×3 damage on crit, attack -4DR  but get +3 damage when aiming 2 rounds'],
+    ['Sniper Rifle', 'x3 damage on crit, attack -4DR  but get +3 damage when aiming 2 rounds'],
     ['Rocket Launcher*', 'd4 targets, ignores 2 points of armor, fires onces per combat']
   ]
   var weapon12a = [
@@ -190,7 +291,7 @@
     'Cyberbike scrap'
   ]
   var drone10a = [
-    ['Twin autocannons', 'Ammo depletion', 'After the third round, the turret has a 10% risk of running out of ammo. Some turrets are set to self-destruct when this happens, dealing d10 damage to d4 targets unless they test AGILITY DR12.']
+    ['Twin autocannons', 'After the third round, the turret has a 10% risk of running out of ammo. Some turrets are set to self-destruct when this happens, dealing d10 damage to d4 targets unless they test AGILITY DR12.']
   ]
   var drone_armor4 = [
     'Armored'
@@ -215,6 +316,16 @@
     'Made for combat'
   ]
 
+  const tx = document.getElementsByTagName("textarea");
+  for (let i = 0; i < tx.length; i++) {
+    // tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;");
+    // tx[i].addEventListener("input", OnInput, false);
+  }
+  function expand_textarea(el) {
+    el.style.height = 0;
+    el.style.height = (el.scrollHeight) + "px";
+  }
+
   function get_damage(number=0) {
     var dice = [die1, die2, die3].sort(function(a, b) { return a - b; })[tier - 1] - 1;
     if (number == 1) {
@@ -233,25 +344,30 @@
     var weapon = random_item_from(eval('weapon'+damage));
     var flag, main = weapon;
     if (typeof weapon == 'object') { main = weapon[0]; flag = true; }
+    var el = document.getElementById('weapon');
 
-    document.getElementById('weapon').innerHTML += main.toUpperCase();
-    if (damage) { document.getElementById('weapon').innerHTML += (' D' + damage).toUpperCase(); }
-    document.getElementById('weapon').innerHTML += '<br>';
+    el.innerHTML += main.toUpperCase();
+    if (main == 'SMG') { el.insertAdjacentHTML("afterbegin", 'μ');}
+    if (damage) { el.innerHTML += (' D' + damage).toUpperCase(); }
+    el.innerHTML += "\n";
 
     if (flag) {
-      document.getElementById('weapon').innerHTML += '<span class="weapon_desc">' + weapon[1] + '</span><br>';
+      el.innerHTML += weapon[1] + '\n';
     }
     if (damage == '8a' && d(6) == 1) {
-      document.getElementById('weapon').innerHTML += 'with ' + grenade_launcher[0].toUpperCase() + ' D6<br>'
-      document.getElementById('weapon').innerHTML += '<span class="weapon_desc">' + grenade_launcher[1] + '</span><br>';
+      el.innerHTML += 'with ' + grenade_launcher[0].toUpperCase() + " D6\n"
+      el.innerHTML += grenade_launcher[1] + '\n';
     }
+    el.innerHTML += "\n";
+    if (el.innerHTML.match(/\*/)) { document.getElementById('vehicle').style.display = 'block'; }
   }
 
   function add_special() {
-    var special = random_item_from(goon_special);
-    document.getElementById('specials').innerHTML += special[0].toUpperCase() + "<br><span class='special_desc'>" + special[1] + '</span><br>';
+    // var special = random_item_from(goon_special);
+    // document.getElementById('specials').innerHTML += special[0].toUpperCase() + "<br><span class='special_desc'>" + special[1] + '</span><br>';
   }
 
+  document.getElementById('vehicle').style.display = 'none';
   var die1 = d(12);
   var die2 = d(12);
   var die3 = d(12);
@@ -265,22 +381,35 @@
   var armor = [0, 1, die3 % 2 ? 2 : 3][[die1, die2, die3].indexOf(morale)]
   var hp = d(parseInt(damage)) * 2;
 
-  document.getElementById('threat').innerHTML = tier;
-  document.getElementById('hp').innerHTML = hp + tier*3;
-  document.getElementById('morale').innerHTML = morale;
+  document.getElementById('threat').value = tier;
+  document.getElementById('hp').value = hp + tier*3;
+  document.getElementById('morale').value = morale;
+
   var clothes = ['No armor', random_item_from(goon_armor2), random_item_from(goon_armor4), random_item_from(goon_armor6)][armor];
   if (typeof clothes == 'object') {
-    if (d(100) < 25*tier) { document.getElementById('armor_desc').innerHTML += clothes[1] + '<br>'; }
-    clothes = clothes[0];
+    document.getElementById('armor').value = (clothes[0] + (armor ? (' -d' + armor*2) : '')).toUpperCase();
+    if (d(100) < 2500*tier) {
+      document.getElementById('armor').value += "\n"+ clothes[1];
+    }
+  } else {
+    document.getElementById('armor').value = (clothes + (armor ? (' -d' + armor*2) : '')).toUpperCase();
   }
-  document.getElementById('armor').innerHTML =
-    clothes + (armor ? (' -d' + armor*2) : '');
+  expand_textarea(document.getElementById('armor'));
+
   add_weapon(damage);
   if (d(100) < 25*tier && tier == 3) { add_weapon(get_damage(2)); } // possible third weapon
   if (d(100) < 25*tier) { add_weapon(get_damage(1)); } // possible second weapon
+  document.getElementById('weapon').innerHTML = document.getElementById('weapon').innerHTML.trim();
+  expand_textarea(document.getElementById('weapon'));
 
   if (d(100) < 25*tier) { add_special(); }
   if (d(100) < 25*tier && tier > 1) { add_special(); }
   if (tier == 3) { add_special(); }
+
+  const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+  setInterval(function () {
+    var percent = clamp(parseInt(document.getElementById('cpu').innerHTML) + ((d(2) - 1) ? 1 : -1) * d(10), 2, 99);
+    document.getElementById('cpu').innerHTML = percent + '%';
+  }, 500);
 </script>
 </html>
