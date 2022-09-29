@@ -6,8 +6,7 @@
   <title>CY_THREAT - United Citadel Security PRISM//v0.12.869</title>
   <meta name="description" content="CY_THREAT - A CY_BORG Enemy Generator">
   <link rel="stylesheet" href="https://unpkg.com/xp.css/dist/98.css" />
-  <link rel="stylesheet" href="menu.css" />
-  <link rel="stylesheet" href="sonar.css" />
+  <link rel="stylesheet" href="cy_threat/sonar_and_menu.css" />
   <style type="text/css">
     body {
       background: blue;
@@ -21,7 +20,7 @@
       width: 100%;
       height: 100%;
       opacity: 0.05;
-      background-image: url('images/UCS_SMALL.png');
+      background-image: url('cy_threat/images/UCS_SMALL.png');
       z-index: -1;
     }
     .grid-container {
@@ -169,13 +168,13 @@
 </head>
 <body id='main'>
   <div style='position: absolute; color: white;'>
-    <img style='margin-left: 15px;' src='images/recycle_bin_empty-2.png' />
+    <img style='margin-left: 15px;' src='cy_threat/images/recycle_bin_empty-2.png' />
     <div style='margin-left: 3px;font-family: "Pixelated MS Sans Serif"'>Recycle Bin</div>
     <br>
-    <img style='margin-left: 15px;' src='images/computer_explorer_cool-5.png' />
+    <img style='margin-left: 15px;' src='cy_threat/images/computer_explorer_cool-5.png' />
     <div style='margin-left: 0px; font-family: "Pixelated MS Sans Serif"'>My Computer</div>
     <br>
-    <img id='prism' style='margin-left: 15px;' src='images/search_web-0.png' />
+    <img id='prism' style='margin-left: 15px;' src='cy_threat/images/search_web-0.png' />
     <div style='margin-left: 16px; font-family: "Pixelated MS Sans Serif"'>PRISM</div>
   </div>
   <div id='about' class="window" style='max-width: 600px;'>
@@ -229,7 +228,7 @@ C:\WINDOWS\SYSTEM32> mork_borg_gen
   <div id='screen' class="window" style='max-width: 800px;'>
     <div class="title-bar">
       <div class="title-bar-text">
-        <img style='width: 12px; vertical-align: center;' src='images/search_web-0.png' />
+        <img style='width: 12px; vertical-align: center;' src='cy_threat/images/search_web-0.png' />
         United Citadel Security PRISM//v0.12.869
       </div>
       <div class="title-bar-controls">
@@ -267,11 +266,11 @@ C:\WINDOWS\SYSTEM32> mork_borg_gen
         <div id='geo' style='text-align: center;'></div>
         <div id='map_container'>
           <div id="sonar"></div>
-          <img id='map' src="images/cy_map.jpg" />
+          <img id='map' src="cy_threat/images/cy_map.jpg" />
         </div>
         <button id='search' style='width: 100%'>Search</button>
         <button class='save' style='width: 100%'>Export</button>
-        <img style='margin-top: 15px' id='svg' src="../CompWith_CY_BORG_horiz.svg" width=150 />
+        <img style='margin-top: 15px' id='svg' src="CompWith_CY_BORG_horiz.svg" width=150 />
       </fieldset>
       <fieldset class="item2">
         <legend>Subject</legend>
@@ -322,7 +321,7 @@ C:\WINDOWS\SYSTEM32> mork_borg_gen
     <div class="window" style='width: 100%;'>
       <div class="window-body" style='margin: 0px;'>
         <button style='font-size: 120%; font-weight: bolder;'>
-          <img style='width: 20px; vertical-align: middle;' src='images/UCS_small.png' />
+          <img style='width: 20px; vertical-align: middle;' src='cy_threat/images/UCS_small.png' />
           <b>Start</b>
         </button>
         <button id='screen_task' class='active' style='vertical-align: middle; background: lightgrey; max-width: 225px; font-size: 110%; font-weight: bold;'>
@@ -330,9 +329,9 @@ C:\WINDOWS\SYSTEM32> mork_borg_gen
         </button>
         <div class="status-bar" style='float: right; height: 22px; margin-top: 3px; margin-right: 10px; align-items: end;'>
           <span  class="status-bar-field" style='padding: 5px; font-size: 110%; text-align: right; width: 105px;'>
-            <img src='images/template_sched_task-2.png' style='height: 12px;' />
-            <img src='images/network_cool_two_pcs-4.png' style='height: 12px;' />
-            <img src='images/loudspeaker_rays-1.png' style='height: 12px;' />
+            <img src='cy_threat/images/template_sched_task-2.png' style='height: 12px;' />
+            <img src='cy_threat/images/network_cool_two_pcs-4.png' style='height: 12px;' />
+            <img src='cy_threat/images/loudspeaker_rays-1.png' style='height: 12px;' />
             <span id='MyClockDisplay'></span>
           </span>
         </div>
@@ -340,8 +339,8 @@ C:\WINDOWS\SYSTEM32> mork_borg_gen
     </div>
   </footer>
 </body>
-<script src="tab.js"></script>
-<script src="../utils.js"></script>
+<script src="cy_threat/tab.js"></script>
+<script src="utils.js"></script>
 <script type="text/javascript">
   var goon_1 = ['twitching uncontrollably', 'blaring loud music', 'shouting for you to put your hands over your head', 'gliding almost imperceptibly millimetres above the ground', 'covered in screens', 'unreasonably clean and dressed in white', 'missing limbs', 'frothing at the mouth with hypos sticking out from their necks', 'silently, barely noticeable', 'speeding along on cyberbikes', 'dressed in freshly pressed SecCorp uniforms', 'laughing at the pathetic sight of you and your group']
   var goon_2 = ['one too many cybertech implants', 'a cyberdeck hanging by their side', 'faces covered in tattoos', 'blood leaking from exposed wounds', 'heavy eyelids hiding drug-infused eyes', 'skin moist with sweat', 'RCDs that display your face', 'head to toe leather trim', 'teeth filed down to sharp points', 'pockets overflowing with over-due bills', 'legs powered by compact exo-skeletons', 'a half eaten meal in one hand']

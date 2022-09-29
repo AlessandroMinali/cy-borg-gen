@@ -4,6 +4,12 @@ Allows sharing of generated characters and local editing so that you can use the
 
 [Link](https://alessandrominali.github.io/cy-borg-gen/waste_of_creds.html)
 
+# CY_THREAT
+Generate a infinite number of baddies that wander the streets of Cy.  
+Capable of generating GOONS, DRONES, BEASTS, CYDROIDS, PHREAKS and VEHICLES...eventually.
+
+[Link](https://alessandrominali.github.io/cy-borg-gen/threat.html)
+
 # CY_D0SSIER
 Flavourful mission generator for Cy_BORG
 
