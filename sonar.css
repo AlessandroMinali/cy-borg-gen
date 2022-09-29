@@ -65,8 +65,8 @@
 #sonar {
   position: relative;
   background: red;
-  width: 8px;
-  height: 8px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
   z-index: 2;
 }

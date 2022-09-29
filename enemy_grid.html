@@ -9,6 +9,58 @@
   <link rel="stylesheet" href="menu.css" />
   <link rel="stylesheet" href="sonar.css" />
   <style type="text/css">
+    body {
+      background: blue;
+      /*background-image: url('UCS_SMALL.png');*/
+    }
+    body::before {
+      content: ' ';
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.05;
+      background-image: url('UCS_SMALL.png');
+      z-index: -1;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: auto auto auto auto;
+      grid-gap: 5px;
+      padding: 5px;
+      margin-top: 3px;
+    }
+    .item1 {
+      max-width: 150px;
+      margin: 0 auto;
+      grid-area: 1 / 1 / span 3 / span 1;
+    }
+    .item2 {
+      grid-area: 1 / 2 / span 1 / span 2;
+    }
+    .item3 {
+      grid-area: 2 / 2 / span 1 / span 2;
+    }
+    @media only screen and (max-width: 480px) {
+      .item1 {
+        grid-area: 1 / 1
+
+      }
+      .item2 {
+        grid-area: 2 / 1
+      }
+      .item3 {
+        grid-area: 3 / 1
+      }
+      footer > .window > .window-body > button{
+        font-size: 80%;
+      }
+      footer > .window > .window-body > .status-bar {
+        display: none;
+      }
+    }
     .wrapper {
       display: flex;
       flex-wrap: wrap;
@@ -18,7 +70,7 @@
       margin: 0px 10px;
     }
     #goon {
-      font-size: 150%;
+      font-size: 120%;
     }
     #special {
       font-weight: bold;
@@ -54,28 +106,22 @@
       margin-bottom:9px;
       box-shadow: inset 1px 1px #fff, inset 2px 2px #dfdfdf, inset -1px -1px #0a0a0a, inset -2px -2px grey
     }
-    .window-body {
-      margin-top: 3px;
+    #screen {
+      margin: 0 auto;
     }
-    .window { 
-      /*max-width: 700px;*/
-    }
-    .img_container {
-      width: 100%;
+    #map_container {
       border: 1px solid grey;
       overflow: hidden;
     }
-    #map, #profile {
+    #map {
       width: 100%;
-      transition: transform 0.5s linear;
+      transition: transform 0.1s linear;
       transform: scale(1.1);
       animation: flickerAnimation 0.01s 33;
     }
     #map:hover {
-      transform: scale(1.15);
-    }
-    #profile {
-      /*transform: scale(2.1) translate(-25%);*/
+      transition: transform 0.5s linear;
+      transform: scale(1.2);
     }
     @keyframes flickerAnimation {
       0%   { opacity:1; }
@@ -97,12 +143,36 @@
       50%  { opacity:0.7; }
       100% { opacity:1; }
     }
+    body > footer {
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+    }
+    footer > pre { white-space: pre-wrap; }
+    #svg {
+      -webkit-filter: invert(25%); /* safari 6.0 - 9.0 */
+              filter: invert(25%);
+    }
   </style>
 </head>
 <body>
-  <div class="window">
+  <div style='position: absolute; z-index: -1; color: white;'>
+    <img style='margin-left: 10px;' src='recycle_bin_empty-2.png' />
+    <div style='font-family: "Pixelated MS Sans Serif"'>Recycle Bin</div>
+    <br>
+    <img style='margin-left: 10px;' src='computer_explorer_cool-5.png' />
+    <div style='font-family: "Pixelated MS Sans Serif"'>My Computer</div>
+    <br>
+    <img style='margin-left: 10px;' src='search_web-0.png' />
+    <div style='margin-left: 11px; font-family: "Pixelated MS Sans Serif"'>PRISM</div>
+  </div>
+  <div id='screen' class="window" style='max-width: 800px;'>
     <div class="title-bar">
-      <div class="title-bar-text">United Citadel Security PRISM//v0.12.869</div>
+      <div class="title-bar-text">
+        <img style='width: 12px; vertical-align: center;' src='search_web-0.png' />
+        United Citadel Security PRISM//v0.12.869
+      </div>
       <div class="title-bar-controls">
         <button aria-label="Minimize"></button>
         <button aria-label="Maximize"></button>
@@ -132,50 +202,51 @@
       </li>
     </ul>
     <hr style='margin-top: 0px;'>
-    <div class="window-body">
-      <div class='wraper'>
-        <fieldset class='col-max'>
-          <legend>Live Feed</legend>
-          <div class='img_container'>
-            <div id="sonar"></div>
-            <img id='map' style='' src="cy_map.jpg" />
-          </div>
-          <button style='width: 100%'>Search</button>
-        </fieldset>
-        <fieldset class='col-mx'>
-          <legend>Subject</legend>
-          <p id='goon'></p>
-        </fieldset>
-        <div class='wrapper'>
-          <div class="field-row-stacked col-max">
-            <div class="field-row">
-              <label class='col'>THREAT</label>
-              <input class='col' id="threat" type="text" />
-            </div>
-            <div class="field-row">
-              <label class='col'>HP</label>
-              <input class='col' id="hp" type="text" />
-            </div>
-            <div class="field-row">
-              <label class='col'>MORALE</label>
-              <input class='col' id="morale" type="text" />
-            </div>
-            <div class="field-row" style='align-items: start;'>
-              <label class='col' style='padding-top: 5px;'>ARMOR</label>
-              <textarea class='col-max 'id="armor"></textarea>
-            </div>
-            <div class="field-row" style='align-items: start;'>
-              <label class='col' style='padding-top: 5px;'>ARSENAL</label>
-              <textarea class='col-max' id="weapon"></textarea>
-            </div>
-            <p id='vehicle'><b>*x2 damage vs. vehicles, turrets and mechs.</b></p>
-          </div>
-          <div class="field-row-stacked">
-            <label style='float: right;'>SPECIAL TRAITS</label>
-            <textarea id="specials"></textarea>
-          </div>
+    <div class="window-body grid-container">
+      <fieldset class="item1">
+        <legend>Live Feed</legend>
+        <div id='map_container'>
+          <div id="sonar"></div>
+          <img id='map' style='' src="cy_map.jpg" />
         </div>
-      </div>
+        <button style='width: 100%'>Search</button>
+        <img style='margin-top: 15px' id='svg' src="CompWith_CY_BORG_horiz.svg" width=150 />
+      </fieldset>
+      <fieldset class="item2">
+        <legend>Subject</legend>
+        <p id='goon'></p>
+      </fieldset>
+      <div class='item3'>
+        <div class='wrapper'>
+            <div class="field-row-stacked">
+              <div class="field-row">
+                <label class='col'>THREAT</label>
+                <input class='col' id="threat" type="text" />
+              </div>
+              <div class="field-row">
+                <label class='col'>HP</label>
+                <input class='col' id="hp" type="text" />
+              </div>
+              <div class="field-row">
+                <label class='col'>MORALE</label>
+                <input class='col' id="morale" type="text" />
+              </div>
+              <div class="field-row" style='align-items: start;'>
+                <label class='col' style='padding-top: 5px;'>ARMOR</label>
+                <textarea class='col-max 'id="armor"></textarea>
+              </div>
+              <div class="field-row" style='align-items: start;'>
+                <label class='col' style='padding-top: 5px;'>ARSENAL</label>
+                <textarea class='col-max' id="weapon"></textarea>
+              </div>
+              <p id='vehicle'><b>*x2 damage vs. vehicles, turrets and mechs.</b></p>
+            </div>
+            <div class="field-row-stacked">
+              <label style='float: right;'>SPECIAL TRAITS</label>
+              <textarea id="specials"></textarea>
+            </div>
+          </div>
+    </div>
     </div>
     <hr style='margin-bottom: 0px;'>
     <div class="status-bar">
@@ -183,6 +254,27 @@
       <p class="status-bar-field" style='text-align: right; max-width: 80px'>CPU Usage: <span id='cpu'>15%</span></p>
     </div>
   </div>
+  <footer>
+    <div class="window" style='width: 100%;'>
+      <div class="window-body" style='margin: 0px;'>
+        <button style='font-size: 120%; font-weight: bolder;'>
+          <img style='width: 20px; vertical-align: middle;' src='UCS_small.png' />
+          <b>Start</b>
+        </button>
+        <button class='active' style='vertical-align: middle; background: lightgrey; max-width: 225px; font-size: 110%; font-weight: bold;'>
+          United Citadel Security PRISM
+        </button>
+        <div class="status-bar" style='float: right; height: 22px; margin-top: 3px; margin-right: 10px; align-items: end;'>
+          <span  class="status-bar-field" style='padding: 5px; font-size: 110%; text-align: right; width: 105px;'>
+            <img src='template_sched_task-2.png' style='height: 12px;' />
+            <img src='network_cool_two_pcs-4.png' style='height: 12px;' />
+            <img src='loudspeaker_rays-1.png' style='height: 12px;' />
+            <span id='MyClockDisplay'></span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </footer>
 </body>
 <script src="tab.js"></script>
 <script src="utils.js"></script>
@@ -353,6 +445,34 @@
     'Made for combat'
   ]
 
+  function showTime(){
+    var date = new Date();
+    var h = date.getHours(); // 0 - 23
+    var m = date.getMinutes(); // 0 - 59
+    var s = date.getSeconds(); // 0 - 59
+    var session = "AM";
+    
+    if(h == 0){
+        h = 12;
+    }
+    
+    if(h > 12){
+        h = h - 12;
+        session = "PM";
+    }
+    
+    h = (h < 10) ? "0" + h : h;
+    m = (m < 10) ? "0" + m : m;
+    s = (s < 10) ? "0" + s : s;
+    
+    var time = h + ":" + m + ":" + s + " " + session;
+    document.getElementById("MyClockDisplay").innerText = time;
+    document.getElementById("MyClockDisplay").textContent = time;
+    
+    setTimeout(showTime, 1000);
+  }
+  showTime();
+
   function expand_textarea(el) {
     el.style.height = 0;
     el.style.height = (el.scrollHeight) + "px";
@@ -408,12 +528,13 @@
 
   function set_sonar() {
     var sonar = document.getElementById('sonar');
-    var map = document.getElementById('map');
+    var map = document.getElementById('map_container');
     sonar.style.top = clamp(d(map.offsetHeight) , map.offsetHeight*0.2, map.offsetHeight*0.8) + 'px';
     sonar.style.left = clamp(d(map.offsetWidth) , map.offsetWidth*0.2, map.offsetWidth*0.8) + 'px';
+    console.log(sonar.style.left, sonar.style.top, map.offsetWidth, map.clientWidth, map.clientHeight);
   }
 
-  set_sonar();
+  addEventListener("load", function () { set_sonar(); });
   document.getElementById('vehicle').style.display = 'none';
   document.getElementById('specials').innerHTML = 'NONE';
   var die1 = d(12);
@@ -465,6 +586,6 @@
     el.style.animation = 'none';
     el.offsetHeight; /* trigger reflow */
     el.style.animation = null;
-  }, d(4)*1000);
+  }, d(4)*3000);
 </script>
 </html>
