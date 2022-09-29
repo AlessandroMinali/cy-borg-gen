@@ -63,6 +63,7 @@
 }
 
 #sonar {
+  display: none;
   position: relative;
   background: red;
   width: 4px;
