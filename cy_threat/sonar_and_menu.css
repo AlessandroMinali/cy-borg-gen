@@ -15,9 +15,11 @@
    font-size: 110%;
 }
  ul[role="menubar"] > [role="menuitem"]:focus, ul[role="menubar"] > [role="menuitem"]:focus-within, ul[role="menubar"] > [role="menuitem"]:hover {
-   background: #39f;
-   color: #fff;
+   box-shadow: inset -1px -1px #0a0a0a,inset 1px 1px #fff,inset -2px -2px grey,inset 2px 2px #dfdfdf;
    outline: none;
+}
+ ul[role="menubar"] > [role="menuitem"]:focus-within {
+  box-shadow: inset -1px -1px #fff,inset 1px 1px #0a0a0a,inset -2px -2px #dfdfdf,inset 2px 2px grey;
 }
  ul[role="menu"] {
    position: relative;
@@ -55,12 +57,10 @@
    width: 100%;
    padding: 4px 10px 4px 32px;
    box-sizing: border-box;
-   border: 1px solid transparent;
-   border-radius: 3px;
 }
  ul[role="menu"] > [role="menuitem"] > a:hover, ul[role="menu"] > [role="menuitem"] > button:hover, ul[role="menu"] > [role="menuitem"][aria-haspopup="true"]:hover, ul[role="menu"] > [role="menuitem"] > a:focus, ul[role="menu"] > [role="menuitem"] > button:focus, ul[role="menu"] > [role="menuitem"][aria-haspopup="true"]:focus {
-   background: silver;
-   opacity: 0.75;
+   background: rgb(0, 0, 128);
+   color: white;
    border-color: grey;
 }
  ul[role="menu"] > [role="menuitem"][aria-haspopup="true"]::after {

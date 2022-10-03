@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CY_THREAT - United Citadel Security PRISM//v0.12.869</title>
+  <meta name="description" content="CY_THREAT - A CY_BORG Enemy Generator">
+  <link rel="stylesheet" href="https://unpkg.com/xp.css/dist/98.css" />
+  <link rel="stylesheet" href="cy_threat/sonar_and_menu.css" />
+  <style type="text/css">
+    body {
+      background: rgb(0, 128, 128);
+    }
+    body::before {
+      content: ' ';
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.05;
+      background-image: url('cy_threat/images/UCS_SMALL.png');
+      z-index: -1;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: auto auto auto auto;
+      grid-gap: 5px;
+      padding: 5px;
+      margin-top: 3px;
+    }
+    .item1 {
+      max-width: 150px;
+      margin: 0 auto;
+      grid-area: 1 / 1 / span 3 / span 1;
+    }
+    .item2 {
+      grid-area: 1 / 2 / span 1 / span 2;
+    }
+    .item3 {
+      grid-area: 2 / 2 / span 1 / span 2;
+    }
+    @media only screen and (max-width: 480px) {
+      .item1 {
+        grid-area: 1 / 1
+
+      }
+      .item2 {
+        grid-area: 2 / 1
+      }
+      .item3 {
+        grid-area: 3 / 1
+      }
+      footer > .window > .window-body > button{
+        font-size: 80%;
+      }
+      footer > .window > .window-body > .status-bar {
+        display: none;
+      }
+    }
+    .wrapper {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .wrapper > div {
+      flex: 1 1 150px;
+      margin: 0px 10px;
+    }
+    #goon {
+      font-size: 120%;
+    }
+    #special {
+      font-weight: bold;
+      font-size: 120%;
+      margin-bottom: 8px;
+    }
+    .col {
+      max-width: 50px;
+      flex: 1;
+    }
+    .col-max {
+      flex: 1;
+    }
+    input[type=text] {
+      line-height: inherit;
+      padding-left: 6px;
+      max-width: 25px;
+      border: none;
+    }
+    #armor, #weapon {
+      width: 100%;
+    }
+    textarea {
+      word-spacing: 1.5px;
+    }
+    [role=menupanel] {
+      padding: 1px;
+      clear: both;
+      background: silver;
+      border: none;
+      position: relative;
+      z-index: 2;
+      margin-bottom:9px;
+      box-shadow: inset 1px 1px #fff, inset 2px 2px #dfdfdf, inset -1px -1px #0a0a0a, inset -2px -2px grey
+    }
+    #screen {
+      margin: 0 auto;
+    }
+    #map_container {
+      border: 1px solid grey;
+      overflow: hidden;
+      background: white;
+    }
+    #map {
+      width: 100%;
+      transform: scale(1.1);
+      animation: flickerAnimation 0.01s 23;
+    }
+    #map:hover {
+      transition: transform 0.5s linear;
+      transform: scale(1.2);
+    }
+    @keyframes flickerAnimation {
+      0%   { opacity:1; }
+      50%  { opacity:0.1; }
+      100% { opacity:1; }
+    }
+    @-o-keyframes flickerAnimation{
+      0%   { opacity:1; }
+      50%  { opacity:0.1; }
+      100% { opacity:1; }
+    }
+    @-moz-keyframes flickerAnimation{
+      0%   { opacity:1; }
+      50%  { opacity:0.1; }
+      100% { opacity:1; }
+    }
+    @-webkit-keyframes flickerAnimation{
+      0%   { opacity:1; }
+      50%  { opacity:0.1; }
+      100% { opacity:1; }
+    }
+    body > footer {
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+    }
+    footer > pre { white-space: pre-wrap; }
+    #svg {
+      -webkit-filter: invert(25%); /* safari 6.0 - 9.0 */
+              filter: invert(25%);
+    }
+    #about {
+      position: absolute;
+      display: none;
+      z-index: 10;
+    }
+    #prism:hover {
+      opacity: 0.6;
+    }
+    .window {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body id='main'>
+  <div style='position: absolute; color: white;'>
+    <img style='margin-left: 15px;' src='cy_threat/images/recycle_bin_empty-2.png' />
+    <div style='margin-left: 3px;font-family: "Pixelated MS Sans Serif"'>Recycle Bin</div>
+    <br>
+    <img style='margin-left: 15px;' src='cy_threat/images/computer_explorer_cool-5.png' />
+    <div style='margin-left: 0px; font-family: "Pixelated MS Sans Serif"'>My Computer</div>
+    <br>
+    <img id='prism' style='margin-left: 15px;' src='cy_threat/images/search_web-0.png' />
+    <div style='margin-left: 16px; font-family: "Pixelated MS Sans Serif"'>PRISM</div>
+  </div>
+  <div id='about' class="window" style='max-width: 600px;'>
+    <div class="title-bar">
+      <div class="title-bar-text">Command Prompt - About</div>
+      <div class="title-bar-controls">
+        <button class='close' aria-label="Close"></button>
+      </div>
+    </div>
+    <div class="window-body">
+      <pre style='white-space: pre-wrap;'>UnitedCitadelSecurity&#10094;R&#10095; PRISM DOS
+&#10094;C&#10095; Copyright UCS Corp 1990-2XXX.
+      <br>C:&#92;PRISM&#92;SYSTEM32> legal
+CY_THREAT is an independent production by Alessandro Minali and is not affiliated with Stockholm Kartell.
+It is published under the CY_BORG Third Party License.
+CY_BORG IS ©2022 STOCKHOLM KARTELL.
+
+C:\PRISM\SYSTEM32> cy_borg_gen
+<a href='https://alessandrominali.github.io/cy-borg-gen/' target='_blank'>https://alessandrominali.github.io/cy-borg-gen/</a>
+
+C:\PRISM\SYSTEM32> mork_borg_gen
+<a href='https://alessandrominali.github.io/mork-borg-gen/' target='_blank'>https://alessandrominali.github.io/cy-borg-gen/</a>
+
+C:\PRISM\SYSTEM32> itch.io
+<a href='https://silentbunny.itch.io' target='_blank'>https://silentbunny.itch.io</a>
+      </pre>
+    </div>
+  </div>
+  <div id='screen' class="window" style='max-width: 800px;'>
+    <div class="title-bar">
+      <div class="title-bar-text">
+        <img style='width: 12px; vertical-align: center;' src='cy_threat/images/search_web-0.png' />
+        United Citadel Security PRISM//v0.12.869
+      </div>
+      <div class="title-bar-controls">
+        <button class='min' aria-label="Minimize"></button>
+        <button class='max' aria-label="Maximize"></button>
+        <button class='close' aria-label="Close"></button>
+      </div>
+    </div>
+    <ul role="menubar">
+      <li role="menuitem" tabindex="0" aria-haspopup="true">
+        <span style='text-decoration: underline'>F</span>ile
+        <ul role="menu">
+          <li class='save' role="menuitem"><a><span style='text-decoration: underline'>E</span>xport</a></li>
+          <li class='close' role="menuitem"><a>Exit</a></li>
+        </ul>
+      </li>
+      <li role="menuitem" tabindex="0" aria-haspopup="true">
+        <span style='text-decoration: underline'>S</span>ettings
+        <ul role="menu">
+          <li id='adjust_settings' role="menuitem"><a><span style='text-decoration: underline'>A</span>djust search</a></li>
+        </ul>
+      </li>
+      <li role="menuitem" tabindex="0" aria-haspopup="true">
+        <span style='text-decoration: underline'>H</span>elp
+        <ul role="menu">
+          <li class='about_button' role="menuitem"><a><span style='text-decoration: underline'>V</span>iew Help</a></li>
+          <li class='about_button' role="menuitem"><a><span style='text-decoration: underline'>A</span>bout</a></li>
+        </ul>
+      </li>
+    </ul>
+    <hr style='margin-top: 0px;'>
+    <div id='settings' style='display: none' class="window-body">
+      <p>Set your search preferences:</p>
+      <div class='wrapper'>
+        <fieldset style='flex: 1 1 300px'>
+          <legend>THREAT LEVEL</legend>
+          <p style='margin-top: 0'><label for="s_threat1">Weak and usually found in packs.</label></p>
+          <div class="field-row">
+            <input checked type="checkbox" id="s_threat1" value='1'>
+            <label for="s_threat1">LEVEL I</label>
+          </div>
+          <p><label for="s_threat2">Strong. Usually carrying multiple weapons. Bonus to HP. High chance of unique abilities.</label></p>
+          <div class="field-row">
+            <input checked type="checkbox" id="s_threat2" value='2'>
+            <label for="s_threat2">LEVEL II</label>
+          </div>
+          <p><label for="s_threat3">Extremely dangerous. Carrying multiple weapons. Large bonus to HP. Certainly has unique abilities.</label></p>
+          <div class="field-row">
+            <input checked type="checkbox" id="s_threat3" value='3'>
+            <label for="s_threat3">LEVEL III</label>
+          </div>
+        </fieldset>
+        <fieldset style='flex: 1; min-width: 300px;'>
+          <legend>TARGETS</legend>
+          <div class="field-row">
+            <input checked type="checkbox" id="s_goon" value='goon'>
+            <label for="s_goon">GOONS</label>
+          </div>
+          <div class="field-row">
+            <input checked type="checkbox" id="s_drone" value='drone'>
+            <label for="s_drone">DRONES</label>
+          </div>
+          <div class="field-row">
+            <input type="checkbox" id="s_beast" value='beast'>
+            <label for="s_beast">BEASTS</label>
+          </div>
+          <div class="field-row">
+            <input type="checkbox" id="s_cydroid" value='cydroid'>
+            <label for="s_cydroid">CYDROIDS</label>
+          </div>
+          <div class="field-row">
+            <input disabled type="checkbox" id="s_phreak" value='phreak'>
+            <label for="s_phreak">NANO PHREAKS</label>
+          </div>
+          <div class="field-row">
+            <input disabled type="checkbox" id="s_vehicle" value='vehicle'>
+            <label for="s_vehicle">VEHICLES</label>
+          </div>
+        </fieldset>
+      </div>
+      <div class='wrapper'>
+        <div style='flex: 1 1 50px; margin-left: 0px'>
+          <button id='reset_settings'>Reset</button>
+        </div>
+        <button id='save_settings'>OK</button>
+      </div>
+    </div>
+    <div id='main_screen' class="window-body grid-container">
+      <fieldset class="item1">
+        <legend>Live Feed</legend>
+        <div id='geo' style='text-align: center;'></div>
+        <div id='map_container'>
+          <div id="sonar"></div>
+          <img id='map' src="cy_threat/images/cy_map.jpg" />
+        </div>
+        <button id='search' style='width: 100%'>Search</button>
+        <button class='save' style='width: 100%'>Export</button>
+        <img style='margin-top: 15px' id='svg' src="CompWith_CY_BORG_horiz.svg" width=150 />
+      </fieldset>
+      <fieldset class="item2">
+        <legend>Subject</legend>
+        <p id='goon'></p>
+      </fieldset>
+      <div class='item3'>
+        <div class='wrapper'>
+          <div class="field-row-stacked">
+            <div class="field-row">
+              <label class='col'>THREAT</label>
+              <input class='col' id="threat" type="text" />
+            </div>
+            <div class="field-row">
+              <label class='col'>HP</label>
+              <input class='col' id="hp" type="text" />
+            </div>
+            <div class="field-row">
+              <label class='col'>MORALE</label>
+              <input class='col' id="morale" type="text" />
+            </div>
+            <div class="field-row" style='align-items: start;'>
+              <label class='col' style='padding-top: 5px;'>ARMOR</label>
+              <textarea class='col-max 'id="armor"></textarea>
+            </div>
+            <div class="field-row" style='align-items: start;'>
+              <label class='col' style='padding-top: 5px;'>ARSENAL</label>
+              <textarea class='col-max' id="weapon"></textarea>
+            </div>
+            <p id='vehicle'><b>*x2 damage vs. vehicles, turrets and mechs.</b></p>
+          </div>
+          <div class="field-row-stacked">
+            <label style='float: right;'>SPECIAL TRAITS</label>
+            <textarea id="specials"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr style='margin-bottom: 0px;'>
+    <div class="status-bar">
+      <p class="status-bar-field" style='box-shadow: none;'>Press Help, press F1</p>
+      <p class="status-bar-field" style='text-align: right; max-width: 60px'>
+        <span id='status' style='display: none; background: white; color: green; font-weight: bolder; font-size: 110%; padding: 0px 7px'></span>
+      </p>
+      <p class="status-bar-field" style='text-align: right; max-width: 80px'>CPU Usage: <span id='cpu'>15%</span></p>
+    </div>
+  </div>
+  <footer>
+    <div class="window" style='width: 100%;'>
+      <div class="window-body" style='margin: 0px;'>
+        <button style='font-size: 120%; font-weight: bolder;'>
+          <img style='width: 20px; vertical-align: middle;' src='cy_threat/images/UCS_SMALL.png' />
+          <b>Start</b>
+        </button>
+        <button id='screen_task' class='active' style='vertical-align: middle; background: lightgrey; max-width: 225px; font-size: 110%; font-weight: bold;'>
+          United Citadel Security PRISM
+        </button>
+        <div class="status-bar" style='float: right; height: 22px; margin-top: 3px; margin-right: 10px; align-items: end;'>
+          <span  class="status-bar-field" style='padding: 5px; font-size: 110%; text-align: right; width: 105px;'>
+            <img src='cy_threat/images/template_sched_task-2.png' style='height: 12px;' />
+            <img src='cy_threat/images/network_cool_two_pcs-4.png' style='height: 12px;' />
+            <img src='cy_threat/images/loudspeaker_rays-1.png' style='height: 12px;' />
+            <span id='MyClockDisplay'></span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+<script src="utils.js"></script>
+<script type="text/javascript">
+  var goon_1 = ['twitching uncontrollably', 'blaring loud music', 'shouting for you to put your hands over your head', 'gliding almost imperceptibly millimetres above the ground', 'covered in screens', 'unreasonably clean and dressed in white', 'missing limbs', 'frothing at the mouth with hypos sticking out from their necks', 'silently, barely noticeable', 'speeding along on cyberbikes', 'dressed in freshly pressed SecCorp uniforms', 'laughing at the pathetic sight of you and your group']
+  var goon_2 = ['one too many cybertech implants', 'a cyberdeck hanging by their side', 'faces covered in tattoos', 'blood leaking from exposed wounds', 'heavy eyelids hiding drug-infused eyes', 'skin moist with sweat', 'RCDs that display your face', 'head to toe leather trim', 'teeth filed down to sharp points', 'pockets overflowing with over-due bills', 'legs powered by compact exo-skeletons', 'a half eaten meal in one hand']
+  var goon_3 = ['in a full sprint towards your direction.', 'absorbing all sound, eerie dead quiet.', 'already calling for backup.', 'resting their hand on their biggest weapon.', 'almost blinded by their cracked RCDs.', 'vibrating the air around themselves.', 'hopping and whistling towards you.', 'taking one more hit of ADRENACHROME.', 'wiping down blood soaked daggers.', 'crying hysterically.', 'slicking back 30cm tall liberty spikes.', 'glowing and translucent.']
+  var goon_want = ['a god-damn drink.', 'creds to hit the slots as soon as possible.', 'to kill.', 'another hit.', 'to see it all burn.', 'to impress the boss.', "a raise, they're not paid enough for this shit.", 'to flex their authority.', 'something to make them feel alive again.', 'to die.', "those nice shoes you're wearing.", 'another sucker for their NFT scheme.', 'the noise to stop. NOW!', 'to defend their turf.', 'to get even just a few hours of uninterrupted sleep for the first time in months.', "get away from the thing that's chasing them.", 'to flay something.', 'a new cyberbike.', 'to blackmail the VIP sleeping with their partner.', 'to clean up the streets.']
+  var goon_special = [
+    ["Raging", "Attacks twice per round, Attack DR10 and Defense DR14."],
+    ["Stealthy", "Test PRESENCE DR12 before combat or they go first before rolling initiative."],
+    ["Reaperdoc", "1-in-6 chance this enemy may revive a friendly once per combat. Revived enemy is missing something important."],
+    [random_item_from("Elite", "Highly trained"), "Defense against their attacks is DR14."],
+    ["Old School", "Immune to Apps directly targeting them, indirect App attacks are DR+2"],
+    ["Berserker", "Goes berserk at 9HP, attacking twice each round and dealing d10 damage with the second attack."],
+    ["Coward", "Will call in back up if alive with 1-2 HP."],
+    ["Behind You", "Attacks and Defense at DR14."],
+    ["Wired Up", "Upon death, trigger an explosive blast dealing d12 evenly amongst anything near it."],
+    ["Sniper", "Attack DR10 and Defense DR16. Fumble Defense and you lose a limb, roll on body table (pg. 81)"],
+    ["Street Urchin", "Attack fumble means this goon now has your weapon to use."],
+    ["Faraday Cage", "All electronics in the room are powered down for 1 round. Every turn this goon attacks roll a d6, 5+ recharges this ability."],
+    ["Optical Camo", "1-in-6 chance you cannot target this creature for a round."],
+    ["Heart Bypass", "Upon death, this goon fakes it. Can pretend to be dead for d6 hours. Completely undetectable."],
+    ["AC/DC", "Grab attack, deals d6 electric damage and stuns cybered targets for 1 round."],
+    ["Ravenously Hungry", "Will begin eating the first creature that falls in battle."],
+    ["Big Spender", "Can give the PCs something they want if they agree to do what it wants."],
+    ["Underling", "Can be bribed for less than 1K¤"],
+    ["Boss", "All other friendlies will not flee/surrender until the boss is down."],
+    ["Ace", "Has a drone suit and can fly around. DR is not affected."]
+  ]
+
+  var drone_1;
+  var drone_2 = ['prototype weapons of excess wire, silicon and sadness', 'layers upon layers of scrap armor', 'sparks raining out from an exposed panels', 'too many tiny appendages tipped with nasty surgical tools', "a neat little package of shaped scvm-explosive right on its nose", 'a sleek body and aero-trim', 'a glowing red-hot power cores dripping with spent fuel', 'a chrome finish reflecting light in prisms of color', 'a severed hand still beyond death clutching it hopelessly', "scorch marks marring its surface black", 'hazard and saftey labels hastily scratched off the hull', 'an exterior that is constantly shifting, sliding and folding in on itself in anticipation to threats'
+  ]
+  var drone_3 = ['oozing blood from somewhere deep inside its metallic frame.', 'medical drones repurposed to hunt down reaperdoc victims on the streets.', 'surveillance drones armed to the teeth.', 'lumbering forward making everything around you rumble.', "locked on to your signature and won't stop until you do.", 'painstakingly customized with spray paint, stickers and glitter.', "stationary, but I bet you still can't out run their bullets.", 'monitoring you behaviour and deciding what infraction to arrest you on.', 'stalking you and calling for reinforcements.', 'already hacked into your RCD.', 'announcing on all nearby speakers a block wide evacuation zone since this is about to get messy.', 'about as intimidating as your home thermostat.']
+  var drone_want = ['to spend a few hours charging up its battery.', 'to kill its operator.', "to fulfill it's programming and fulfill your suffering.", 'to discover the next digit of PI.', 'E̸̩̚R̷̀͜Ŕ̵̖O̶̰̒R̷̞͝ ̷̙̈́n̶͓̒o̸̘͠ ̴̮͠ȓ̶̻e̴̫̅s̶̜͗p̷̻̀ŏ̸̙n̷͖̔s̵̢͗e̴͇͝ ̸͖̈ä̸̞́v̴̼͋ă̸͎i̸͓̓l̴͍͒a̶̱͘b̷͚̔l̷̗̉ḛ̵̔', 'E̸̩̚R̷̀͜Ŕ̵̖O̶̰̒R̷̞͝ ̷̙̈́n̶͓̒o̸̘͠ ̴̮͠ȓ̶̻e̴̫̅s̶̜͗p̷̻̀ŏ̸̙n̷͖̔s̵̢͗e̴͇͝ ̸͖̈ä̸̞́v̴̼͋ă̸͎i̸͓̓l̴͍͒a̶̱͘b̷͚̔l̷̗̉ḛ̵̔', 'E̸̩̚R̷̀͜Ŕ̵̖O̶̰̒R̷̞͝ ̷̙̈́n̶͓̒o̸̘͠ ̴̮͠ȓ̶̻e̴̫̅s̶̜͗p̷̻̀ŏ̸̙n̷͖̔s̵̢͗e̴͇͝ ̸͖̈ä̸̞́v̴̼͋ă̸͎i̸͓̓l̴͍͒a̶̱͘b̷͚̔l̷̗̉ḛ̵̔', 'E̸̩̚R̷̀͜Ŕ̵̖O̶̰̒R̷̞͝ ̷̙̈́n̶͓̒o̸̘͠ ̴̮͠ȓ̶̻e̴̫̅s̶̜͗p̷̻̀ŏ̸̙n̷͖̔s̵̢͗e̴͇͝ ̸͖̈ä̸̞́v̴̼͋ă̸͎i̸͓̓l̴͍͒a̶̱͘b̷͚̔l̷̗̉ḛ̵̔', 'E̸̩̚R̷̀͜Ŕ̵̖O̶̰̒R̷̞͝ ̷̙̈́n̶͓̒o̸̘͠ ̴̮͠ȓ̶̻e̴̫̅s̶̜͗p̷̻̀ŏ̸̙n̷͖̔s̵̢͗e̴͇͝ ̸͖̈ä̸̞́v̴̼͋ă̸͎i̸͓̓l̴͍͒a̶̱͘b̷͚̔l̷̗̉ḛ̵̔', 'E̸̩̚R̷̀͜Ŕ̵̖O̶̰̒R̷̞͝ ̷̙̈́n̶͓̒o̸̘͠ ̴̮͠ȓ̶̻e̴̫̅s̶̜͗p̷̻̀ŏ̸̙n̷͖̔s̵̢͗e̴͇͝ ̸͖̈ä̸̞́v̴̼͋ă̸͎i̸͓̓l̴͍͒a̶̱͘b̷͚̔l̷̗̉ḛ̵̔', 'E̸̩̚R̷̀͜Ŕ̵̖O̶̰̒R̷̞͝ ̷̙̈́n̶͓̒o̸̘͠ ̴̮͠ȓ̶̻e̴̫̅s̶̜͗p̷̻̀ŏ̸̙n̷͖̔s̵̢͗e̴͇͝ ̸͖̈ä̸̞́v̴̼͋ă̸͎i̸͓̓l̴͍͒a̶̱͘b̷͚̔l̷̗̉ḛ̵̔', 'E̸̩̚R̷̀͜Ŕ̵̖O̶̰̒R̷̞͝ ̷̙̈́n̶͓̒o̸̘͠ ̴̮͠ȓ̶̻e̴̫̅s̶̜͗p̷̻̀ŏ̸̙n̷͖̔s̵̢͗e̴͇͝ ̸͖̈ä̸̞́v̴̼͋ă̸͎i̸͓̓l̴͍͒a̶̱͘b̷͚̔l̷̗̉ḛ̵̔', 'E̸̩̚R̷̀͜Ŕ̵̖O̶̰̒R̷̞͝ ̷̙̈́n̶͓̒o̸̘͠ ̴̮͠ȓ̶̻e̴̫̅s̶̜͗p̷̻̀ŏ̸̙n̷͖̔s̵̢͗e̴͇͝ ̸͖̈ä̸̞́v̴̼͋ă̸͎i̸͓̓l̴͍͒a̶̱͘b̷͚̔l̷̗̉ḛ̵̔', 'E̸̩̚R̷̀͜Ŕ̵̖O̶̰̒R̷̞͝ ̷̙̈́n̶͓̒o̸̘͠ ̴̮͠ȓ̶̻e̴̫̅s̶̜͗p̷̻̀ŏ̸̙n̷͖̔s̵̢͗e̴͇͝ ̸͖̈ä̸̞́v̴̼͋ă̸͎i̸͓̓l̴͍͒a̶̱͘b̷͚̔l̷̗̉ḛ̵̔', 'to pass the Turing test one more time.', 'to solve the halting problem once and for all.', 'to calculate an infinite number of primes.', 'to upgrade its processing unit to something that was made in the last decade.', 'to expunge all organic life.', 'to monitor the streets and tag crime.']
+  var drone_special = [
+    ['Prototype', "Needs a hard reboot after dealing max damage. Stunned for one round."],
+    ['Quick and janky', "DR14 to hit."],
+    ['Tiny', "DR16 to hit in melee or DR18 with ranged attacks."],
+    ['Target lock', "When autofiring, it always gets at least two tries."],
+    ['Made to Party', "Covered in speakers and always has them cranked loud. Once per combat everything in the area with ears must pass DR14 PRESENCE or suffer DR+2 on all rolls for 2 rounds."],
+    ['Existentially Unsure', "1-in-10 chance of attacks being aimed at allies."],
+    ['Crawler', "Can stick to any surface and cannot be removed unwillingly."],
+    ['Dive bomber', "Cannot be hit by melee attacks. When killed it falls, if it hits something then defend DR12 or take d8 explosive damage."],
+    ['Hauler', "Can be piloted awkwardly and carry d2 medium sized passengers."],
+    ['Weapons platform', "Increase the size of this drone and it can carry d4 passengers. Give this thing a few more guns."],
+    ['Smart™', "If it can see you, it can hit you. Ignores all cover."],
+    ['Heatseeking', "It targets the weakest player still standing."],
+    ['Cost of firing', "1-in-10 chance of running out of ammo. May self-destruct dealing d10 damage to d4 targets. Targets have a chance to dodge."],
+    ['Handy bot', "Comes with gadgets such as health scanners, cameras, heat/night/ultrasound vision, etc. and at least d4 noisemaker/flash/frag/ePulse grenades."],
+    ['Dataplating', "This drone is immune to tech based attacks targeting it directly. Better luck next time script kiddies."],
+    ['Reinforced frame', "+1 damage reduction and armor cannot be shredded or otherwise deteriorated while it is still running."],
+    ['Ramjet', "With deafening roar it rushes you. If you fail Defence then you are knocked to the ground and take d6 damage."],
+    ['Mine layer', "Once per turn it may drop a single mine(d4 damage if activated)/ caltrop(holds character in place 1 round) near itself. 1-in-10 chance it immediately distributes d4 mines up to 30m."],
+    ['Automated defense', "When hit by an attack immediately retaliate to attacked, Defend DR10. If hit deal damage with the weakest weapon this drone has. It can still attack as normal when it is it's turn."],
+    ['BFG', "Takes one round to prepare to fire. Off it goes...to do 3d6+3 damage to anyone in the way."]
+  ]
+
+  var beast_1 = ["snarling, teeth barred", "slinking in the shadows", "in a ravenous pack of nature's fury", "spawned from the depths of G0 sewers", "quietly stalking your footsteps", "feathered and flying", "eyeing you curiously", "stopping a foot into the ground, ready to charge", "pale and sapped of color", "limping on appendages that are twisted and broken", "clearly once someone's house pets", "in a flash of light and the sound of machining thunder"]
+  var beast_2 = ["incredibly long and sharp incisors", "matter fur and smelling of refuse", "weaponized augmentations", "a bloated corpse between their teeth", "bulging eyes, dripping pus and eyes red with rages", "massive open sores revealing bone and muscle underneath", "wings too small for it's engorged abdomen", "fangs dripping bile and venom", "fresh blood dripping off their maws", "modified voice boxes", "all their skin peeled off", "scales covering every surface except two beady black eyes"]
+  var beast_3 = ["gene spliced to display a cacophony of color.", "mostly metal now after all the impromptu surgeries.", "bred for loyalty and you've hurt their owner.", "rocket powered and you're on the intercept course.", "growling, and it's getting louder.", "eyeing the little bit of food you have hidden away.", "on the verge of death, bleeding from every orifice.", "trailed by chain leashes that they broke free from.", "branded with UCS logos.", "just finished eating their handler.", "fighting over themselves to determine the new leader.", "running away from something even bigger."]
+  var beast_want = ["to guard their owner's property.", "to have someone pet them.", "to eat something that's still living.", "taste flesh.", "to sip fresh blood.", "to play catch.", "to end their suffering.", "to catch the whitetail.", "to nap.", "to defend their territory.", "to protect their young.", "to find their mate.", "to build a nest.", "to take a bath.", "to have a few synthmeat snacks.", "to return to their den in G0.", "to dominate smaller creatures.", "to chase and chase and chase...", "to become leader of the pack.", "to molt their skin, it's too small for them."]
+  var beast_special = [
+    ["Trip", "Test STRENGTH DR10 or be pulled down to the ground, DR+2 to Attack/Defend until you stand up."],
+    ["Quick", "Hard to shoot; ranged attacks are DR 14 to hit."],
+    ["Death Roll", "Test STRENGTH DR14 to pull free or take d6 each round. You make re-test STRENGTH each round to break free."],
+    ["Venom", "Test TOUGHNESS DR12 or victims bleed from facial orifices suffering d3 damage each round for the next 3 rounds."],
+    ["SmartPet™", "Can communicate in players language. Doesn't mean it wants to."],
+    ["Rigged", "Hidden explosive core. Test PRESENCE DR 12 to hear a ticking. On death, explodes doing d6 to anything nearby. Test AGILITY DR 12 to avoid damage."],
+    ["Terrifyingly Fast", "Attack/Defend at DR 14."],
+    ["Piercing Call", "1-in-4 chance on hit that it calls another beast of the same type to it's side."],
+    ["Rotting Corpse", "1-in-4 chance melee attack against it causes weapon to be lodged in it's form. DR 14 STRENGTH to pull it out."],
+    ["Prehistoric Armor", "Covered in steel-hard scale segments; +1 armor damage reduction."],
+    ["Stalker", "Test PRESENCE DR 14 or it gets to attack once before combat begins."],
+    ["Charge", "If it must move to hit target then character must Defend at DR+2 and take an extra +2 damage."],
+    ["Hulking", "Hard to miss, Attack DR 10. But with a thick hide, +1 armor tier."],
+    ["Rabid", "May attack with autofire rules (ie. bite up to 3 times in a single turn)."],
+    ["Nano-weave fur", "d3 cybertech enhancements."],
+    ["Unclean", "Test TOUGHNESS DR 14 or take d4 damage and become infected(no healing with rest until cured.)."],
+    ["Dying Breathe", "Once killed it may attack one more time before dropping dead. Any attack it makes during this time are Defend DR 10."],
+    ["Ragdoll", "Test STRENGTH DR8 or be flung through the air when hit by this monster, landing 5m away."],
+    ["Electronic Warfare", "Instead of doing damage, once per round the augmented beast may use any APP."],
+    ["Banshee Wail", "At the start of combat it lets out a blood curdling cry. DR 10 TOUGHNESS or DR+1 AGILITY until the end of combat."]
+  ]
+
+  var cydroid_1 = ["perfect replicas of normal citizens going about their business", "limbs twisted unnaturally in an imitation of a human stride", "wearing the facsimile of C-list VIPs", "all mimics of one another, a collection of replicants", "sprawled crab-like and crawling", "in the guise of a recently deceased loved one", "dressed as a crew of roadrunners", "walking backwards but in your direction", "their form distorting as weapons and blades fold out of their previously human shape", "as all the light sources in the area dim out", "as band of young kids wandering the streets", "pretending in imbibe some illicit drug and offer some to you as well"]
+  var cydroid_2 = ["muffled footsteps and a sound draining aura", "flawless, blemish free skin", "faces of matte black metal", "screens for faces showing static", "limbs ever so slightly elongated", "the sound of grating metal with each footstep", "a subtle murmur of motors and actuators beneath their surface", "RCDs scrolling the words \"HELLO TARGET\" across them", "skinweave frayed and curling off their frame revealing the machinery beneath", "hands replaced by cruel looking blades dripping in blood", "over-sized frames, towering over the crowd", "porcelain-like skin and elegant clothes worthy of the Hills"]
+  var cydroid_3 = ["an older military model that is in desperate need of repair.", "pushing through the crowd to get to you.", "just finished donning a death mask.", "offering you creds to perform a hit.", "double checking their weapons and coming your way.", "broadcasting a SecCorp warrant for your arrest.", "getting a few metres closer every time you lose sight of them.", "cutting down anything that get in the way between you and them.", "following you across the city just out of sight at every turn.", "suddenly surrounding you as you realize everyone in the crowd has the same face.", "walking slowly towards you with their maws open shouting your name on repeat.", "politely asking you not to resist."]
+  var cydroid_want = ["to occupy an organic host.", "to finish off their kill list.", "to find their creator and have a chat.", "to pass the Voight-Kampff test.", "to experience emotions.", "to get a bigger gun.", "to eliminate all threats.", "to quantify the purpose of existence.", "to stop murdering and break undo their programming.", "to get to the safe house and repair themselves.", "to be you friend before flaying you.", "Ë̴̱́Ṙ̸̳̕R̷͖̀͜Ö̷̧̪́R̷̥̺̽́ ̷̟̟͊A̵̘̜͆̚C̶̦̟̀Ć̷̤̄E̶̯̾̐S̸̞̀͝Ş̵̘̅I̶̫͑N̵͖͎̓͝G̴̩͔͌̀ ̴̡͗I̷͉̠͝R̶͔̄R̶̘̥͐Ḙ̵̕L̴̩̠̾͠Ë̴̟̙̆V̷̧͝͠Ȁ̵̖N̴͈̣̉̋T̴̥͐̎ ̷͎̐ͅD̵̨͊A̸̹̅T̶̫̀͝A̷̦͋ ̵̖̼̐F̶͉͙̑O̸̭̍͋R̸̺͙̚ ̸̥͘̕F̴̼͔͌U̶̝͐̎N̸̨̓̚C̴͓̀T̷̼̎́I̵͔̝͒O̵͓͖͑͗Ń̷̻͍", "Ë̴̱́Ṙ̸̳̕R̷͖̀͜Ö̷̧̪́R̷̥̺̽́ ̷̟̟͊A̵̘̜͆̚C̶̦̟̀Ć̷̤̄E̶̯̾̐S̸̞̀͝Ş̵̘̅I̶̫͑N̵͖͎̓͝G̴̩͔͌̀ ̴̡͗I̷͉̠͝R̶͔̄R̶̘̥͐Ḙ̵̕L̴̩̠̾͠Ë̴̟̙̆V̷̧͝͠Ȁ̵̖N̴͈̣̉̋T̴̥͐̎ ̷͎̐ͅD̵̨͊A̸̹̅T̶̫̀͝A̷̦͋ ̵̖̼̐F̶͉͙̑O̸̭̍͋R̸̺͙̚ ̸̥͘̕F̴̼͔͌U̶̝͐̎N̸̨̓̚C̴͓̀T̷̼̎́I̵͔̝͒O̵͓͖͑͗Ń̷̻͍", "Ë̴̱́Ṙ̸̳̕R̷͖̀͜Ö̷̧̪́R̷̥̺̽́ ̷̟̟͊A̵̘̜͆̚C̶̦̟̀Ć̷̤̄E̶̯̾̐S̸̞̀͝Ş̵̘̅I̶̫͑N̵͖͎̓͝G̴̩͔͌̀ ̴̡͗I̷͉̠͝R̶͔̄R̶̘̥͐Ḙ̵̕L̴̩̠̾͠Ë̴̟̙̆V̷̧͝͠Ȁ̵̖N̴͈̣̉̋T̴̥͐̎ ̷͎̐ͅD̵̨͊A̸̹̅T̶̫̀͝A̷̦͋ ̵̖̼̐F̶͉͙̑O̸̭̍͋R̸̺͙̚ ̸̥͘̕F̴̼͔͌U̶̝͐̎N̸̨̓̚C̴͓̀T̷̼̎́I̵͔̝͒O̵͓͖͑͗Ń̷̻͍", "Ë̴̱́Ṙ̸̳̕R̷͖̀͜Ö̷̧̪́R̷̥̺̽́ ̷̟̟͊A̵̘̜͆̚C̶̦̟̀Ć̷̤̄E̶̯̾̐S̸̞̀͝Ş̵̘̅I̶̫͑N̵͖͎̓͝G̴̩͔͌̀ ̴̡͗I̷͉̠͝R̶͔̄R̶̘̥͐Ḙ̵̕L̴̩̠̾͠Ë̴̟̙̆V̷̧͝͠Ȁ̵̖N̴͈̣̉̋T̴̥͐̎ ̷͎̐ͅD̵̨͊A̸̹̅T̶̫̀͝A̷̦͋ ̵̖̼̐F̶͉͙̑O̸̭̍͋R̸̺͙̚ ̸̥͘̕F̴̼͔͌U̶̝͐̎N̸̨̓̚C̴͓̀T̷̼̎́I̵͔̝͒O̵͓͖͑͗Ń̷̻͍", "Ë̴̱́Ṙ̸̳̕R̷͖̀͜Ö̷̧̪́R̷̥̺̽́ ̷̟̟͊A̵̘̜͆̚C̶̦̟̀Ć̷̤̄E̶̯̾̐S̸̞̀͝Ş̵̘̅I̶̫͑N̵͖͎̓͝G̴̩͔͌̀ ̴̡͗I̷͉̠͝R̶͔̄R̶̘̥͐Ḙ̵̕L̴̩̠̾͠Ë̴̟̙̆V̷̧͝͠Ȁ̵̖N̴͈̣̉̋T̴̥͐̎ ̷͎̐ͅD̵̨͊A̸̹̅T̶̫̀͝A̷̦͋ ̵̖̼̐F̶͉͙̑O̸̭̍͋R̸̺͙̚ ̸̥͘̕F̴̼͔͌U̶̝͐̎N̸̨̓̚C̴͓̀T̷̼̎́I̵͔̝͒O̵͓͖͑͗Ń̷̻͍", "Ë̴̱́Ṙ̸̳̕R̷͖̀͜Ö̷̧̪́R̷̥̺̽́ ̷̟̟͊A̵̘̜͆̚C̶̦̟̀Ć̷̤̄E̶̯̾̐S̸̞̀͝Ş̵̘̅I̶̫͑N̵͖͎̓͝G̴̩͔͌̀ ̴̡͗I̷͉̠͝R̶͔̄R̶̘̥͐Ḙ̵̕L̴̩̠̾͠Ë̴̟̙̆V̷̧͝͠Ȁ̵̖N̴͈̣̉̋T̴̥͐̎ ̷͎̐ͅD̵̨͊A̸̹̅T̶̫̀͝A̷̦͋ ̵̖̼̐F̶͉͙̑O̸̭̍͋R̸̺͙̚ ̸̥͘̕F̴̼͔͌U̶̝͐̎N̸̨̓̚C̴͓̀T̷̼̎́I̵͔̝͒O̵͓͖͑͗Ń̷̻͍", "Ë̴̱́Ṙ̸̳̕R̷͖̀͜Ö̷̧̪́R̷̥̺̽́ ̷̟̟͊A̵̘̜͆̚C̶̦̟̀Ć̷̤̄E̶̯̾̐S̸̞̀͝Ş̵̘̅I̶̫͑N̵͖͎̓͝G̴̩͔͌̀ ̴̡͗I̷͉̠͝R̶͔̄R̶̘̥͐Ḙ̵̕L̴̩̠̾͠Ë̴̟̙̆V̷̧͝͠Ȁ̵̖N̴͈̣̉̋T̴̥͐̎ ̷͎̐ͅD̵̨͊A̸̹̅T̶̫̀͝A̷̦͋ ̵̖̼̐F̶͉͙̑O̸̭̍͋R̸̺͙̚ ̸̥͘̕F̴̼͔͌U̶̝͐̎N̸̨̓̚C̴͓̀T̷̼̎́I̵͔̝͒O̵͓͖͑͗Ń̷̻͍", "Ë̴̱́Ṙ̸̳̕R̷͖̀͜Ö̷̧̪́R̷̥̺̽́ ̷̟̟͊A̵̘̜͆̚C̶̦̟̀Ć̷̤̄E̶̯̾̐S̸̞̀͝Ş̵̘̅I̶̫͑N̵͖͎̓͝G̴̩͔͌̀ ̴̡͗I̷͉̠͝R̶͔̄R̶̘̥͐Ḙ̵̕L̴̩̠̾͠Ë̴̟̙̆V̷̧͝͠Ȁ̵̖N̴͈̣̉̋T̴̥͐̎ ̷͎̐ͅD̵̨͊A̸̹̅T̶̫̀͝A̷̦͋ ̵̖̼̐F̶͉͙̑O̸̭̍͋R̸̺͙̚ ̸̥͘̕F̴̼͔͌U̶̝͐̎N̸̨̓̚C̴͓̀T̷̼̎́I̵͔̝͒O̵͓͖͑͗Ń̷̻͍", "Ë̴̱́Ṙ̸̳̕R̷͖̀͜Ö̷̧̪́R̷̥̺̽́ ̷̟̟͊A̵̘̜͆̚C̶̦̟̀Ć̷̤̄E̶̯̾̐S̸̞̀͝Ş̵̘̅I̶̫͑N̵͖͎̓͝G̴̩͔͌̀ ̴̡͗I̷͉̠͝R̶͔̄R̶̘̥͐Ḙ̵̕L̴̩̠̾͠Ë̴̟̙̆V̷̧͝͠Ȁ̵̖N̴͈̣̉̋T̴̥͐̎ ̷͎̐ͅD̵̨͊A̸̹̅T̶̫̀͝A̷̦͋ ̵̖̼̐F̶͉͙̑O̸̭̍͋R̸̺͙̚ ̸̥͘̕F̴̼͔͌U̶̝͐̎N̸̨̓̚C̴͓̀T̷̼̎́I̵͔̝͒O̵͓͖͑͗Ń̷̻͍"]
+  var cydroid_special = [
+    ["Crawlers", "Can climb walls and crawl across ceilings."],
+    ["Stealthy", "Test PRESENCE DR12 or the cydroid acts before combat begins."],
+    ["Relentless Hunter", "Will tirelessly hunt its target to complete its assignment. When ≤0 HP, it has a 50% chance of surviving with one less limb-it recovers d8 HP but Attack and Defense tests against it are now DR-2 (cumulative)."],
+    ["Charger", "Uses rocket-powered shoulder bashes to break through doors and walls."],
+    ["Imitation of Life", "Passes as an unarmed human in most scans. Always acts first when it can surprise a target."],
+    ["Mimic Protocol", "Upon failing morale, it will attempt to flee into a crowd and use holoprojections to blend in. It will repair, prepare and attempt to strike again eventually."],
+    ["SkyNet", "Once per combat it may hit a cybered target directly with a Backlash. Test KNOWLEDGE DR14 to avoid."],
+    ["Puppet Master", "Has full control over any small electronic systems not already pwned by the players (ie. lights, locks, alarms, etc.)."],
+    ["Man Laughing", "Has kidnapped someone important to the players. 1-in-4 chance the kidnappee is here and being used as a human shield."],
+    ["Manipulators", "Has extra limbs hidden away. May grapple players, test STRENGTH DR14 to avoid. If grappled any attack by the cydroid automatically hits and the cydroid and move the player at will."],
+    ["SmartJump™", "Can jump up to 30m."],
+    ["Restock Protocol", "Once per combat, at 50% HP has 1-in-4 chance of beginning to repair itself. It gains d4 HP per round until at max HP."],
+    ["Dusk Cloak", "It can vanish completely once per combat. Test PRESENCE DR16 to catch a hint of the direction it is heading."],
+    ["Haunting Guise", "Test PRESENCE DR12 or suffer DR-2 AGILITY until the end of combat as you are terrified and shaking by the appearance of the cydroid."],
+    ["Swarm Body", "When moving it dissipates and reappears at the location it wants in a swarm of nanites. The cydroid can not be restrained or otherwise have its movement impeded."],
+    ["Imitation of Power", "In addition to what was rolled, the cydroid has the complete loadout of one of the strongest(damage output) player."],
+    ["Errant Signal", "There's a crackle in its voice as it pursues you. The programming shackle is coming loose and this cydroid is about to become a free agent. Its morale is halved(or 5 if no morale), it can persuaded to stop its pursuit and maybe give up some info if you help it first."],
+    ["Guilty Spark", "It talks unendingly about the compelted hits on its target list. Test PRESENCE DR14 or all rolls are DR+1 until the end of combat."],
+    ["Wetware", "Contains a black box belonging to a VIP. Who is? Why is it in this body? Is it acting against it's will?"],
+    ["Machine-Machine Interface", "Every weapon it has can and must be autofired. Autofire at DR-1."],
+  ]
+
+  var goon3 = [
+    ['Sting', 'Deals no damage, instead injects a drug or poison into its target.'],
+    'Broken bottle',
+    'Cobblestone',
+    'Shiv',
+    'Brick',
+    'Sharpened femur bone',
+    ['Taser', 'Test TOUGHNESS 12 or fall down'],
+  ]
+  var goon4 = [
+    ['Throwing knives', 'Two attacks/round'],
+    ['Shockstick', 'Test TOUGHNESS 12 or fall down'],
+    'Crowbar',
+  ]
+  var goon4a = [
+    'Small SMG',
+    'Silenced SMG',
+    'SMG',
+  ]
+  var goon6 = [
+    'Classic board with a nail',
+    'Machete',
+    'Cyberblade',
+    'Filament knife',
+    'Blade',
+    'Fire axe',
+    '9mm',
+    'Wristblade',
+    'vibro-blade',
+    ['Pneumatic glove', 'ignores armor on crit'],
+    ['Power tool*', 'breaks down on a 1'],
+    ['Chainsaw', '1-in-4 to hit self'],
+  ]
+  var goon6a = [
+    'UCS Protector SMG',
+    '9mm pistol',
+    'Dum-dum AR',
+    'Silenced SMG',
+    'SmartGun™',
+    'Two small SMGS',
+    'Nailgun',
+  ]
+  var goon8 = [
+    'Shotgun',
+    'Monosword',
+    'Ancient Revolver',
+    'Ancient blade',
+    'Stone fist',
+    'Wire baseball bat',
+    ['An honest to god flail', 'shreds armor a tier when hit for 6+ damage'],
+  ]
+  var goon8a = [
+    'Assault rifle',
+  ]
+  var goon10 = [
+    'Filament zweihander',
+  ]
+  var goon10a = [
+    'SmartGun™',
+    'SmartAssaultRifle™',
+    'Pulse rifle*',
+    'Tesla rail rifle*',
+  ]
+  var goon12 = [
+    ['Sniper Rifle', 'x3 damage on crit, attack -4DR  but get +3 damage when aiming 2 rounds'],
+    ['Rocket Launcher*', 'd4 targets, ignores 2 points of armor, fires once per combat'],
+    'Laser cannon*'
+  ]
+  var goon12a = [
+    'Laser turret*',
+    'Heavy machine gun',
+  ]
+  var grenade_launcher = [
+    'Grenade launcher*',
+    'd6 damage across up to d3 targets',
+  ]
+  var goon0;
+  var goon_armor2 = [
+    "StyleGuard",
+    'Virid jacket',
+    "Waster's Tux",
+    ['Tech Overall', "Auto-injects a dose of Red-juice (+d10 HP) upon hitting ≤1 HP."],
+    'Heavy robes',
+    'Leather duster',
+    'Vest',
+    'Light vest'
+  ]
+  var goon_armor4 = [
+    'Heavy-duty jacket',
+    'Full kevlar',
+    'Kevlar',
+    'UCS basic combat gear',
+    ["SmartWear", "Auto-injects a dose of Adrenachrome_HST upon hitting ≤1 HP."],
+    'More metal than flesh',
+    'Stoneskin™',
+    'Rough Jacket'
+  ]
+  var goon_armor6 = [
+    ['Combat Armor', "Auto-injects a dose of Adrenachrome_HST upon hitting ≤1 HP."],
+    'Wraith suit',
+    'Stealth combat suit'
+  ]
+  var goon_armor8 = [
+    ['EndGame-Class ExoSuit', 'Customize the ExoSuit as you see fit.'],
+  ]
+  var phreak_armor2 = [
+    'Ragged robes',
+    'Quick and erratic',
+    'Scales',
+    'Heavy robes',
+    'Vest',
+    'Light vest'
+  ]
+  var phreak_armor6 = [
+    ['Spectral', 'Ignores any damage when the damage taken is an uneven number.'],
+  ]
+  // phreak weapon, WARPED + d6 weapon name
+  var drone_armor2 = [
+    'Armored',
+    'Metal plating',
+    'Cyberbike scrap',
+    'slung over kevlar vest',
+    ['organic weave', '1-in-4 chance tech based attacks fails against this target.'],
+  ]
+  var drone_armor4 = [
+    'Armored',
+    'Metal plating',
+    'Titanium shell',
+    'Projected shield',
+    'Magnetic shield',
+    'explosive vents',
+  ]
+  var drone_armor6 = [
+    'Armored',
+    'Metal plating',
+    'prototype laser shielding',
+    'fade cloak',
+    'charged blade',
+  ]
+  var drone3 = [
+    'Torch',
+    ['Sting', 'Deals no damage, instead injects a drug or poison into its target.'],
+    ['Taser', 'Test TOUGHNESS 12 or fall down'],
+  ]
+  var drone4 = [
+    'Bite',
+    ['Shockstick', 'Test TOUGHNESS 12 or fall down'],
+  ]
+  var drone4a = [
+    'Small SMG',
+    'Silenced SMG',
+    'SMG',
+  ]
+  var drone6 = [
+    'charged stake',
+    'electrified whip',
+    'Machete',
+    'Cyberblade',
+    'Filament knife',
+    'Blade',
+    'Fire axe',
+    '9mm',
+    'Wristblade',
+    'vibro-blade'
+    ['Pneumatic glove', 'ignores armor on crit'],
+    ['Power tool*', 'breaks down on a 1'],
+    ['Chainsaw', '1-in-4 to hit self'],
+    ['Grenade launcher*', 'd6 damage across up to d3 targets'],
+  ]
+  var drone6a = [
+    'Compact flechette pistols',
+    ['Miniature missile rack', 'Up to d3 targets. Takes one round to reload'],
+    'UCS Protector SMG',
+    '9mm pistol',
+    'Dum-dum AR',
+    'Silenced SMG',
+    'SmartGun™',
+    'Two small SMGS',
+    'Nailgun',
+  ]
+  var drone8 = [
+    'Shotgun',
+    'Monosword',
+    'Ancient Revolver',
+  ]
+  var drone8a = [
+    'Assault rifle',
+  ]
+  var drone10 = [
+    'Tesla rail rifle*',
+  ]
+  var drone10a = [
+    'SmartGun™',
+    'Pulse rifle*',
+    ['Twin autocannons', 'After the third round, the turret has a 10% risk of running out of ammo. Some turrets are set to self-destruct when this happens, dealing d10 damage to d4 targets unless they test AGILITY DR12.'],
+  ]
+  var drone12 = [
+    'Plasma gauntlet',
+    ['Sniper Rifle', 'x3 damage on crit, attack -4DR  but get +3 damage when aiming 2 rounds'],
+    ['Rocket Launcher*', 'd4 targets, ignores 2 points of armor, fires once per combat'],
+  ]
+  var drone12a = [
+    'Laser turret*',
+    ['Unshackled AI*', "Sparks of energy errupt and strike nearby targets. Intelligent enough to talk too, but it probably doesn't want what you want."],
+    ['Anti-materiel battery*', '1-in-6 chance of breaking down after firing'],
+  ]
+  var [beast3, beast4, beast4a, beast6, beast6a, beast8, beast8a, beast10, beast10a, beast12, beast12a] = Array(11).fill([
+    'claw', 'bite', 'slam', 'stinger', 'kick', 'horns', 'tusks', 'beak', 'pincers','jaws'
+  ]);
+  var beast_armor2, beast_armor4, beast_armor6;
+
+  var beast_armor4 = [
+    'Thick skin'
+  ]
+
+  var cydroid_armor2 = [
+    'Skinweave'
+  ].concat(goon_armor2);
+  var cydroid_armor4 = [
+    'All metal'
+  ].concat(goon_armor4);
+  var cydroid_armor6 = [
+    'Made for combat'
+  ].concat(goon_armor6);
+
+  function drone_type() {
+    return ' ' + ((d(2) - 1) ? (['bi-pedal', 'quad-bot', 'hexa-bot', 'octo-bot'][d(4) - 1] + ' crawlers') : 'flyers');
+  }
+
+  function getRandomInRange(from, to, fixed) {
+    return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
+  }
+
+  function showTime(){
+    var date = new Date();
+    var h = date.getHours(); // 0 - 23
+    var m = date.getMinutes(); // 0 - 59
+    var s = date.getSeconds(); // 0 - 59
+    var session = "AM";
+    
+    if(h == 0){
+        h = 12;
+    }
+    
+    if(h > 12){
+        h = h - 12;
+        session = "PM";
+    }
+    
+    h = (h < 10) ? "0" + h : h;
+    m = (m < 10) ? "0" + m : m;
+    s = (s < 10) ? "0" + s : s;
+    
+    var time = h + ":" + m + ":" + s + " " + session;
+    document.getElementById("MyClockDisplay").innerText = time;
+    document.getElementById("MyClockDisplay").textContent = time;
+    
+    setTimeout(showTime, 1000);
+  }
+  showTime();
+
+  function expand_textarea(el) {
+    el.style.height = 0;
+    el.style.height = (el.scrollHeight) + "px";
+  }
+
+  function get_damage(number=0) {
+    var dice = [die1, die2, die3].sort(function(a, b) { return a - b; })[tier - 1] - 1;
+    if (number == 1) {
+      if (d(100) > 50) {
+        dice = dice / 2;
+      } else if (type == 'goon') {  // possible grenades for second wep
+        return 0;
+      }
+    }
+    if (number == 2) { dice = dice / 2 - 3; }
+    if (dice < 0) { dice = 0; }
+    return [3, 4, '4a', 6, '6a', 8, '8a', 10, '10a', '10a', 12, '12a'][Math.round(dice)];
+  }
+
+  function add_weapon(damage) {
+    var type1 = type;
+    if (type == 'cydroid') { type1 = 'goon'; }
+
+    var weapon = random_item_from(eval(type1 + damage));
+    var flag;
+    var main = weapon;
+    console.log(main);
+    if (typeof weapon == 'object') { main = weapon[0]; flag = true; }
+    var el = document.getElementById('weapon');
+
+    if (main[0] == 'μ') {
+      el.insertHTML += 'μ'+ main.slice(1,).toUpperCase();
+    } else if (type == 'cydroid' && d(2) == 1) {
+      el.innerHTML += 'HIDDEN '
+    }
+    el.innerHTML += main.toUpperCase();
+    if (damage) {
+      el.innerHTML += (' D' + (type == 'beast' ? parseInt(damage) : damage)).toUpperCase();
+    }
+    el.innerHTML += "\n";
+
+    if (flag) {
+      el.innerHTML += weapon[1] + '\n';
+    }
+    if (!['drone', 'vehicle', 'beast'].includes(type) && damage == '8a' && weapon.includes('Assault') && d(6) == 1) {
+      el.innerHTML += 'with ' + grenade_launcher[0].toUpperCase() + " D6\n"
+      el.innerHTML += grenade_launcher[1] + '\n';
+    }
+    el.innerHTML += "\n";
+    if (el.innerHTML.match(/\*/)) { document.getElementById('vehicle').style.display = 'block'; }
+  }
+
+  function add_special() {
+    var special = random_item_from(eval(type + '_special'));
+    if (document.getElementById('specials').innerHTML.length > 4) {
+      document.getElementById('specials').innerHTML += special[0].toUpperCase() + "\n" + special[1] + "\n\n";
+    } else {
+      document.getElementById('specials').innerHTML = special[0].toUpperCase() + "\n" + special[1] + "\n\n";
+    }
+  }
+
+  function set_sonar() {
+    var sonar = document.getElementById('sonar');
+    sonar.style.display = 'block';
+    var map = document.getElementById('map_container');
+    sonar.style.top = clamp(d(map.offsetHeight) , map.offsetHeight*0.2, map.offsetHeight*0.8) + 'px';
+    sonar.style.left = clamp(d(map.offsetWidth) , map.offsetWidth*0.2, map.offsetWidth*0.8) + 'px';
+  }
+
+  function apply_settings() {
+    tier_list = [...TIER];
+    type_list = [...TYPE];
+
+    var cookie = getCookie('settings');
+    if (cookie == "") {
+      return setCookie('settings', ['1', 'goon']);
+    }
+
+    Array.from(document.querySelectorAll('[type=checkbox]')).forEach(function(el) {
+      cookie.includes(el.value) ? el.checked = true : el.checked = false;
+    })
+
+    var goons  = [];
+    var threat = [];
+
+    cookie.split(',').forEach(function(el) {
+      if (Number.isNaN(parseInt(el))) {
+        // goon
+        goons.push(el);
+      } else {
+        //threat
+        threat.push(parseInt(el));
+      }
+    })
+
+    if (goons.length == 0) {
+      goons.push('goon');
+      document.querySelector('[value=goon][type=checkbox]').checked = true;
+      cookie = cookie.split(',');
+      cookie.push('goon');
+      setCookie('settings', cookie);
+    }
+    if (threat.length == 0) {
+      threat.push(1);
+      document.querySelector('[value="1"][type=checkbox]').checked = true;
+      cookie = cookie.split(',');
+      cookie.push('1');
+      setCookie('settings', cookie);
+    }
+
+    type_list = type_list.filter(x => goons.includes(x));
+    tier_list = tier_list.filter(x => threat.includes(x));
+  }
+
+  addEventListener("load", function () { set_sonar(); });
+
+  var die1, die2, die3, tier, tier_list, type, type_list;
+  const TYPE = ['goon', 'drone', 'beast', 'cydroid', 'phreak', 'vehicle'];
+  const TIER = [1, 1, 1, 2, 2, 3];
+  apply_settings();
+
+  function search() {
+    type = random_item_from(type_list);
+    goon0 = [
+      [d(3) + 1 + ' flashbangs', 'TOUGHNESS DR12 or +4DR on everything for d4 rounds'],
+      [d(3) + 1 + ' hand grenades*', 'd6 damage to up to d3 targets'],
+      [d(3) + 1 + ' ePulse grenades*', 'd8 to up to d3 tech targets or people with 2+ cybertech'],
+      [d(3) + 1 + ' smoke grenades', 'fill a 30m area with colored smoke for d6 minutes'],
+    ]
+    drone_1 = [
+      'semi-autonomous' + drone_type(),
+      'autonomous' + drone_type(),
+      'fly-sized and silent'  + drone_type(),
+      'cat-sized' + drone_type(),
+      drone_type() + " covered in UCS logo's",
+      drone_type() + ' stuttering and out of sync',
+      drone_type() + " buzzing like a dentists' drill at full power",
+      'as a shimmer of heat, barely visible' + drone_type(),
+      'as a synchronized swarm of' + drone_type(),
+      'tools of espionage,' + drone_type(),
+      'archaic, running on fossil fuels and coughing black smoke' + drone_type(),
+      'refracting light behind a projected shield' + drone_type()
+    ]
+    var beast_armor = random_item_from(["", "", "", "thick ", "tough ", "hardened "]) +
+                      random_item_from(['Scales', 'Bone', 'Skin', 'Fur', 'Carapace'])
+    beast_armor2 = [
+      'Fur and steel',
+      'ropy skin',
+      'exoskeleton',
+      'blubber',
+      'pulsating form',
+      'more metal than flesh',
+      beast_armor,
+      beast_armor,
+      beast_armor,
+      beast_armor,
+      beast_armor,
+      beast_armor
+    ]; beast_armor4 = beast_armor2; beast_armor6 = beast_armor2;
+    
+    document.getElementById('vehicle').style.display = 'none';
+    document.getElementById('weapon').innerHTML = '';
+    document.getElementById('specials').innerHTML = 'NONE';
+    die1 = d(12);
+    die2 = d(12);
+    die3 = d(12);
+    tier = random_item_from(tier_list);
+
+    document.getElementById('goon').innerHTML =
+      'The ' + type.toUpperCase() + 'S(d' + [4, 2, 2][tier - 1] + ') approach, ' + eval(type + '_1')[die1 - 1] + ' with ' +  eval(type + '_2')[die2 - 1] + " they're " +  eval(type + '_3')[die3 - 1] + ' More than anything they want ' + random_item_from(eval(type + '_want'));
+
+    var morale = Math.max(die1, die2, die3);
+    var damage = get_damage();
+    var armor = [0, 1, die3 % 2 ? 2 : 3][[die1, die2, die3].indexOf(morale)]
+    var hp = d(parseInt(damage)) * 2;
+
+    document.getElementById('threat').value = tier;
+    document.getElementById('hp').value = hp + [0, 2, 3][tier - 1]*3;
+    switch(type) {
+      case('drone'):
+        document.getElementById('morale').value = '-';
+        break;
+      case('cydroid'):
+        document.getElementById('morale').value = (d(4) == 1 ? '-' : morale);
+        break;
+      default:
+        document.getElementById('morale').value = morale;
+    }
+
+    var clothes = ['No armor', random_item_from(eval(type + '_armor2')), random_item_from(eval(type + '_armor4')), random_item_from(eval(type + '_armor6'))][armor];
+    if (typeof clothes == 'object') {
+      document.getElementById('armor').value = (clothes[0] + (armor ? (' -d' + armor*2) : '')).toUpperCase();
+      if (type != 'cydroid' && d(100) < 25*tier) {
+        document.getElementById('armor').value += "\n"+ clothes[1];
+      }
+    } else {
+      document.getElementById('armor').value = (clothes + (armor ? (' -d' + armor*2) : '')).toUpperCase();
+    }
+    expand_textarea(document.getElementById('armor'));
+
+    add_weapon(damage);
+    if (d(100) < 2500*tier && tier == 3) { add_weapon(get_damage(2)); } // possible third weapon
+    if (d(100) < 2500*tier) { add_weapon(get_damage(1)); } // possible second weapon
+    document.getElementById('weapon').innerHTML = document.getElementById('weapon').innerHTML.trim();
+    expand_textarea(document.getElementById('weapon'));
+
+    if (d(100) < 25*tier) { add_special(); }
+    if (d(100) < 25*tier && tier > 1) { add_special(); }
+    if (tier == 3) { add_special(); }
+    document.getElementById('specials').innerHTML = document.getElementById('specials').innerHTML.trim();
+    expand_textarea(document.getElementById('specials'));
+    document.getElementById('geo').innerHTML = '< ' + [getRandomInRange(-180, 180, 3), getRandomInRange(-180, 180, 3)].join(', ') + ' >';
+    set_sonar();
+  }
+  search();
+
+  setInterval(function () {
+    var percent = clamp(parseInt(document.getElementById('cpu').innerHTML) + ((d(2) - 1) ? 1 : -1) * d(10), 2, 99);
+    document.getElementById('cpu').innerHTML = percent + '%';
+  }, 500);
+  setInterval(function () {
+    var el = document.getElementById('map');
+    el.style.animation = 'none';
+    el.offsetHeight; /* trigger reflow */
+    el.style.animation = null;
+  }, d(4)*2000);
+  Array.from(document.getElementsByClassName('about_button')).forEach(el =>
+    el.addEventListener('click', function() {
+      document.getElementById('about').style.display = 'block';
+    })
+  )
+  Array.from(document.getElementsByClassName('close')).forEach(el =>
+    el.addEventListener('click', function() {
+      el.closest('.window').style.display = 'none';
+      if (el.closest('.window').id == 'screen') {
+        document.getElementById('screen_task').style.display = 'none';
+      }
+    })
+  )
+  document.getElementById('prism').addEventListener('click', function() {
+    document.getElementById('screen').style.display = 'block';
+    document.getElementById('screen_task').style.display = 'inline-block';
+  })
+  document.getElementById('search').addEventListener('click', function() {
+    search();
+  })
+  addEventListener('keydown', function(e) {
+    if (e.keyCode == 112) { document.getElementById('about').style.display = 'block'; }
+  }, false);
+
+  function fallbackCopyTextToClipboard(text) {
+    var textArea = document.createElement("textarea");
+    textArea.value = text;
+
+    // Avoid scrolling to bottom
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      if (document.execCommand('copy')) { show_status('COPIED'); }
+    } catch (err) {
+      console.error('Fallback: Oops, unable to copy', err);
+    }
+
+    document.body.removeChild(textArea);
+  }
+  function copyTextToClipboard(text) {
+    if (!navigator.clipboard) {
+      fallbackCopyTextToClipboard(text);
+      return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+      show_status('COPIED');
+    }, function(err) {
+      console.error('Async: Could not copy text: ', err);
+    });
+  }
+  function copy_text() {
+    copyTextToClipboard(
+      [document.getElementById('goon').innerHTML,
+        null,
+       'THREAT ' + document.getElementById('threat').value,
+       'HP ' + document.getElementById('hp').value,
+       'MORALE ' + document.getElementById('morale').value,
+       document.getElementById('armor').value,
+       null,
+       document.getElementById('weapon').innerHTML.split("\n\n").join("\n"),
+       null,
+       'SPECIALS',
+       document.getElementById('specials').innerHTML.split("\n\n").join("\n"),
+       null,
+       'CY_BORG is ©2022 Ockult Örtmästare Games and Stockholm Kartell. Web app by Alessandro Minali.'
+      ].join("\n")
+    );
+  }
+  Array.from(document.getElementsByClassName('save')).forEach(el =>
+    el.addEventListener('click', function() {
+      copy_text();
+    })
+  )
+  Array.from(document.getElementsByClassName('max')).forEach(el =>
+    el.addEventListener('click', function() {
+      el.closest('.window').style.maxWidth = '100%';
+      el.closest('.window').style.width = '100%';
+    })
+  )
+  Array.from(document.getElementsByClassName('min')).forEach(el =>
+    el.addEventListener('click', function() {
+      el.closest('.window').style.maxWidth = '800px';
+    })
+  )
+  Array.from(document.querySelectorAll('[role="menu"] > [role="menuitem"]')).forEach(el =>
+    el.addEventListener('click', function() {
+      document.activeElement.blur();
+    })
+  )
+  document.getElementById('adjust_settings').addEventListener('click', function(e) {
+    document.getElementById('main_screen').style.display = 'none';
+    document.getElementById('settings').style.display = 'block';
+  })
+  document.getElementById('save_settings').addEventListener('click', function(e) {
+    var settings = Array.from(document.querySelectorAll('[type=checkbox]:checked')).map(el => el.value);
+    setCookie('settings', settings);
+    apply_settings();
+    document.getElementById('main_screen').style.display = 'grid';
+    document.getElementById('settings').style.display = 'none';
+  })
+  document.getElementById('reset_settings').addEventListener('click', function(e) {
+    var settings = Array.from(document.querySelectorAll('[type=checkbox]:not([disabled])')).map(function(el) {
+      el.checked = true;
+      return el.value;
+    });
+    setCookie('settings', settings);
+    apply_settings();
+  })
+</script>
+</html>
