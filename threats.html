@@ -278,7 +278,7 @@ C:\PRISM\SYSTEM32> itch.io
             <label for="s_cydroid">CYDROIDS</label>
           </div>
           <div class="field-row">
-            <input disabled type="checkbox" id="s_phreak" value='phreak'>
+            <input type="checkbox" id="s_phreak" value='phreak'>
             <label for="s_phreak">NANO PHREAKS</label>
           </div>
           <div class="field-row">
@@ -484,6 +484,33 @@ C:\PRISM\SYSTEM32> itch.io
     ["Machine-Machine Interface", "Every weapon it has can and must be autofired. Autofire at DR-1."],
   ]
 
+  var phreak_1 = ["in the ceremonial garb of the Heirs of Kergoz", "projectile vomitting unknown contents from the depths of their stomach", "reciting a mantra in a long forgotten language", "their skin writhing and alive", "skittering along the edges of the street avoiding light", "clicking in imitation of a broken clock", "the smell reaching you before you see them", "as the air behind them condenses quickly", "blinking in and out of existence", "choking on engorged and swollen tongues", "beastial, crouching low to the ground", "a pack of rabid G0 rats"];
+  var phreak_2 = ["rotting flesh that continues growing back as fast as it falls off", "large fungal growths obscuring their face", "too many eyes peeking, watching you", "seared flesh that is rippling with static energy", "nanite flames licking at their limbs, alight but not burning the skin underneath", "currents of dust and small particles dragging in the air around them constantly", "small holes dotting their skin as barely visible insects crawl in and out of them", "every bone on their body just slightly too long to look natural", "skin moist, humid and frog-like", "skin and eyes blood-red, on the verge of CY-RAGE", "eyes flourscent green, emitting deadly radiation", "teeth barred and dripping pink ooze"]
+  var phreak_3 = ["scratching incessantly at large open sore on their neck.", "the bloated corpse of a long lost soul.", "covering themselves in the entrails of their last victim.", "shrunken and misshappen former city dwellers.", "the size of, in what a previous life may have been, small children.", "releasing spores into the air as their skin flakes away with every step.", "singing aloud in the perfect imitation of the voice of your mother.", "soaked and a constant trickle of brownish-red water is pouring from their orifices.", "pulsating as small tendrils extend from their skin reaching out to any nearby surface.", "staring off in the distance with crooked eyes at, what seems to be, something behind you.", "barely concious automatons of hate and bile.", "gaunt, hollowing and bent on revenge."]
+  var phreak_want = ["to multiply.", "to itch under their stone hard skin.", "to control their infestations.", "to remove their infestations and return to normal life.", "to satiety the two-headed daemon with sacrifices.", "to remember who they used to be before the infection.", "to be annhilated.", "to light everything on fire.", "to end the obvious misery your in.", "to recruit you to their purpose.", "to flay you so they will be accepted into the group.", "to bless all with the powers of Nano.", "to give in and embrace the infestation.", "to carve out a place in society for phreaks.", "to see their children again.", "to feed.", "to peel off their flesh and start anew.", "to convince you that actually you're the strange one.", "to release the glory of G0 to the rest of Cy.", "to dominate non-Nano life."];
+  var phreak_special = [
+    ["Psychic Scapels", "Target tests PRESENCE DR14 or takes d10 damage."],
+    ["Frothing Infested", "Crits against this creature triggers a random infestation and has 50% chance of the player instead."],
+    ["Infested", "Crits against this creature triggers a random infestation."],
+    ["Nanomancer", "Can use d2+1 Nano powers."],
+    ["Ooze", "Test TOUGHNESS DR14 or all hits taken until the end of combat deal an additional d4 damage."],
+    ["Empty shell", "Incapable of thought and will never surrender or flee."],
+    ["Balloon", "Explodes upon death or crit. Acid bile spews forth to hit up to d3 nearby targets; AGILITY DR14 or take d4 damage."],
+    ["Fading", "Ignores any damage when the damage taken is an uneven number."],
+    ["Infestation", "Test TOUGHNESS DR8 when it attacks. If fail, gain a random Nano infestation. 1-in-10 chance to gain a random Nano power."],
+    ["Freezing Gaze", "Test TOUGHNESS DR14 or you are locked in place unable to act. All actions DR+(armor die) until end of combat."],
+    ["Small", "DR14 to Attack."],
+    ["Free Delivery", "Once per combat, an attack that hits may be instead redirected back to the attacker. They have a chance to Defend."],
+    ["Familiar", "A small swarm of birds/insects/rodents are constantly envloping this creature. Melee Attack/Defend is DR+2."],
+    ["Binding", "Test STRENGTH DR14 or be pulled directly towards this creature."],
+    ["Open Pores", "Air rushes out, test STRENGTH DR14 or be pushed 5m away from this creature."],
+    ["Incinerate", "Test AGILITY DR12 or be engulfed in nanites that cling to and burn your flesh. d6 damage and ignores armor. You may spend a turn to scrape them off or take d3 burn damage per round."],
+    ["Spice Flow", "The air is filled with paprika colored dust billowing from the creatures body. Test TOUGHNESS DR14 or Attack/Defend DR+2 for the rest of combat."],
+    ["Lunar Surface", "Covered in rocky-grey growths. Defend at DR10 but increase armor tier by 2."],
+    ["Rage", "Attacks the nearest creature to them, friendly or otherwise. Attacks twice per round, with the second attack dealing damage of the next highest damage die."],
+    ["Drain", "All the color is sapped of the surronding area and objects. Only this creature may use Nano powers until the end of combat. Color only returns after d4 minutes of the creature being slain."],
+  ]
+
   var goon3 = [
     ['Sting', 'Deals no damage, instead injects a drug or poison into its target.'],
     'Broken bottle',
@@ -589,18 +616,26 @@ C:\PRISM\SYSTEM32> itch.io
   var goon_armor8 = [
     ['EndGame-Class ExoSuit', 'Customize the ExoSuit as you see fit.'],
   ]
-  var phreak_armor2 = [
-    'Ragged robes',
+  var [phreak_armor2, phreak_armor4, phreak_armor6] = Array(3).fill([
     'Quick and erratic',
     'Scales',
-    'Heavy robes',
-    'Vest',
-    'Light vest'
-  ]
-  var phreak_armor6 = [
-    ['Spectral', 'Ignores any damage when the damage taken is an uneven number.'],
-  ]
-  // phreak weapon, WARPED + d6 weapon name
+    'Nanite carapace',
+    'Crystalline shards',
+    'Living swarm',
+    'barbed flesh',
+    'fleshy growths',
+  ])
+  var phreak3 = ['claw', 'bite'].concat(goon3);
+  var phreak4 = ['claw', 'bite'].concat(goon4);
+  var phreak4a = ['occular ray'].concat(goon4a);
+  var phreak6 = ['claw', 'bite'].concat(goon6);
+  var phreak6a = ['occular ray'].concat(goon6a);
+  var phreak8 = ['claw', 'bite'].concat(goon8);
+  var phreak8a = ['occular ray'].concat(goon8a);
+  var phreak10 = ['claw', 'bite'].concat(goon10);
+  var phreak10a = ['occular ray'].concat(goon10a);
+  var phreak12 = ['claw', 'bite'].concat(goon12);
+  var phreak12a = ['occular ray'].concat(goon12a);
   var drone_armor2 = [
     'Armored',
     'Metal plating',
@@ -694,11 +729,6 @@ C:\PRISM\SYSTEM32> itch.io
     'claw', 'bite', 'slam', 'stinger', 'kick', 'horns', 'tusks', 'beak', 'pincers','jaws'
   ]);
   var beast_armor2, beast_armor4, beast_armor6;
-
-  var beast_armor4 = [
-    'Thick skin'
-  ]
-
   var cydroid_armor2 = [
     'Skinweave'
   ].concat(goon_armor2);
