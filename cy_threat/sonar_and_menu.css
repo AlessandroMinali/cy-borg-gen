@@ -61,7 +61,10 @@
  ul[role="menu"] > [role="menuitem"] > a:hover, ul[role="menu"] > [role="menuitem"] > button:hover, ul[role="menu"] > [role="menuitem"][aria-haspopup="true"]:hover, ul[role="menu"] > [role="menuitem"] > a:focus, ul[role="menu"] > [role="menuitem"] > button:focus, ul[role="menu"] > [role="menuitem"][aria-haspopup="true"]:focus {
    background: rgb(0, 0, 128);
    color: white;
-   border-color: grey;
+}
+ li.disabled[role="menuitem"] > a:hover {
+   color: grey;
+   text-shadow: none !important;
 }
  ul[role="menu"] > [role="menuitem"][aria-haspopup="true"]::after {
    content: "";
