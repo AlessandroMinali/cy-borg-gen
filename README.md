@@ -6,7 +6,7 @@ Allows sharing of generated characters and local editing so that you can use the
 
 # CY_THREAT
 Generate a infinite number of baddies that wander the streets of Cy.  
-Capable of generating GOONS, DRONES, BEASTS, CYDROIDS, PHREAKS and VEHICLES...eventually.
+Capable of generating GOONS, DRONES, BEASTS, CYDROIDS, PHREAKS and VEHICLES.
 
 [Link](https://silentbunny.itch.io/cy-threat)  
 [PDF zine](https://silentbunny.itch.io/cy-threat-zine)
