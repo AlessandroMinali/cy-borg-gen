@@ -627,7 +627,7 @@ C:\WINDOWS\SYSTEM32> mork_borg_gen
     var clothes = ['No armor', random_item_from(goon_armor2), random_item_from(goon_armor4), random_item_from(goon_armor6)][armor];
     if (typeof clothes == 'object') {
       document.getElementById('armor').value = (clothes[0] + (armor ? (' -d' + armor*2) : '')).toUpperCase();
-      if (d(100) < 2500*tier) {
+      if (d(100) < 25*tier) {
         document.getElementById('armor').value += "\n"+ clothes[1];
       }
     } else {
