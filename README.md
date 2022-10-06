@@ -8,7 +8,7 @@ Allows sharing of generated characters and local editing so that you can use the
 Generate a infinite number of baddies that wander the streets of Cy.  
 Capable of generating GOONS, DRONES, BEASTS, CYDROIDS, PHREAKS and VEHICLES...eventually.
 
-[Link](https://silentbunny.itch.io/cy-threat)
+[Link](https://silentbunny.itch.io/cy-threat)  
 [PDF zine](https://silentbunny.itch.io/cy-threat-zine)
 
 # CY_D0SSIER
