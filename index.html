@@ -378,18 +378,18 @@ C:\PRISM\SYSTEM32> itch.io
   var goon_1 = ['twitching uncontrollably', 'blaring loud music', 'shouting for you to put your hands over your head', 'gliding almost imperceptibly millimetres above the ground', 'covered in screens', 'unreasonably clean and dressed in white', 'missing limbs', 'frothing at the mouth with hypos sticking out from their necks', 'silently, barely noticeable', 'speeding along on cyberbikes', 'dressed in freshly pressed SecCorp uniforms', 'laughing at the pathetic sight of you and your group']
   var goon_2 = ['one too many cybertech implants', 'a cyberdeck hanging by their side', 'faces covered in tattoos', 'blood leaking from exposed wounds', 'heavy eyelids hiding drug-infused eyes', 'skin moist with sweat', 'RCDs that display your face', 'head to toe leather trim', 'teeth filed down to sharp points', 'pockets overflowing with over-due bills', 'legs powered by compact exo-skeletons', 'a half eaten meal in one hand']
   var goon_3 = ['in a full sprint towards your direction.', 'absorbing all sound, eerie dead quiet.', 'already calling for backup.', 'resting their hand on their biggest weapon.', 'almost blinded by their cracked RCDs.', 'vibrating the air around themselves.', 'hopping and whistling towards you.', 'taking one more hit of ADRENACHROME.', 'wiping down blood soaked daggers.', 'crying hysterically.', 'slicking back 30cm tall liberty spikes.', 'glowing and translucent.']
-  var goon_want = ['a god-damn drink.', 'creds to hit the slots as soon as possible.', 'to kill.', 'another hit.', 'to see it all burn.', 'to impress the boss.', "a raise, they're not paid enough for this shit.", 'to flex their authority.', 'something to make them feel alive again.', 'to die.', "those nice shoes you're wearing.", 'another sucker for their NFT scheme.', 'the noise to stop. NOW!', 'to defend their turf.', 'to get even just a few hours of uninterrupted sleep for the first time in months.', "get away from the thing that's chasing them.", 'to bully something.', 'a new cyberbike.', 'to blackmail the VIP sleeping with their partner.', 'to clean up the streets.']
+  var goon_want = ['a god-damn drink.', 'creds to hit the slots as soon as possible.', 'to kill.', 'another hit.', 'to see it all burn.', 'to impress the boss.', "a raise, they're not paid enough for this shit.", 'to flex their authority.', 'something to make them feel alive again.', 'to die.', "those nice shoes you're wearing.", 'another sucker for their NFT scheme.', 'the noise to stop. NOW!', 'to defend their turf.', 'to get just a few hours of uninterrupted sleep for the first time in months.', "get away from the thing that's chasing them.", 'to bully something.', 'a new cyberbike.', 'to blackmail the VIP sleeping with their partner.', 'to clean up the streets.']
   var goon_special = [
     ["Raging", "Attacks twice per round, Attack DR10 and Defense DR14."],
     ["Stealthy", "Test PRESENCE DR12 before combat or they go first before rolling initiative."],
     ["Reaperdoc", "1-in-6 chance this enemy may revive a friendly once per combat. Revived enemy is missing something important."],
     [random_item_from("Elite", "Highly trained"), "Defense against their attacks is DR14."],
-    ["Old School", "Immune to Apps directly targeting them, indirect App attacks are DR+2"],
+    ["Old School", "Immune to Apps directly targeting them, indirect App attacks are DR+2."],
     ["Berserker", "Goes berserk at 9HP, attacking twice each round and dealing d10 damage with the second attack."],
     ["Coward", "Will call in back up if alive with 1-2 HP."],
     ["Behind You", "Attacks and Defense at DR14."],
     ["Wired Up", "Upon death, trigger an explosive blast dealing d12 evenly amongst anything near it."],
-    ["Sniper", "Attack DR10 and Defense DR16. Fumble Defense and you lose a limb, roll on body table (pg. 81)"],
+    ["Sniper", "Attack DR10 and Defense DR16. Fumble Defense and you lose a limb, roll on body table(core pg.81)."],
     ["Street Urchin", "Attack Fumble means this goon disarms you and takes your weapon."],
     ["Faraday Cage", "All electronics in the room are powered down for 1 round. Every turn this goon attacks roll a d6, 5+ recharges this ability."],
     ["Optical Camo", "1-in-6 chance you cannot target this creature for a round."],
@@ -397,15 +397,15 @@ C:\PRISM\SYSTEM32> itch.io
     ["AC/DC", "Grab attack, deals d6 electric damage and stuns cybered targets for 1 round."],
     ["Ravenously Hungry", "Will begin eating the first creature that falls in battle."],
     ["Big Spender", "Can give the PCs something they want if they agree to do what it wants."],
-    ["Underling", "Can be bribed for less than 1K¤"],
+    ["Underling", "Can be bribed for less than 500¤."],
     ["Boss", "All other friendlies will not flee/surrender until the boss is down."],
     ["Ace", "Has a drone suit and can fly around. DR is not affected."]
   ]
 
   var drone_1;
-  var drone_2 = ['prototype weapons of excess wire, silicon and sadness', 'layers upon layers of scrap armor', 'sparks raining out from an exposed panels', 'too many tiny appendages tipped with nasty surgical tools', "a neat little package of shaped scvm-explosive right on its nose", 'a sleek body and aero-trim', 'a glowing red-hot power cores dripping with spent fuel', 'a chrome finish reflecting light in prisms of color', 'a severed hand still beyond death clutching it hopelessly', "scorch marks marring its surface black", 'hazard and safety labels hastily scratched off the hull', 'an exterior that is constantly shifting, sliding and folding in on itself in anticipation to threats',
+  var drone_2 = ['prototype weapons of excess wire, silicon and sadness', 'layers upon layers of scrap armor', 'sparks raining out from exposed panels', 'too many tiny appendages tipped with nasty surgical tools', "a neat little package of shaped scvm-explosive right on its nose", 'a sleek body and aero-trim', 'glowing red-hot power cores dripping with spent fuel', 'a chrome finish reflecting light in prisms of color', 'a severed hand still, beyond death, clutching it hopelessly', "scorch marks marring its surface black", 'hazard and safety labels hastily scratched off the hull', 'an exterior that is constantly shifting, sliding and folding in on itself in anticipation to threats',
   ]
-  var drone_3 = ['oozing blood from somewhere deep inside its metallic frame.', 'medical drones repurposed to hunt down reaperdoc victims on the streets.', 'surveillance drones armed to the teeth.', 'lumbering forward making everything around you rumble.', "locked on to your signature and won't stop until you do.", 'painstakingly customized with spray paint, stickers and glitter.', "stationary, but I bet you still can't out run their bullets.", 'monitoring you behaviour and deciding what infraction to arrest you on.', 'stalking you and calling for reinforcements.', 'already hacked into your RCD.', 'announcing on all nearby speakers a block wide evacuation zone since this is about to get messy.', 'about as intimidating as your home thermostat.']
+  var drone_3 = ['oozing blood from somewhere deep inside its metallic frame.', 'medical drones repurposed to hunt down new reaperdoc victims on the streets.', 'surveillance drones armed to the teeth.', 'lumbering forward making everything around you rumble.', "locked on to your signature and won't stop until you do.", 'painstakingly customized with spray paint, stickers and glitter.', "stationary, but I bet you still can't out run their bullets.", 'monitoring you behaviour and deciding what infraction to arrest you on.', 'stalking you and calling for reinforcements.', 'already hacking into your RCD.', 'announcing on all nearby speakers a block wide evacuation zone since this is about to get messy.', 'about as intimidating as your home thermostat.']
   var drone_want = ['to spend a few hours charging up its battery.', 'to kill its operator.', "to fulfill its programming and fulfill your suffering.", 'to discover the next digit of PI.', 'E̸̩̚R̷̀͜Ŕ̵̖O̶̰̒R̷̞͝ ̷̙̈́n̶͓̒o̸̘͠ ̴̮͠ȓ̶̻e̴̫̅s̶̜͗p̷̻̀ŏ̸̙n̷͖̔s̵̢͗e̴͇͝ ̸͖̈ä̸̞́v̴̼͋ă̸͎i̸͓̓l̴͍͒a̶̱͘b̷͚̔l̷̗̉ḛ̵̔', 'E̸̩̚R̷̀͜Ŕ̵̖O̶̰̒R̷̞͝ ̷̙̈́n̶͓̒o̸̘͠ ̴̮͠ȓ̶̻e̴̫̅s̶̜͗p̷̻̀ŏ̸̙n̷͖̔s̵̢͗e̴͇͝ ̸͖̈ä̸̞́v̴̼͋ă̸͎i̸͓̓l̴͍͒a̶̱͘b̷͚̔l̷̗̉ḛ̵̔', 'E̸̩̚R̷̀͜Ŕ̵̖O̶̰̒R̷̞͝ ̷̙̈́n̶͓̒o̸̘͠ ̴̮͠ȓ̶̻e̴̫̅s̶̜͗p̷̻̀ŏ̸̙n̷͖̔s̵̢͗e̴͇͝ ̸͖̈ä̸̞́v̴̼͋ă̸͎i̸͓̓l̴͍͒a̶̱͘b̷͚̔l̷̗̉ḛ̵̔', 'E̸̩̚R̷̀͜Ŕ̵̖O̶̰̒R̷̞͝ ̷̙̈́n̶͓̒o̸̘͠ ̴̮͠ȓ̶̻e̴̫̅s̶̜͗p̷̻̀ŏ̸̙n̷͖̔s̵̢͗e̴͇͝ ̸͖̈ä̸̞́v̴̼͋ă̸͎i̸͓̓l̴͍͒a̶̱͘b̷͚̔l̷̗̉ḛ̵̔', 'E̸̩̚R̷̀͜Ŕ̵̖O̶̰̒R̷̞͝ ̷̙̈́n̶͓̒o̸̘͠ ̴̮͠ȓ̶̻e̴̫̅s̶̜͗p̷̻̀ŏ̸̙n̷͖̔s̵̢͗e̴͇͝ ̸͖̈ä̸̞́v̴̼͋ă̸͎i̸͓̓l̴͍͒a̶̱͘b̷͚̔l̷̗̉ḛ̵̔', 'E̸̩̚R̷̀͜Ŕ̵̖O̶̰̒R̷̞͝ ̷̙̈́n̶͓̒o̸̘͠ ̴̮͠ȓ̶̻e̴̫̅s̶̜͗p̷̻̀ŏ̸̙n̷͖̔s̵̢͗e̴͇͝ ̸͖̈ä̸̞́v̴̼͋ă̸͎i̸͓̓l̴͍͒a̶̱͘b̷͚̔l̷̗̉ḛ̵̔', 'E̸̩̚R̷̀͜Ŕ̵̖O̶̰̒R̷̞͝ ̷̙̈́n̶͓̒o̸̘͠ ̴̮͠ȓ̶̻e̴̫̅s̶̜͗p̷̻̀ŏ̸̙n̷͖̔s̵̢͗e̴͇͝ ̸͖̈ä̸̞́v̴̼͋ă̸͎i̸͓̓l̴͍͒a̶̱͘b̷͚̔l̷̗̉ḛ̵̔', 'E̸̩̚R̷̀͜Ŕ̵̖O̶̰̒R̷̞͝ ̷̙̈́n̶͓̒o̸̘͠ ̴̮͠ȓ̶̻e̴̫̅s̶̜͗p̷̻̀ŏ̸̙n̷͖̔s̵̢͗e̴͇͝ ̸͖̈ä̸̞́v̴̼͋ă̸͎i̸͓̓l̴͍͒a̶̱͘b̷͚̔l̷̗̉ḛ̵̔', 'E̸̩̚R̷̀͜Ŕ̵̖O̶̰̒R̷̞͝ ̷̙̈́n̶͓̒o̸̘͠ ̴̮͠ȓ̶̻e̴̫̅s̶̜͗p̷̻̀ŏ̸̙n̷͖̔s̵̢͗e̴͇͝ ̸͖̈ä̸̞́v̴̼͋ă̸͎i̸͓̓l̴͍͒a̶̱͘b̷͚̔l̷̗̉ḛ̵̔', 'E̸̩̚R̷̀͜Ŕ̵̖O̶̰̒R̷̞͝ ̷̙̈́n̶͓̒o̸̘͠ ̴̮͠ȓ̶̻e̴̫̅s̶̜͗p̷̻̀ŏ̸̙n̷͖̔s̵̢͗e̴͇͝ ̸͖̈ä̸̞́v̴̼͋ă̸͎i̸͓̓l̴͍͒a̶̱͘b̷͚̔l̷̗̉ḛ̵̔', 'to pass the Turing test one more time.', 'to solve the halting problem once and for all.', 'to calculate an infinite number of primes.', 'to upgrade its processing unit to something that was made in the last decade.', 'to expunge all organic life.', 'to monitor the streets and tag crime.']
   var drone_special = [
     ['Prototype', "Needs a hard reboot after dealing max damage. Stunned for one round."],
@@ -413,7 +413,7 @@ C:\PRISM\SYSTEM32> itch.io
     ['Tiny', "DR16 to hit in melee or DR18 with ranged attacks."],
     ['Target lock', "When autofiring, it always gets at least two tries."],
     ['Made to Party', "Covered in speakers and always has them cranked loud. Once per combat everything in the area with ears must pass DR14 PRESENCE or suffer DR+2 on all rolls for 2 rounds."],
-    ['Existentially Unsure', "1-in-10 chance of attacks being aimed at allies."],
+    ['Existentially Unsure', "1-in-10 chance of its attacks being aimed at its allies."],
     ['Crawler', "Can stick to any surface and cannot be removed unwillingly."],
     ['Dive bomber', "Cannot be hit by melee attacks. When killed it falls, if it hits something then defend DR12 or take d8 explosive damage."],
     ['Hauler', "Can be piloted awkwardly and carry d2 medium sized passengers."],
@@ -425,41 +425,41 @@ C:\PRISM\SYSTEM32> itch.io
     ['Dataplating', "This drone is immune to tech based attacks targeting it directly. Better luck next time script kiddies."],
     ['Reinforced frame', "+1 damage reduction and armor cannot be shredded or otherwise deteriorated while it is still running."],
     ['Ramjet', "With a deafening roar it rushes you. If you fail Defense then you are knocked to the ground and take d6 damage."],
-    ['Mine layer', "Once per turn it may drop a single mine(d4 damage if activated)/ caltrop(holds character in place 1 round) near itself. 1-in-10 chance it immediately distributes d4 mines up to 30m."],
-    ['Automated defense', "When hit by an attack immediately retaliate to attacked, Defend DR10. If hit deal damage with the weakest weapon this drone has. It can still attack as normal when it is its turn."],
-    ['BFG', "Takes one round to prepare to fire. Off it goes...to do 3d6+3 damage to anyone in the way."]
+    ['Mine layer', "Once per turn it may drop a single mine(d4 damage if activated) or caltrop(holds character in place 1 for round) near itself. 1-in-10 chance it immediately distributes d4 mines up to 30m."],
+    ['Automated defense', "When hit by an attack immediately retaliate against attacker, Defend DR10. If hit deal damage with the weakest weapon this drone has. It can still attack as normal when it is its turn."],
+    ['B F G', "Takes one round to prepare to fire. Off it goes...to do 3d6+3 damage to anyone in the way."]
   ]
 
-  var beast_1 = ["snarling, teeth barred", "slinking in the shadows", "in a ravenous pack of nature's fury", "spawned from the depths of G0 sewers", "quietly stalking your footsteps", "feathered and flying", "eyeing you curiously", "stopping a foot into the ground, ready to charge", "pale and sapped of color", "limping on appendages that are twisted and broken", "clearly once someone's house pets", "in a flash of light and the sound of machining thunder"]
-  var beast_2 = ["incredibly long and sharp incisors", "matted fur and smelling of refuse", "weaponized augmentations", "a bloated corpse between their teeth", "bulging eyes, dripping pus and eyes red with rages", "massive open sores revealing bone and muscle underneath", "wings too small for its engorged abdomen", "fangs dripping bile and venom", "fresh blood dripping off their maws", "modified voice boxes", "all their skin peeled off", "scales covering every surface except two beady black eyes"]
+  var beast_1 = ["snarling, teeth barred", "slinking in the shadows", "in a ravenous pack of nature's fury", "spawned from the depths of G0 sewers", "quietly stalking your footsteps", "feathered and flying", "eyeing you curiously", "stomping a foot into the ground, ready to charge", "pale and sapped of color", "limping on appendages that are twisted and broken", "clearly once someone's house pets", "in a flash of light and the sound of machining thunder"]
+  var beast_2 = ["incredibly long and sharp incisors", "matted fur and smelling of refuse", "weaponized augmentations", "a bloated corpse between their teeth", "bulging eyes, dripping pus and eyes red with rage", "massive open sores revealing bone and muscle underneath", "wings too small for its engorged abdomen", "fangs dripping bile and venom", "fresh blood dripping off their maws", "modified voice boxes", "all their skin peeled off", "scales covering every surface except two beady black eyes"]
   var beast_3 = ["gene spliced to display a cacophony of color.", "mostly metal now after all the impromptu surgeries.", "bred for loyalty and you've hurt their owner.", "rocket powered and you're on the intercept course.", "growling, and it's getting louder.", "eyeing the little bit of food you have hidden away.", "on the verge of death, bleeding from every orifice.", "trailed by chain leashes that they broke free from.", "branded with UCS logos.", "just finished eating their handler.", "fighting over themselves to determine the new leader.", "running away from something even bigger."]
-  var beast_want = ["to guard their owner's property.", "to have someone pet them.", "to eat something that's still living.", "to taste flesh.", "to sip fresh blood.", "to play catch.", "to end their suffering.", "to catch the whitetail.", "to nap.", "to defend their territory.", "to protect their young.", "to find their mate.", "to build a nest.", "to take a bath.", "to have a few synthmeat snacks.", "to return to their den in G0.", "to dominate smaller creatures.", "to chase and chase and chase...", "to become leader of the pack.", "to molt their skin, it's too small for them."]
+  var beast_want = ["to guard their owner's property.", "to have someone pet them.", "to eat something that's still living.", "to taste flesh.", "to sip fresh blood.", "to play catch.", "to end their suffering.", "to catch the whitetail.", "to nap.", "to defend their territory.", "to protect their young.", "to find their mate.", "to build a nest.", "to take a bath.", "to have a few synthmeat snacks.", "to return to their den in G0.", "to dominate smaller creatures.", "to chase and chase and chase...", "to become the leader of the pack.", "to molt their skin, it's too small for them."]
   var beast_special = [
     ["Trip", "Test STRENGTH DR10 or be pulled down to the ground, DR+2 to Attack/Defend until you stand up."],
-    ["Quick", "Hard to shoot; ranged attacks are DR 14 to hit."],
+    ["Quick", "Hard to shoot; ranged attacks are DR14 to hit."],
     ["Death Roll", "Test STRENGTH DR14 to pull free or take d6 each round. You make re-test STRENGTH each round to break free."],
     ["Venom", "Test TOUGHNESS DR12 or victims bleed from facial orifices suffering d3 damage each round for the next 3 rounds."],
-    ["SmartPet™", "Can communicate in players language. Doesn't mean it wants to."],
-    ["Rigged", "Hidden explosive core. Test PRESENCE DR 12 to hear a ticking. On death, explodes doing d6 to anything nearby. Test AGILITY DR 12 to avoid damage."],
-    ["Terrifyingly Fast", "Attack/Defend at DR 14."],
+    ["SmartPet™", "Can communicate with the players. Doesn't mean it wants to."],
+    ["Rigged", "Hidden explosive core. Test PRESENCE DR12 to hear a ticking. On death, explodes doing d6 damage to anything nearby. Test AGILITY DR12 to avoid."],
+    ["Terrifyingly Fast", "Attack/Defend at DR14."],
     ["Piercing Call", "1-in-4 chance on hit that it calls another beast of the same type to its side."],
-    ["Rotting Corpse", "1-in-4 chance melee attack against it causes weapon to be lodged in its form. DR 14 STRENGTH to pull it out."],
+    ["Rotting Corpse", "1-in-4 chance melee attack against it causes weapon to be lodged in its form. DR14 STRENGTH to pull it out."],
     ["Prehistoric Armor", "Covered in steel-hard scale segments; +1 armor damage reduction."],
-    ["Stalker", "Test PRESENCE DR 14 or it gets to attack once before combat begins."],
+    ["Stalker", "Test PRESENCE DR14 or it gets to attack once before combat begins."],
     ["Charge", "If it must move to hit target then character must Defend at DR+2 and take an extra +2 damage."],
-    ["Hulking", "Hard to miss, Attack DR 10. But with a thick hide, +1 armor tier."],
+    ["Hulking", "Hard to miss, Attack DR10. But with a thick hide, +1 armor tier."],
     ["Rabid", "May attack with autofire rules (ie. bite up to 3 times in a single turn)."],
     ["Nano-weave fur", "d3 cybertech enhancements."],
-    ["Unclean", "Test TOUGHNESS DR 14 or take d4 damage and become infected(no healing with rest until cured.)."],
-    ["Dying Breathe", "Once killed it may attack one more time before dropping dead. Any attack it makes during this time are Defend DR 10."],
+    ["Unclean", "Test TOUGHNESS DR14 or take d4 damage and become infected(no healing with rest until cured.)."],
+    ["Dying Breathe", "Once killed it may attack one round of combat before dropping dead. Any attacks it makes during this time are Defend DR10."],
     ["Ragdoll", "Test STRENGTH DR8 or be flung through the air when hit by this monster, landing 5m away."],
     ["Electronic Warfare", "Instead of doing damage, once per round the augmented beast may use any APP."],
-    ["Banshee Wail", "At the start of combat it lets out a blood curdling cry. DR 10 TOUGHNESS or DR+1 AGILITY until the end of combat."]
+    ["Banshee Wail", "At the start of combat it lets out a blood curdling cry. DR10 TOUGHNESS or DR+2 AGILITY until the end of combat."]
   ]
 
-  var cydroid_1 = ["perfect replicas of normal citizens going about their business", "limbs twisted unnaturally in an imitation of a human stride", "wearing the facsimile of C-list VIPs", "all mimics of one another, a collection of replicants", "sprawled crab-like and crawling", "in the guise of a recently deceased loved one", "dressed as a crew of roadrunners", "walking backwards but in your direction", "their form distorting as weapons and blades fold out of their previously human shape", "as all the light sources in the area dim out", "as band of young kids wandering the streets", "pretending in imbibe some illicit drug and offer some to you as well"]
-  var cydroid_2 = ["muffled footsteps and a sound draining aura", "flawless, blemish free skin", "faces of matte black metal", "screens for faces showing static", "limbs ever so slightly elongated", "the sound of grating metal with each footstep", "a subtle murmur of motors and actuators beneath their surface", "RCDs scrolling the words \"HELLO TARGET\" across them", "skinweave frayed and curling off their frame revealing the machinery beneath", "hands replaced by cruel looking blades dripping in blood", "over-sized frames, towering over the crowd", "porcelain-like skin and elegant clothes worthy of the Hills"]
-  var cydroid_3 = ["an older military model that is in desperate need of repair.", "pushing through the crowd to get to you.", "just finished donning a death mask.", "offering you creds to perform a hit.", "double checking their weapons and coming your way.", "broadcasting a SecCorp warrant for your arrest.", "getting a few metres closer every time you lose sight of them.", "cutting down anything that get in the way between you and them.", "following you across the city just out of sight at every turn.", "suddenly surrounding you as you realize everyone in the crowd has the same face.", "walking slowly towards you with their maws open shouting your name on repeat.", "politely asking you not to resist."]
+  var cydroid_1 = ["perfect replicas of normal citizens going about their business", "limbs twisted unnaturally in an imitation of a human stride", "wearing the facsimile of C-list VIPs", "all mimics of one another, a collection of replicants", "sprawled crab-like and crawling", "in the guise of a recently deceased loved one", "dressed as a crew of roadrunners", "walking backwards but in your direction", "their form distorting as weapons and blades fold out of their previously human shape", "as all the light sources in the area dim out", "as a band of young kids wandering the streets", "pretending to imbibe some illicit drug and offer some to you as well"]
+  var cydroid_2 = ["muffled footsteps and a sound draining aura", "flawless, blemish free skin", "faces of matte black metal", "screens for faces showing static", "limbs ever so slightly elongated", "the sound of grating metal with each footstep", "a subtle murmur of motors and actuators beneath their surface", "RCDs scrolling the words \"HELLO TARGET\" across them", "skinweave frayed and curling off their frame revealing the machinery beneath", "hands replaced by cruel looking blades dripping in blood", "over-sized frames, towering over the crowd", "a porcelain-like shell and elegant clothes worthy of the Hills"]
+  var cydroid_3 = ["an older military model that is in desperate need of repair.", "pushing through the crowd to get to you.", "just finished donning a death mask.", "offering you creds to perform a hit.", "double checking their weapons and coming your way.", "broadcasting a SecCorp warrant for your arrest.", "getting a few metres closer every time you lose sight of them.", "cutting down anything that gets in the way between you and them.", "following you across the city just out of sight at every turn.", "suddenly surrounding you as you realize everyone in the crowd has the same face.", "walking slowly towards you with their maws gaping, shouting your name on repeat.", "politely asking you not to resist."]
   var cydroid_want = ["to occupy an organic host.", "to finish off their kill list.", "to find their creator and have a chat.", "to pass the Voight-Kampff test.", "to experience emotions.", "to get a bigger gun.", "to eliminate all threats.", "to quantify the purpose of existence.", "to stop murdering and undo their programming.", "to get to the safe house and repair themselves.", "to be you friend before flaying you.", "Ë̴̱́Ṙ̸̳̕R̷͖̀͜Ö̷̧̪́R̷̥̺̽́ ̷̟̟͊A̵̘̜͆̚C̶̦̟̀Ć̷̤̄E̶̯̾̐S̸̞̀͝Ş̵̘̅I̶̫͑N̵͖͎̓͝G̴̩͔͌̀ ̴̡͗I̷͉̠͝R̶͔̄R̶̘̥͐Ḙ̵̕L̴̩̠̾͠Ë̴̟̙̆V̷̧͝͠Ȁ̵̖N̴͈̣̉̋T̴̥͐̎ ̷͎̐ͅD̵̨͊A̸̹̅T̶̫̀͝A̷̦͋ ̵̖̼̐F̶͉͙̑O̸̭̍͋R̸̺͙̚ ̸̥͘̕F̴̼͔͌U̶̝͐̎N̸̨̓̚C̴͓̀T̷̼̎́I̵͔̝͒O̵͓͖͑͗Ń̷̻͍", "Ë̴̱́Ṙ̸̳̕R̷͖̀͜Ö̷̧̪́R̷̥̺̽́ ̷̟̟͊A̵̘̜͆̚C̶̦̟̀Ć̷̤̄E̶̯̾̐S̸̞̀͝Ş̵̘̅I̶̫͑N̵͖͎̓͝G̴̩͔͌̀ ̴̡͗I̷͉̠͝R̶͔̄R̶̘̥͐Ḙ̵̕L̴̩̠̾͠Ë̴̟̙̆V̷̧͝͠Ȁ̵̖N̴͈̣̉̋T̴̥͐̎ ̷͎̐ͅD̵̨͊A̸̹̅T̶̫̀͝A̷̦͋ ̵̖̼̐F̶͉͙̑O̸̭̍͋R̸̺͙̚ ̸̥͘̕F̴̼͔͌U̶̝͐̎N̸̨̓̚C̴͓̀T̷̼̎́I̵͔̝͒O̵͓͖͑͗Ń̷̻͍", "Ë̴̱́Ṙ̸̳̕R̷͖̀͜Ö̷̧̪́R̷̥̺̽́ ̷̟̟͊A̵̘̜͆̚C̶̦̟̀Ć̷̤̄E̶̯̾̐S̸̞̀͝Ş̵̘̅I̶̫͑N̵͖͎̓͝G̴̩͔͌̀ ̴̡͗I̷͉̠͝R̶͔̄R̶̘̥͐Ḙ̵̕L̴̩̠̾͠Ë̴̟̙̆V̷̧͝͠Ȁ̵̖N̴͈̣̉̋T̴̥͐̎ ̷͎̐ͅD̵̨͊A̸̹̅T̶̫̀͝A̷̦͋ ̵̖̼̐F̶͉͙̑O̸̭̍͋R̸̺͙̚ ̸̥͘̕F̴̼͔͌U̶̝͐̎N̸̨̓̚C̴͓̀T̷̼̎́I̵͔̝͒O̵͓͖͑͗Ń̷̻͍", "Ë̴̱́Ṙ̸̳̕R̷͖̀͜Ö̷̧̪́R̷̥̺̽́ ̷̟̟͊A̵̘̜͆̚C̶̦̟̀Ć̷̤̄E̶̯̾̐S̸̞̀͝Ş̵̘̅I̶̫͑N̵͖͎̓͝G̴̩͔͌̀ ̴̡͗I̷͉̠͝R̶͔̄R̶̘̥͐Ḙ̵̕L̴̩̠̾͠Ë̴̟̙̆V̷̧͝͠Ȁ̵̖N̴͈̣̉̋T̴̥͐̎ ̷͎̐ͅD̵̨͊A̸̹̅T̶̫̀͝A̷̦͋ ̵̖̼̐F̶͉͙̑O̸̭̍͋R̸̺͙̚ ̸̥͘̕F̴̼͔͌U̶̝͐̎N̸̨̓̚C̴͓̀T̷̼̎́I̵͔̝͒O̵͓͖͑͗Ń̷̻͍", "Ë̴̱́Ṙ̸̳̕R̷͖̀͜Ö̷̧̪́R̷̥̺̽́ ̷̟̟͊A̵̘̜͆̚C̶̦̟̀Ć̷̤̄E̶̯̾̐S̸̞̀͝Ş̵̘̅I̶̫͑N̵͖͎̓͝G̴̩͔͌̀ ̴̡͗I̷͉̠͝R̶͔̄R̶̘̥͐Ḙ̵̕L̴̩̠̾͠Ë̴̟̙̆V̷̧͝͠Ȁ̵̖N̴͈̣̉̋T̴̥͐̎ ̷͎̐ͅD̵̨͊A̸̹̅T̶̫̀͝A̷̦͋ ̵̖̼̐F̶͉͙̑O̸̭̍͋R̸̺͙̚ ̸̥͘̕F̴̼͔͌U̶̝͐̎N̸̨̓̚C̴͓̀T̷̼̎́I̵͔̝͒O̵͓͖͑͗Ń̷̻͍", "Ë̴̱́Ṙ̸̳̕R̷͖̀͜Ö̷̧̪́R̷̥̺̽́ ̷̟̟͊A̵̘̜͆̚C̶̦̟̀Ć̷̤̄E̶̯̾̐S̸̞̀͝Ş̵̘̅I̶̫͑N̵͖͎̓͝G̴̩͔͌̀ ̴̡͗I̷͉̠͝R̶͔̄R̶̘̥͐Ḙ̵̕L̴̩̠̾͠Ë̴̟̙̆V̷̧͝͠Ȁ̵̖N̴͈̣̉̋T̴̥͐̎ ̷͎̐ͅD̵̨͊A̸̹̅T̶̫̀͝A̷̦͋ ̵̖̼̐F̶͉͙̑O̸̭̍͋R̸̺͙̚ ̸̥͘̕F̴̼͔͌U̶̝͐̎N̸̨̓̚C̴͓̀T̷̼̎́I̵͔̝͒O̵͓͖͑͗Ń̷̻͍", "Ë̴̱́Ṙ̸̳̕R̷͖̀͜Ö̷̧̪́R̷̥̺̽́ ̷̟̟͊A̵̘̜͆̚C̶̦̟̀Ć̷̤̄E̶̯̾̐S̸̞̀͝Ş̵̘̅I̶̫͑N̵͖͎̓͝G̴̩͔͌̀ ̴̡͗I̷͉̠͝R̶͔̄R̶̘̥͐Ḙ̵̕L̴̩̠̾͠Ë̴̟̙̆V̷̧͝͠Ȁ̵̖N̴͈̣̉̋T̴̥͐̎ ̷͎̐ͅD̵̨͊A̸̹̅T̶̫̀͝A̷̦͋ ̵̖̼̐F̶͉͙̑O̸̭̍͋R̸̺͙̚ ̸̥͘̕F̴̼͔͌U̶̝͐̎N̸̨̓̚C̴͓̀T̷̼̎́I̵͔̝͒O̵͓͖͑͗Ń̷̻͍", "Ë̴̱́Ṙ̸̳̕R̷͖̀͜Ö̷̧̪́R̷̥̺̽́ ̷̟̟͊A̵̘̜͆̚C̶̦̟̀Ć̷̤̄E̶̯̾̐S̸̞̀͝Ş̵̘̅I̶̫͑N̵͖͎̓͝G̴̩͔͌̀ ̴̡͗I̷͉̠͝R̶͔̄R̶̘̥͐Ḙ̵̕L̴̩̠̾͠Ë̴̟̙̆V̷̧͝͠Ȁ̵̖N̴͈̣̉̋T̴̥͐̎ ̷͎̐ͅD̵̨͊A̸̹̅T̶̫̀͝A̷̦͋ ̵̖̼̐F̶͉͙̑O̸̭̍͋R̸̺͙̚ ̸̥͘̕F̴̼͔͌U̶̝͐̎N̸̨̓̚C̴͓̀T̷̼̎́I̵͔̝͒O̵͓͖͑͗Ń̷̻͍", "Ë̴̱́Ṙ̸̳̕R̷͖̀͜Ö̷̧̪́R̷̥̺̽́ ̷̟̟͊A̵̘̜͆̚C̶̦̟̀Ć̷̤̄E̶̯̾̐S̸̞̀͝Ş̵̘̅I̶̫͑N̵͖͎̓͝G̴̩͔͌̀ ̴̡͗I̷͉̠͝R̶͔̄R̶̘̥͐Ḙ̵̕L̴̩̠̾͠Ë̴̟̙̆V̷̧͝͠Ȁ̵̖N̴͈̣̉̋T̴̥͐̎ ̷͎̐ͅD̵̨͊A̸̹̅T̶̫̀͝A̷̦͋ ̵̖̼̐F̶͉͙̑O̸̭̍͋R̸̺͙̚ ̸̥͘̕F̴̼͔͌U̶̝͐̎N̸̨̓̚C̴͓̀T̷̼̎́I̵͔̝͒O̵͓͖͑͗Ń̷̻͍"]
   var cydroid_special = [
     ["Crawlers", "Can climb walls and crawl across ceilings."],
@@ -467,20 +467,20 @@ C:\PRISM\SYSTEM32> itch.io
     ["Relentless Hunter", "Will tirelessly hunt its target to complete its assignment. When ≤0 HP, it has a 50% chance of surviving with one less limb-it recovers d8 HP but Attack and Defense tests against it are now DR-2 (cumulative)."],
     ["Charger", "Uses rocket-powered shoulder bashes to break through doors and walls."],
     ["Imitation of Life", "Passes as an unarmed human in most scans. Always acts first when it can surprise a target."],
-    ["Mimic Protocol", "Upon failing morale, it will attempt to flee into a crowd and use holoprojections to blend in. It will repair, prepare and attempt to strike again eventually."],
-    ["SkyNet", "Once per combat it may hit a cybered target directly with a Backlash. Test KNOWLEDGE DR14 to avoid."],
+    ["Mimic Protocol", "Upon failing morale, it will attempt to flee into the crowd and use holoprojections to blend in. It will repair itself and attempt to strike again eventually."],
+    ["SkyNet", "Once per combat it may hit a cybered target directly with a BACKLASH(core pg.72). Test KNOWLEDGE DR14 to avoid."],
     ["Puppet Master", "Has full control over any small electronic systems not already pwned by the players (ie. lights, locks, alarms, etc.)."],
     ["Man Laughing", "Has kidnapped someone important to the players. 1-in-4 chance the kidnappee is here and being used as a human shield."],
-    ["Manipulators", "Has extra limbs hidden away. May grapple players, test STRENGTH DR14 to avoid. If grappled any attack by the cydroid automatically hits and the cydroid and move the player at will."],
+    ["Manipulators", "Has extra limbs hidden away. May grapple players, test STRENGTH DR14 to avoid. If grappled any attack by the cydroid automatically hits and the cydroid can drag the player at will."],
     ["SmartJump™", "Can jump up to 30m."],
     ["Restock Protocol", "Once per combat, at 50% HP has 1-in-4 chance of beginning to repair itself. It gains d4 HP per round until at max HP."],
     ["Dusk Cloak", "It can vanish completely once per combat. Test PRESENCE DR16 to catch a hint of the direction it is heading."],
-    ["Haunting Guise", "Test PRESENCE DR12 or suffer DR-2 AGILITY until the end of combat as you are terrified and shaking by the appearance of the cydroid."],
+    ["Haunting Guise", "Test PRESENCE DR12 or suffer DR+2 AGILITY until the end of combat as you are terrified and shaking by the appearance of the cydroid."],
     ["Swarm Body", "When moving it dissipates and reappears at the location it wants in a swarm of nanites. The cydroid can not be restrained or otherwise have its movement impeded."],
-    ["Imitation of Power", "In addition to what was rolled, the cydroid has the complete loadout of one of the strongest(damage output) player."],
+    ["Imitation of Power", "In addition to what was rolled, the cydroid has the complete loadout of one of the strongest(by damage output) players."],
     ["Errant Signal", "There's a crackle in its voice as it pursues you. The programming shackle is coming loose and this cydroid is about to become a free agent. Its morale is halved(or 5 if no morale), it can persuaded to stop its pursuit and maybe give up some info if you help it first."],
-    ["Guilty Spark", "It talks unendingly about the completed hits on its target list. Test PRESENCE DR14 or all rolls are DR+1 until the end of combat."],
-    ["Wetware", "Contains a black box belonging to a VIP. Who is? Why is it in this body? Is it acting against its will?"],
+    ["Guilty Spark", "It talks loudly and unendingly about its almost complete target list. Test PRESENCE DR14 or all rolls are DR+1 until the end of combat."],
+    ["Wetware", "Contains a black box belonging to a VIP. Who is it? Why is it in this body? Is it acting against its will?"],
     ["Machine-Machine Interface", "Every weapon it has can and must be autofired. Autofire at DR-1."],
   ]
 
@@ -490,7 +490,7 @@ C:\PRISM\SYSTEM32> itch.io
   var phreak_want = ["to multiply.", "to itch under their stone hard skin.", "to control their infestations.", "to remove their infestations and return to normal life.", "to satiety the two-headed daemon with sacrifices.", "to remember who they used to be before the infection.", "to be annihilated.", "to light everything on fire.", "to end the obvious misery you're in.", "to recruit you to their purpose.", "to flay you so they will be accepted into the group.", "to bless all with the powers of Nano.", "to give in and embrace the infestation.", "to carve out a place in society for phreaks.", "to see their children again.", "to feed.", "to peel off their flesh and start anew.", "to convince you that actually you're the strange one.", "to release the glory of G0 to the rest of Cy.", "to dominate non-Nano life."];
   var phreak_special = [
     ["Psychic Scapels", "Target tests PRESENCE DR14 or takes d10 damage."],
-    ["Frothing Infested", "Crits against this creature triggers a random infestation and has 50% chance of the player instead."],
+    ["Frothing Infested", "Crits against this creature triggers a random infestation and has 50% chance of hitting the player instead."],
     ["Infested", "Crits against this creature triggers a random infestation."],
     ["Nanomancer", "Can use d2+1 Nano powers."],
     ["Ooze", "Test TOUGHNESS DR14 or all hits taken until the end of combat deal an additional d4 damage."],
@@ -517,17 +517,17 @@ C:\PRISM\SYSTEM32> itch.io
     ["Weak Points", "Can be hit with Attack DR16 to deal double damage and ignore armor."],
     ["Heavy Undercarriage", "Cannot take damage from IEDs or mines that target the underside of the vehicle. May be flipped by such an explosion though, DR16."],
     ["Spider Tank", "Instead of wheels it has a series of spider-like leg appendages. May traverse any surface at any angle."],
-    ["Sardine Can", "A jury rigged extension also the option of carrying +d6 passengers."],
-    ["Crowd Control I", "If attacked with melee, regardless if it hits, the vehicles immediately deploys smoke cover. The vehicle and everything within 3m is engulfed in orange smoke. Any unprotected creature must test TOUGHNESS DR14 every round while in the smoke or take d4 damage(ignores armor)."],
-    ["Turret Drones", "They have d3 gimballed and autonomous turrets clamped to the vehicle. Anytime it hits each turret may also make an attack that the same target. Deals 1 damage."],
-    ["Crowd Control II", "Once per combat the vehicle may deploy a sheet of mines around itself. Make any movement within 3m of the vehicle you must test AGILITY DR16 or take d6 damage."],
+    ["Sardine Can", "A jury rigged extension allows the option of carrying +d6 passengers."],
+    ["Crowd Control I", "If attacked with melee, regardless if it hits, the vehicle immediately deploys smoke cover. The vehicle and everything within 3m is engulfed in orange smoke. Any unprotected creature must test TOUGHNESS DR14 every round while in the smoke or take d4 damage(ignores armor)."],
+    ["Turret Drones", "They have d3 gimballed and autonomous turrets clamped to the vehicle. Anytime it hits each turret may also make an attack at the same target. Deals 1 damage."],
+    ["Crowd Control II", "Once per combat the vehicle may deploy a sheet of mines around itself. Making any movement within 3m of the vehicle you must test AGILITY DR16 or take d6 damage."],
     ["Crowd Control III", "There is a massive water gun on top of the vehicle. Defend DR14 or be knocked unconscious to the ground for d2 rounds and take d4 damage(ignores armor)."],
     ["Surveillance Platform", "May use any App instead of using weapons."],
     ["Crowd Control IV", "Can create holo-projections to camouflage itself or other allies. Before being able to Attack a target camouflaged this way you must pass PRESENCE DR12. Defend from camouflaged targets at DR14."],
-    ["Shoddy Wiring", "You can see glowing red hot components between the cracks of this vehicles. Every time it attacks there is a 1-in-10 chance that internal machinery fails catastrophically and lowers the armor tier of the vehicle by 1."],
+    ["Shoddy Wiring", "You can see glowing red hot components between the cracks of this vehicle. Every time it attacks there is a 1-in-10 chance that internal machinery fails catastrophically and lowers the armor tier of the vehicle by 1."],
     ["Redundant Armor Plating", "This target cannot be subject to armor shredding."],
-    ["Field Repair", "If the components are around, this vehicle can be repaired once in combat in 2 rounds to restore 1/2 its max HP. The technician must be outside the vehicle to initiate repairs and take no others actions for the 2 rounds. They Defend at DR8."],
-    ["Warthog", "There is a cruel pair of twisted metal horns on the front of the vehicle. Perfect for reaching out and touching something. Deals d10 damage. If the target is a vehicle it ignores armor and now they are now stuck together for the rest of combat."],
+    ["Field Repair", "If the components are around, this vehicle can be repaired once in combat in 2 rounds to restore 1/2 its max HP. The technician must be outside the vehicle to initiate repairs and take no other actions for the 2 rounds. They Defend at DR8."],
+    ["Warthog", "There is a cruel pair of twisted metal horns on the front of the vehicle. Perfect for reaching out and touching something. Deals d10 damage. If the target is a vehicle it ignores armor and they are now stuck together for the rest of combat."],
     ["AI Assistant", "Defend at DR14 and +2 armor piercing damage."],
     ["IED", "Upon failing morale it explodes in a ball of shrapnel and gasoline. Anyone within 10m must test AGILITY DR14 or take d6 damage."],
     ["Hellfire", "May make up to 4 autofire attempts per attack. Autofire at DR-1."],
@@ -957,7 +957,7 @@ C:\PRISM\SYSTEM32> itch.io
       'cat-sized' + drone_type(),
       drone_type() + " covered in UCS logo's",
       drone_type() + ' stuttering and out of sync',
-      drone_type() + " buzzing like a dentists' drill at full power",
+      drone_type() + " buzzing like a dentist's drill at full power",
       'as a shimmer of heat, barely visible' + drone_type(),
       'as a synchronized swarm of' + drone_type(),
       'tools of espionage,' + drone_type(),
