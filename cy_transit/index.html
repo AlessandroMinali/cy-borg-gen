@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CY_TRANSIT - GETTING YOU WERE YOU NEED TO GO!</title>
+  <meta name="description" content="CY_TRANSIT - A CY_BORG Transit rules">
+  <style type="text/css">
+    html {
+       background: #111;
+       padding: 1em;
+       color: #eee;
+       font-size: 1em;
+       line-height: 1;
+       text-shadow: 0.06rem 0 0.06rem #ea36af, -0.125rem 0 0.06rem #75fa69;
+       letter-spacing: 0.125em;
+       animation-duration: 5s;
+       animation-name: textflicker;
+       animation-iteration-count: infinite;
+       animation-direction: alternate;
+       background: radial-gradient(rgba(0, 150, 0, 0.75), black 120%),linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+       background-size: 100% 2px, 3px 100%;
+    }
+    @keyframes textflicker {
+      from {
+        text-shadow: 1px 0 0 #ea36af, -1px 0 0 #75fa69;
+      }
+      to {
+        text-shadow: 2px 0.5px 0px #ea36af, 0px 0 0 #75fa69;
+      }
+    }
+    body {
+      background: radial-gradient(rgba(0, 150, 0, 0.75), black 120%),linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+      background-size: 100% 2px, 3px 100%;
+      margin: 0;
+      padding: 1rem;
+      color: white;
+      font: 1.3rem Inconsolata, monospace;
+    }
+
+    body > footer {
+      position: sticky;
+      top: 100vh;
+    }
+    footer > pre { white-space: pre-wrap; }
+
+    ::selection {
+      background: #0080FF;
+      text-shadow: none;
+    }
+
+    select {
+      font-size: 100%;
+      opacity: 0.8;
+    }
+    pre {
+      margin: 0;
+    }
+    button {
+      width:  100%;
+      height: 60px;
+      font-size: 100%;
+      border: 1px solid;
+      box-shadow: 5px 5px;
+      cursor: pointer;
+    }
+    button:hover { opacity: 0.9; height: 59px; }
+    .cursed {
+      text-decoration: none;
+      color: blue;
+    }
+    .content {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    #login_pre, #login { padding-left: 20px; margin: 0; }
+    #login { overflow-x: hidden; }
+
+    @media only screen and (max-width: 500px) {
+      select, div { width: 100% }
+      #login { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <p id='login_pre'></p>
+  <p id='login'>></p>
+  <hr>
+  <div class='content'>
+    <div>
+      <label for='start'>START</label><br>
+      <select id="start" size=12></select>
+      <br>
+      <button id='express' onclick='rapidOn()'>Use EXPRESS Lines</button>
+      <button  id='commuter' onclick='rapidOff()'>Use Commuter Lines</button>
+      <br>
+      <a href='https://silentbunny.itch.io/cy-transit/purchase' target='_blank'><button id='download'>Download System Map</button></a>
+    </div>
+    <div>
+      <label for='destination'>DESTINATION</label><br>
+      <select id="destination" size=12></select>
+    </div>
+  </div>
+  <p id='result'></p>  
+  <footer style="font-size: 40%; opacity: 55%;">
+    <pre style="margin: 0px 15px;">
+CY_TRANSIT is an independent production by Alessandro Minali and is not affiliated with Stockholm Kartell.
+It is published under the CY_BORG Third Party License.
+CY_BORG IS ©2022 STOCKHOLM KARTELL.
+    </pre>
+  </footer>
+</body>
+<script src="dijk.js"></script>
+<script type="text/javascript">
+  var stations = {
+    '0': 'Custodian',
+    '1': 'Oak Isles',
+    '2': 'Gravelstead Peak',
+    '3': 'Elm Island',
+    '4': 'Grift',
+    '5': 'BORG Hold',
+    '6': ['Svärta', 'Gräo'],
+    '7': 'Descent',
+    '8': 'Sabbath Square',
+    '9': 'Bigmosse',
+    '10': ['North', 'Rememberance Plaza'],
+    '11': 'Clegton Black',
+    '12': 'Wraith Towers',
+    '13': 'Ommos Monolith',
+    '14': 'Grave Run',
+    '15': 'Undersjön',
+    '16': "Founder's Hill",
+    '17': 'Sun City',
+    '18': ['Arcs', 'Hope Tower II'],
+    '19': 'Crown Island',
+    '20': 'Airport',
+    '21': 'Lilypond',
+    '22': ['South', 'Epoch Plaza'],
+    '23': 'Community Arena',
+    '24': 'Spaceport',
+    '25': 'Screaming Stone',
+    '26': 'Melt',
+    '27': 'Metro HoloDome',
+    '28': 'Wreath',
+    '29': 'Wintercover Park',
+    '30': 'Cy Golf Village',
+    '31': 'Little Hell',
+    '32': ['G0', 'Old Cy'],
+    '33': 'Würte',
+    '34': 'Longvale',
+    '35': 'Dry Lake',
+    '36': 'Inkwell Heights',
+    '37': 'Edges',
+    '38': 'Overlord Bridge',
+    '39': 'Docks',
+    '40': 'High Lake',
+    '41': 'Burnchurch',
+    '42': 'Edda Crawl',
+    '43': 'Edges Country Club',
+    '44': 'Perch Productivity Park',
+    '45': 'Turnpike Projects',
+    '46': 'Laketon',
+    '47': 'Lower Walds',
+    '48': 'Vertex Nova',
+    '49': 'Barnyard',
+    '50': 'Paradise Spire',
+    '51': 'Old Sheen',
+    '52': 'Old Straw',
+    '53': 'Vatan Street',
+    '54': "Prophet's Park",
+    '55': 'Cot Square',
+    '56': 'Reek',
+    '57': 'Iron Isle',
+    '58': 'Low Meadow',
+    '59': 'Mosscroft',
+    '60': 'Happiness',
+    '61': 'Birchop',
+    '62': 'Galgbacken',
+    '63': 'Seared Heights',
+    '64': 'Barrow Hill',
+  }
+  var start_select = document.getElementById("start");
+  var dest_select = document.getElementById("destination");
+  var suggestion = document.getElementById('result');
+
+  const d = (max) => { return Math.floor(Math.random() * max) + 1; }
+  function timeConvert(n) {
+    var num = n;
+    var hours = (num / 60);
+    var rhours = Math.floor(hours);
+    var minutes = (hours - rhours) * 60;
+    var rminutes = Math.round(minutes);
+    var out = '';
+    if (rhours) {
+      out += rhours + " hour" + (rhours > 1 ? 's and ' : ' and ');
+    }
+    return out += rminutes + " minute" + (rminutes > 1 ? 's' : '');
+  }
+
+  const add_option = (key, value, source) => {
+    var option = document.createElement("option");
+    option.value = key;
+    option.text = value;
+    source.add(option);
+  }
+
+  for (const [key, value] of Object.entries(stations).sort((a, b) => {return a[1] > b[1]})) {
+    if (Array.isArray(value)) {
+      value.forEach((el) => {
+        add_option(key, el, start_select);
+        add_option(key, el, dest_select);
+      })
+    } else {
+      add_option(key, value, start_select);
+      add_option(key, value, dest_select);
+    }
+  }
+  start_select.children[0].selected = true;
+  dest_select.children[0].selected = true;
+
+  const counts = [2, 3, 4, 6, 8, 10, 12, 20, 100];
+  var closest = (goal) => {
+    return counts.reduce(function(prev, curr) {
+      return (Math.abs(curr - goal) < Math.abs(prev - goal) ? curr : prev);
+    });
+  }
+
+  [start_select, dest_select].forEach((el) => {
+    el.addEventListener('change', function() {
+      if (start_select.value == dest_select.value) { return; }
+      var [t, route] = g.shortestPath(start_select.value, dest_select.value);
+      suggestion.innerHTML = timeConvert(t + d(closest(t))) + " is your estimated arrival.<br>";
+      suggestion.innerHTML += "Route: " + route.map((el) => {
+        var i = stations[el];
+        if (el == '32') { i[0] = "<span class='cursed'>G0</span>"}
+        return (Array.isArray(i) ? i[0] : i);
+      }).join(' -> ');
+      localStorage.setItem('transit_start', start_select.selectedIndex);
+      localStorage.setItem('transit_dest', dest_select.selectedIndex);
+    });
+  });
+
+  // Array.from(start_select.options).forEach((el) => {
+  //   Array.from(dest_select.options).forEach((le) => {
+  //     try { g.shortestPath(el.value, le.value); } catch { alert("Fail: " + [el.value, le.value].join(",")); }
+  //   });
+  // });
+  // confirm('no issues');
+
+  const manual_change = () => { start_select.dispatchEvent(new Event('change'));}
+  function rapidOff() {
+    g.addVertex('6', {'5': 4, '7': 2, '8': 2});
+    g.addVertex('10', {'8': 1, '12': 2, '13': 1});
+    g.addVertex('15', {'12': 1, '18': 2, '19': 1});
+    g.addVertex('20', {'16': 3, '23': 2, '24': 2, '25': 5, '26': 1});
+    g.addVertex('22', {'19': 2, '28': 3, '29': 1, '61': 4});
+    g.addVertex('39', {'33': 3, '45': 3});
+    commuter.style.display = 'none';
+    express.style.display = 'inline-block';
+    manual_change();
+    localStorage.removeItem('transit');
+  }
+  function rapidOn() {
+    g.addVertex('6', {'5': 4, '7': 2, '8': 2, '10': 1}); //svarta rapid
+    g.addVertex('10', {'6': 1, '8': 1, '12': 2, '13': 1, '15': 1, '20': 1}); // north rapid
+    g.addVertex('15', {'10': 1, '12': 1, '18': 2, '19': 1, '22': 1}); // undersjon rapid
+    g.addVertex('20', {'10': 1,'16': 3, '23': 2, '24': 2, '25': 5, '26': 1, '39': 1}); // airport rapid
+    g.addVertex('22', {'15': 1, '19': 2, '28': 3, '29': 1, '61': 4}); // south rapid
+    g.addVertex('39', {'20': 1, '33': 3, '45': 3}); // docks rapid
+    commuter.style.display = 'inline-block';
+    express.style.display = 'none';
+    manual_change();
+    localStorage.setItem('transit', true);
+  }
+  g.addVertex('0', {'1': 1});
+  g.addVertex('1', {'0': 1, '2': 1, '3': 1});
+  g.addVertex('2', {'1': 1, '4': 1});
+  g.addVertex('3', {'1': 1, '4': 1});
+  g.addVertex('4', {'3': 1, '2': 1, '5': 3});
+  g.addVertex('5', {'4': 3, '6': 4});
+  g.addVertex('7', {'6': 2, '9': 3});
+  g.addVertex('8', {'6': 2, '10': 1});
+  g.addVertex('9', {'7': 3, '11': 2});
+  g.addVertex('11', {'9': 2, '14': 2});
+  g.addVertex('12', {'10': 2, '15': 1});
+  g.addVertex('13', {'10': 1, '16': 2});
+  g.addVertex('14', {'11': 2, '17': 7});
+  g.addVertex('16', {'13': 2, '20': 3});
+  g.addVertex('17', {'14': 7, '21': 2});
+  g.addVertex('18', {'15': 1}); // faster to leave the arcs
+  g.addVertex('19', {'15': 1, '22': 2});
+  g.addVertex('21', {'17': 2, '23': 2, '27': 2});
+  g.addVertex('23', {'20': 2, '21': 2});
+  g.addVertex('24', {'20': 2, '30': 2});
+  g.addVertex('25', {'20': 5, '31': 1, '59': 7});
+  g.addVertex('26', {'20': 1, '32': 10, '33': 3});
+  g.addVertex('27', {'21': 2, '30': 5});
+  g.addVertex('28', {'22': 3, '34': 1});
+  g.addVertex('29', {'22': 1, '35': 4, '36': 3});
+  g.addVertex('30', {'27': 3, '37': 1}); // faster to get to HoloDome
+  g.addVertex('31', {'25': 1, '38': 8});
+  g.addVertex('32', {'26': 9}); // slightly faster to leave G0.
+  g.addVertex('33', {'26': 3, '39': 3});
+  g.addVertex('34', {'28': 1, '40': 2});
+  g.addVertex('35', {'29': 4, '41': 1});
+  g.addVertex('36', {'29': 3, '42': 2});
+  g.addVertex('37', {'30': 1, '43': 2});
+  g.addVertex('38', {'31': 8, '44': 2});
+  g.addVertex('40', {'34': 2, '46': 4});
+  g.addVertex('41', {'35': 1, '47': 5});
+  g.addVertex('42', {'36': 2});
+  g.addVertex('43', {'37': 2});
+  g.addVertex('44', {'38': 2, '48': 6});
+  g.addVertex('45', {'39': 3, '49': 1});
+  g.addVertex('46', {'40': 4, '50': 4, '51': 3});
+  g.addVertex('47', {'41': 5});
+  g.addVertex('48', {'44': 6, '52': 6});
+  g.addVertex('49', {'45': 1, '53': 3});
+  g.addVertex('50', {'46': 4, '53': 4, '54': 9});
+  g.addVertex('51', {'46': 3, '55': 10});
+  g.addVertex('52', {'48': 6, '56': 5});
+  g.addVertex('53', {'49': 3, '50': 4});
+  g.addVertex('54', {'50': 9, '57': 9});
+  g.addVertex('55', {'51': 10, '58': 4});
+  g.addVertex('56', {'52': 5, '59': 4});
+  g.addVertex('57', {'54': 9});
+  g.addVertex('58', {'55': 4, '60': 1});
+  g.addVertex('59', {'25': 6, '56': 4});
+  g.addVertex('60', {'58': 1});
+  g.addVertex('61', {'22': 4, '62': 1});
+  g.addVertex('62', {'61': 1, '63': 1});
+  g.addVertex('63', {'62': 1, '64': 1});
+  g.addVertex('64', {'63': 1});
+  var t_s, t_d;
+  if ((t_s = localStorage.getItem('transit_start')) && (t_d = localStorage.getItem('transit_dest'))) {
+    start_select.selectedIndex = t_s;
+    dest_select.selectedIndex = t_d;
+  }
+  if (localStorage.getItem('transit')) {
+    rapidOn();
+  } else {
+    rapidOff();
+  }
+
+  function makeid(length) {
+      var result           = '';
+      var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      var charactersLength = characters.length;
+      for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * 
+   charactersLength));
+     }
+     return result;
+  }
+  login_pre.innerHTML = "CY_TRANSIT Terminal #" + d(10) + d(10) + d(10) + " HST.v " + (d(100) < 10 ? "<span class='cursed'>BOOT</span>" : "BOOT"); 
+  var code = "\n Systems   OK\n Memory    OK\n MapReduce OK\n\n\n\n Adjusting camera feed\n1\n2\n3\n\n LIVE TRACKING DATA IS AVAILABLE\n [socket://" + d(9) + "12." + d(9) + "2.1" + d(9) + "6" + d(9) + "." + d(9) + "]\n user: " + makeid(d(10) + 5) + "\n pass: " + makeid(d(10) + 5) + "\n Welcome back A D M I N$"
+  var acc = 0;
+  var flag = false;
+  code.split('').forEach((el) => {
+    if (el == "\n") {
+      acc += 800;
+      setTimeout(() => {
+        login.innerHTML = "> ";
+      }, acc)
+    } else if (el == "$") {
+      setTimeout(() => {
+        login.innerHTML = "> "
+        setInterval(() => {
+          login.innerHTML += code.split('')[d(code.length-1)];
+        }, d(3) * 500);
+        setInterval(() => {
+          login.innerHTML += code.split('')[d(code.length-1)];
+        }, d(4) * 200);
+        setInterval(() => {
+          login.innerHTML = "> "
+        }, 5000);
+      }, 50000);
+    } else {
+      setTimeout(() => {
+        login.innerHTML += el;
+      }, acc)
+    }
+    acc += (d(5) * 50);
+  })
+</script>
+</html>
