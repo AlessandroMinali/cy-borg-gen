@@ -224,16 +224,18 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
 
   [start_select, dest_select].forEach((el) => {
     el.addEventListener('change', function() {
-      if (start_select.value == dest_select.value) { return; }
-      var [t, route] = g.shortestPath(start_select.value, dest_select.value);
-      suggestion.innerHTML = timeConvert(t + d(closest(t))) + " is your estimated arrival.<br>";
-      suggestion.innerHTML += "Route: " + route.map((el) => {
-        var i = stations[el];
-        if (el == '32') { i[0] = "<span class='cursed'>G0</span>"}
-        return (Array.isArray(i) ? i[0] : i);
-      }).join(' -> ');
-      localStorage.setItem('transit_start', start_select.selectedIndex);
-      localStorage.setItem('transit_dest', dest_select.selectedIndex);
+      suggestion.innerHTML = 'Calculating ...<br><br>'
+      setTimeout(() => {
+        var [t, route] = g.shortestPath(start_select.value, dest_select.value);
+        suggestion.innerHTML = timeConvert(t + d(closest(t))) + " is your estimated arrival.<br>";
+        suggestion.innerHTML += "Route: " + route.map((el) => {
+          var i = stations[el];
+          if (el == '32') { i[0] = "<span class='cursed'>G0</span>"}
+          return (Array.isArray(i) ? i[0] : i);
+        }).join(' -> ');
+        localStorage.setItem('transit_start', start_select.selectedIndex);
+        localStorage.setItem('transit_dest', dest_select.selectedIndex);
+      }, d(10) * 50);
     });
   });
 
