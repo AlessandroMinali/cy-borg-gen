@@ -94,7 +94,7 @@
       <button id='express' onclick='rapidOn()'>Use EXPRESS Lines</button>
       <button  id='commuter' onclick='rapidOff()'>Use Commuter Lines</button>
       <br>
-      <a href='https://silentbunny.itch.io/cy-transit/purchase' target='_blank'><button id='download'>Download System Map</button></a>
+      <a href='https://silentbunny.itch.io/cy-transit/purchase'><button id='download'>Download System Map</button></a>
     </div>
     <div>
       <label for='destination'>DESTINATION</label><br>
@@ -206,10 +206,7 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
 
   for (const [key, value] of Object.entries(stations).sort((a, b) => {return a[1] > b[1]})) {
     if (Array.isArray(value)) {
-      value.forEach((el) => {
-        add_option(key, el, start_select);
-        add_option(key, el, dest_select);
-      })
+      add_option(key, value[0] + " (" + value[1] + ")", start_select);
     } else {
       add_option(key, value, start_select);
       add_option(key, value, dest_select);
