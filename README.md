@@ -12,7 +12,7 @@ Capable of generating GOONS, DRONES, BEASTS, CYDROIDS, PHREAKS and VEHICLES.
 [PDF zine](https://silentbunny.itch.io/cy-threat-zine)
 
 # CY_TRANSIT
-Modern design layout of the metro systems of Cy including over 60 stops, express lines and an accompanying shitty mobile app to route yourself around Cy. What more do you want?
+Modern design layout of the metro systems of Cy including over 60 stops, express lines and an accompanying shitty mobile app to route yourself around Cy. What more do you want?  
 [Link](https://silentbunny.itch.io/cy-transit)  
 [PDF](https://silentbunny.itch.io/cy-transit/purchase)
 
