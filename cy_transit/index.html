@@ -207,6 +207,7 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
   for (const [key, value] of Object.entries(stations).sort((a, b) => {return a[1] > b[1]})) {
     if (Array.isArray(value)) {
       add_option(key, value[0] + " (" + value[1] + ")", start_select);
+      add_option(key, value[0] + " (" + value[1] + ")", dest_select);
     } else {
       add_option(key, value, start_select);
       add_option(key, value, dest_select);
@@ -248,11 +249,13 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
 
   const manual_change = () => { start_select.dispatchEvent(new Event('change'));}
   function rapidOff() {
+    g.addVertex('1', {'0': 1, '2': 1, '3': 1});
     g.addVertex('6', {'5': 4, '7': 2, '8': 2});
     g.addVertex('10', {'8': 1, '12': 2, '13': 1});
     g.addVertex('15', {'12': 1, '18': 2, '19': 1});
     g.addVertex('20', {'16': 3, '23': 2, '24': 2, '25': 5, '26': 1});
     g.addVertex('22', {'19': 2, '28': 3, '29': 1, '61': 4});
+    g.addVertex('37', {'30': 1, '43': 2});
     g.addVertex('39', {'33': 3, '45': 3});
     commuter.style.display = 'none';
     express.style.display = 'inline-block';
@@ -260,11 +263,13 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
     localStorage.removeItem('transit');
   }
   function rapidOn() {
-    g.addVertex('6', {'5': 4, '7': 2, '8': 2, '10': 1}); //svarta rapid
-    g.addVertex('10', {'6': 1, '8': 1, '12': 2, '13': 1, '15': 1, '20': 1}); // north rapid
+    g.addVertex('1', {'0': 1, '2': 1, '3': 1, '6': 2}); // oak isles bypass to svarta
+    g.addVertex('6', {'1': 2, '5': 4, '7': 2, '8': 2, '10': 1}); //svarta rapid
+    g.addVertex('10', {'6': 1, '8': 1, '12': 2, '13': 1, '15': 1, '20': 1, '22': 2}); // north rapid
     g.addVertex('15', {'10': 1, '12': 1, '18': 2, '19': 1, '22': 1}); // undersjon rapid
-    g.addVertex('20', {'10': 1,'16': 3, '23': 2, '24': 2, '25': 5, '26': 1, '39': 1}); // airport rapid
-    g.addVertex('22', {'15': 1, '19': 2, '28': 3, '29': 1, '61': 4}); // south rapid
+    g.addVertex('20', {'10': 1,'16': 3, '23': 2, '24': 2, '25': 5, '26': 1, '37': 2, '39': 1}); // airport rapid
+    g.addVertex('22', {'10': 2, '15': 1, '19': 2, '28': 3, '29': 1, '61': 4}); // south rapid
+    g.addVertex('37', {'20': 2, '30': 1, '43': 2}); // edges bypass to airport
     g.addVertex('39', {'20': 1, '33': 3, '45': 3}); // docks rapid
     commuter.style.display = 'inline-block';
     express.style.display = 'none';
@@ -272,7 +277,6 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
     localStorage.setItem('transit', true);
   }
   g.addVertex('0', {'1': 1});
-  g.addVertex('1', {'0': 1, '2': 1, '3': 1});
   g.addVertex('2', {'1': 1, '4': 1});
   g.addVertex('3', {'1': 1, '4': 1});
   g.addVertex('4', {'3': 1, '2': 1, '5': 3});
@@ -303,7 +307,6 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
   g.addVertex('34', {'28': 1, '40': 2});
   g.addVertex('35', {'29': 4, '41': 1});
   g.addVertex('36', {'29': 3, '42': 2});
-  g.addVertex('37', {'30': 1, '43': 2});
   g.addVertex('38', {'31': 8, '44': 2});
   g.addVertex('40', {'34': 2, '46': 4});
   g.addVertex('41', {'35': 1, '47': 5});
