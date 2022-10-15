@@ -353,10 +353,8 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
     }
 
     function removeSmallest(arr) {
-        var min = Math.min(...arr);
-        return arr.filter(e => e != min);
+      return arr.sort().filter((_,i) => i)
     }
-
     function two_unique(array) {
       var x = frandom_item_from(array);
       var y;
@@ -366,7 +364,6 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
 
       return [x, y]
     }
-
     function shuffle(array) {
       var new_array = array.slice();
       var m = new_array.length, t, i;
@@ -379,6 +376,43 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
       }
 
       return new_array;
+    }
+    function fallbackCopyTextToClipboard(text) {
+      var textArea = document.createElement("textarea");
+      textArea.value = text;
+
+      // Avoid scrolling to bottom
+      textArea.style.top = "0";
+      textArea.style.left = "0";
+      textArea.style.position = "fixed";
+
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+
+      try {
+        if (document.execCommand('copy')) { show_status('COPIED'); }
+      } catch (err) {
+        console.error('Fallback: Oops, unable to copy', err);
+      }
+
+      document.body.removeChild(textArea);
+    }
+    function copyTextToClipboard(text) {
+      if (!navigator.clipboard) {
+        fallbackCopyTextToClipboard(text);
+        return;
+      }
+      navigator.clipboard.writeText(text).then(function() {
+        show_status('COPIED');
+      }, function(err) {
+        console.error('Async: Could not copy text: ', err);
+      });
+    }
+    function copy_text() {
+      copyTextToClipboard(window.location.origin + window.location.pathname +
+        "?" +
+          [_seed, klass.padStart(2, '0'), selected.join('')].join('&'));
     }
 
     function load_char() {
@@ -426,13 +460,7 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
       })
     }
 
-    document.getElementById("save").addEventListener('click', function() {
-      alert("Shareable link:\n\n" +
-              window.location.origin + window.location.pathname +
-                "?" +
-                  [_seed, klass.padStart(2, '0'), selected.join('')].join('&') +
-                    "\n\nNOTE: Other people will only see the base sheet and not any edits you made.");
-    })
+    document.getElementById("save").addEventListener('click', function() { copy_text(); })
     document.getElementById("edit").addEventListener('click', function() {
       if (history.pushState) {
         var newurl = window.location.protocol + "//" +
@@ -498,8 +526,12 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.
       document.getElementById("class_name").innerHTML = classes[parseInt(klass)];
       document.getElementById("name").innerHTML = names[(fd(6) - 1)*6 + fd(6) - 1];
       selected = Array.from(document.querySelectorAll('input[type=checkbox]:checked')).map(e => e.value);
-      if (selected.length == 0) {
-        selected = two_unique(Array.from(document.querySelectorAll('input[type=checkbox]'))).map(e => e.value);
+      if (klass == 0) {
+        if(selected.length == 0) {
+          selected = two_unique(Array.from(document.querySelectorAll('input[type=checkbox]'))).map(e => e.value);
+        } else {
+          two_unique(Array.from(document.querySelectorAll('input[type=checkbox]'))).map(e => e.value);
+        }
       }
 
       var stats = []
