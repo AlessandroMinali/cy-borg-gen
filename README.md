@@ -26,7 +26,7 @@ Flavourful mission generator for CY_BORG
 
 An assassin inspired by the geisha robots in Ghost in the Shell.  
 
-[Link](https://silentbunny.itch.io/nighter-crawler-geisha-a-cy-borg-class)  
+[Link](https://silentbunny.itch.io/nightcrawler-geisha-a-cy-borg-class)  
 
 # Legal
 ![CompWith_CY_BORG_horiz](https://user-images.githubusercontent.com/4143332/193058984-ecfed7ac-ed1a-448e-9ea5-c83b212869f9.svg)
