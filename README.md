@@ -22,6 +22,12 @@ Flavourful mission generator for CY_BORG
 
 [Link](https://alessandrominali.github.io/cy-borg-gen/cy_dossier.html)
 
+# NIGHTCRAWLER GEISHA - 3rd PARTY CLASS
+
+An assassin inspired by the geisha robots in Ghost in the Shell.  
+
+[Link](https://silentbunny.itch.io/nighter-crawler-geisha-a-cy-borg-class)  
+
 # Legal
 ![CompWith_CY_BORG_horiz](https://user-images.githubusercontent.com/4143332/193058984-ecfed7ac-ed1a-448e-9ea5-c83b212869f9.svg)
 All the code is an independent production by Alessandro Minali and is not affiliated with Stockholm Kartell. It is published under the CY_BORG Third Party License.
