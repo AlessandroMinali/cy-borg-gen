@@ -26,7 +26,10 @@ Flavourful mission generator for CY_BORG
 
 An assassin inspired by the geisha robots in Ghost in the Shell.  
 
-[Link](https://silentbunny.itch.io/nightcrawler-geisha-a-cy-borg-class)  
+# SMARTTECH CATALOG
+
+3 new Smart"guns", 1 new pistol, 1 new drone and 2 new apps.  
+[Link](https://silentbunny.itch.io/smarttech-catalog)  
 
 # Legal
 ![CompWith_CY_BORG_horiz](https://user-images.githubusercontent.com/4143332/193058984-ecfed7ac-ed1a-448e-9ea5-c83b212869f9.svg)
