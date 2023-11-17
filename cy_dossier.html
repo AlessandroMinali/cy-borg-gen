@@ -168,6 +168,7 @@ CY_BORG IS ©2022 STOCKHOLM KARTELL.</div>
         show_status('COPIED');
       }, function(err) {
         console.error('Async: Could not copy text: ', err);
+        fallbackCopyTextToClipboard(text);
       });
     }
     function copy_text() {

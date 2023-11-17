@@ -1110,6 +1110,7 @@ C:\PRISM\SYSTEM32> cy_threat_data_dump
       show_status('COPIED');
     }, function(err) {
       console.error('Async: Could not copy text: ', err);
+      fallbackCopyTextToClipboard(text);
     });
   }
   function copy_text() {
